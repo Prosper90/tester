@@ -47,6 +47,9 @@ export default function Home() {
   const [cardTab, setCardTab] = useState("PR&Team");
   const [energyRegenRate, setEnergyRegenRate] = useState(3);
   const [energyRegenInterval, setEnergyRegenInterval] = useState(5000);
+  const [tapCount, setTapCount] = useState(1);
+  const [multitapLevel, setMultitapLevel] = useState(0);
+  const [energyLimitLevel, setEnergyLimitLevel] = useState(0)
   const [cardLevels, setCardLevels] = useState<CardLevels>({
     "IT Team": 0,
     "Marketing": 0,
@@ -63,6 +66,16 @@ export default function Home() {
     "Licence Asia": 0,
     "Anti money loundering": 0,
   });
+
+  const increaseTapCount = () => {
+    setTapCount((prevCount) => prevCount + 1);
+    setMultitapLevel((prevLevel) => prevLevel + 1);
+  };
+
+  const increaseMaxEnergy = () => {
+    setMaxEnergy((prevMax) => prevMax + 500);
+    setEnergyLimitLevel((prevLevel) => prevLevel + 1);
+  };
 
   const updateProfitPerHour = (amount: number): void => {
     setPointsPerHour((prev) => prev + amount);
@@ -102,7 +115,7 @@ export default function Home() {
 
   const handleTapClick = () => {
     if (energy > 0) {
-      setUserPoints((prevPoints) => prevPoints + 1);
+      setUserPoints((prevPoints) => prevPoints + tapCount); // Increase points by the tapCount value
       setEnergy((prevEnergy) => prevEnergy - 1);
     }
   };
@@ -114,7 +127,19 @@ export default function Home() {
       {activeTab === 'exchange' && (
         <div className="flex flex-col gap-4 items-center justify-start h-screen pt-2 w-full">
           {renderSharedComponents()}
-          <TappingArea userPoints={userPoints} energy={energy} maxEnergy={maxEnergy} handleTapClick={handleTapClick} />
+          <TappingArea
+            userPoints={userPoints}
+            setUserPoints={setUserPoints}
+            tapCount={tapCount}
+            energy={energy}
+            maxEnergy={maxEnergy}
+            setMaxEnergy={setMaxEnergy}
+            multitapLevel={multitapLevel}
+            energyLimitLevel={energyLimitLevel}
+            increaseTapCount={increaseTapCount}
+            increaseMaxEnergy={increaseMaxEnergy}
+            handleTapClick={handleTapClick}
+          />
         </div>
       )}
       {activeTab === 'mine' && (
@@ -159,22 +184,26 @@ export default function Home() {
               updateProfitPerHour={updateProfitPerHour}
             />
           )}
-          <CommonTapArea energy={energy} maxEnergy={maxEnergy} handleTapClick={handleTapClick} />
+          <CommonTapArea
+            energy={energy}
+            maxEnergy={maxEnergy}
+            handleTapClick={handleTapClick}
+          />
         </div>
       )}
       {activeTab === 'friends' && (
         <div className="flex flex-col gap-4 items-center justify-start h-full pt-2 w-full mb-24">
-          <Friends/>
+          <Friends />
         </div>
       )}
       {activeTab === 'earn' && (
         <div className="flex flex-col gap-4 items-center justify-start h-full pt-2 w-full mb-24">
-          <Earn/>
+          <Earn />
         </div>
       )}
       {activeTab === 'airdrop' && (
         <div className="flex flex-col gap-4 items-center justify-start h-screen pt-2 w-full mb-24">
-          <Airdrop/>
+          <Airdrop />
         </div>
       )}
       <Navbar activeTab={activeTab} setActiveTab={setActiveTab} />
