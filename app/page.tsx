@@ -173,7 +173,7 @@ export default function Home() {
         </div>
       )}
       {activeTab === 'airdrop' && (
-        <div className="flex flex-col gap-4 items-center justify-start h-full pt-2 w-full mb-24">
+        <div className="flex flex-col gap-4 items-center justify-start h-screen pt-2 w-full mb-24">
           <Airdrop/>
         </div>
       )}
