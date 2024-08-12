@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.loading-background {
+  background-image: url(../images/Loading_bg.png);
+  background-size: cover; 
+  background-position: center; 
+  background-repeat: no-repeat;
+}
+.top-glow {
+  box-shadow: 0px -16px 30px  #606cf37e;
+}
+
+.friends_background {
+  background-image: url(../images/friend_bg.png);
+  background-size: cover; 
+  background-position: center; 
+  height: 100vh;
+  background-repeat: no-repeat;
+}
+
