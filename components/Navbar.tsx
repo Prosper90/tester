@@ -22,7 +22,7 @@ interface TabItemProps {
 export default function Navbar({ activeTab, setActiveTab }: NavbarProps) {
   return (
     <div className="bottom-0 fixed w-full p-4">
-      <div className="w-full bg-neutral-800 rounded-2xl">
+      <div className="w-full bg-neutral-900 border border-black rounded-2xl">
         <div className="flex justify-around h-full p-4">
           <TabItem icon={Exchange} label="Exchange" activeTab={activeTab} setActiveTab={setActiveTab} />
           <TabItem icon={Mine} label="Mine" activeTab={activeTab} setActiveTab={setActiveTab} />
