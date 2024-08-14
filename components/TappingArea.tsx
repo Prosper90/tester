@@ -18,7 +18,6 @@ interface TappingAreaProps {
   tapCount: number;
   energy: number;
   maxEnergy: number;
-  setMaxEnergy: (newMaxEnergy: number) => void;
   multitapLevel: number;
   energyLimitLevel: number;
   increaseTapCount: () => void;
@@ -26,9 +25,10 @@ interface TappingAreaProps {
   handleTapClick: () => void;
 }
 
-export default function TappingArea({ 
+export default function TappingArea({
   userPoints,
   setUserPoints,
+  tapCount,
   energy,
   maxEnergy,
   multitapLevel,
@@ -38,9 +38,16 @@ export default function TappingArea({
   handleTapClick,
 }: TappingAreaProps) {
   const [showBoost, setShowBoost] = useState(false);
+  const [showIncrement, setShowIncrement] = useState(false);
 
   const handleBoostClick = () => {
     setShowBoost(true);
+  };
+
+  const handleTap = () => {
+    handleTapClick();
+    setShowIncrement(true);
+    setTimeout(() => setShowIncrement(false), 500); // hide after 500ms
   };
 
   return (
@@ -51,13 +58,24 @@ export default function TappingArea({
             <Image src={Coin} width={34} height={34} alt="Coin Icon" className="rounded-full" />
             <h5 className="text-white text-2xl">{userPoints}</h5>
           </div>
-          <div>
-            <Image src={Central_tap} width={200} height={200} onClick={handleTapClick} alt="Central Tap" />
+          <div className="relative">
+            <Image
+              src={Central_tap}
+              width={200}
+              height={200}
+              onClick={handleTap}
+              alt="Central Tap"
+              className={`transition duration-200 ease-in-out rounded-full ${showIncrement ? "ring-4 ring-indigo-600 top-glow" : ""
+                }`}
+            />
+            {showIncrement && <PointIncrement tapCount={tapCount} />}
           </div>
           <div className="flex items-center justify-between w-full">
             <div className="flex items-center gap-1">
               <Image src={Fire} width={15} height={15} alt="Fire" />
-              <h4 className="text-white text-lg">{energy}/{maxEnergy}</h4>
+              <h4 className="text-white text-lg">
+                {energy}/{maxEnergy}
+              </h4>
             </div>
             <div className="flex items-center" onClick={handleBoostClick}>
               <Image src={Boost1} width={45} height={45} alt="Boost" />
@@ -78,9 +96,22 @@ export default function TappingArea({
           energyLimitLevel={energyLimitLevel}
           increaseTapCount={increaseTapCount}
           increaseMaxEnergy={increaseMaxEnergy}
-          setShowBoost={setShowBoost} 
+          setShowBoost={setShowBoost}
         />
       )}
+    </div>
+  );
+}
+
+// Component for showing point increment
+interface PointIncrementProps {
+  tapCount: number;
+}
+
+function PointIncrement({ tapCount }: PointIncrementProps) {  // Destructure tapCount here
+  return (
+    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-full animate-fadeUp text-gray-500 text-2xl font-bold">
+      +{tapCount}
     </div>
   );
 }

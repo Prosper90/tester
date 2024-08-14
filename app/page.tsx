@@ -133,7 +133,7 @@ export default function Home() {
             tapCount={tapCount}
             energy={energy}
             maxEnergy={maxEnergy}
-            setMaxEnergy={setMaxEnergy}
+            // setMaxEnergy={setMaxEnergy}
             multitapLevel={multitapLevel}
             energyLimitLevel={energyLimitLevel}
             increaseTapCount={increaseTapCount}
@@ -185,6 +185,7 @@ export default function Home() {
             />
           )}
           <CommonTapArea
+          tapCount={tapCount}
             energy={energy}
             maxEnergy={maxEnergy}
             handleTapClick={handleTapClick}
