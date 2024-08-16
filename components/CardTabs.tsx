@@ -27,7 +27,7 @@ export default function CardTabs({ cardTab, setCardTab }: CardTabsProps) {
       <div
         className="absolute bottom-0 left-0 h-1 bg-indigo-600 transition-transform duration-300"
         style={{
-          width: "20%", // Adjust width based on number of tabs
+          width: "25%", // Adjust width based on number of tabs
           transform: `translateX(${tabPosition(cardTab)}%)`
         }}
       />
