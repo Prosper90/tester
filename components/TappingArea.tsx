@@ -51,7 +51,7 @@ export default function TappingArea({
   };
 
   return (
-    <div className="my-10 w-full h-full bg-gray-950 rounded-t-[46px] border-t-2 border-indigo-600 top-glow">
+    <div className="my-10 w-full h-full bg-gray-950 rounded-t-[46px] border-t-2 border-amber-600 top-glow">
       {!showBoost ? (
         <div className="flex flex-col items-center justify-start h-full p-2 gap-4">
           <div className="flex items-center justify-center gap-2">

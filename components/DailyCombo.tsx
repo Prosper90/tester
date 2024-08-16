@@ -8,7 +8,7 @@ import ChestBox2 from "../images/Chest_Box.png"
 
 export default function DailyCombo() {
     return (
-        <div className="pt-2 w-full bg-gray-950 rounded-t-[46px] border-t-2 border-indigo-600 top-glow">
+        <div className="pt-2 w-full bg-gray-950 rounded-t-[46px] border-t-2 border-amber-600 top-glow">
             <div className="w-full p-4">
                 <div className="bg-neutral-800 p-2 rounded-xl flex flex-col gap-4 items-center">
                     <div className="flex items-center justify-between w-full">

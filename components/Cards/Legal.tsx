@@ -140,7 +140,7 @@ export default function Legal({ userPoints, setUserPoints, cardLevels, setCardLe
       {/* Modal */}
       {selectedCard && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-neutral-800 rounded-t-[46px] border-t-2 border-indigo-600 top-glow p-6 w-96 relative">
+          <div className="bg-neutral-800 rounded-t-[46px] border-t-2 border-amber-600 top-glow p-6 w-96 relative">
             <div className="flex flex-col items-center gap-4">
               <Image src={Astro} width={100} height={100} alt="Astro" />
               <h3 className="text-white font-semibold text-lg">{selectedCard.title}</h3>
