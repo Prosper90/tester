@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Astro from "../images/Astro.png";
-import ChestBox from "../images/chest_box.png";
+import ChestBox from "../images/chest_box2.png";
 import Logo from "../images/Logo.png";
 
 export default function Loading() {
