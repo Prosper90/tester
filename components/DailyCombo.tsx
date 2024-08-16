@@ -3,7 +3,7 @@
 import Image, { StaticImageData } from "next/image";
 import Coin from "../images/coin.png";
 import ChestBox1 from "../images/ChestBox.png"
-import ChestBox2 from "../images/chest_box.png"
+import ChestBox2 from "../images/Chest_Box.png"
 
 
 export default function DailyCombo() {

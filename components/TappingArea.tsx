@@ -5,9 +5,9 @@ import Central_tap from "../images/central_tap.png";
 import Fire from "../icons/fire.png";
 import Boost1 from "../icons/Boost.png";
 import Coin from "../images/coin.png";
-import Calender from "../icons/Calender.png";
-import Lock from "../icons/Lock.png";
-import Combo from "../icons/Combo.png";
+import Star from "../icons/Star.svg";
+import Diamond from "../icons/Diamond.svg";
+import Clock from "../icons/Clock.svg";
 import { useState } from "react";
 import Boost from "./Boost";
 
@@ -83,9 +83,9 @@ export default function TappingArea({
             </div>
           </div>
           <div className="flex gap-2 text-sm items-center justify-between w-full h-20">
-            <RewardCard icon={Calender} label="Daily Reward" />
-            <RewardCard icon={Lock} label="Daily Cipher" />
-            <RewardCard icon={Combo} label="Daily Combo" />
+            <RewardCard icon={Star} label="Daily Reward" />
+            <RewardCard icon={Diamond} label="Daily Cipher" />
+            <RewardCard icon={Clock} label="Daily Combo" />
           </div>
         </div>
       ) : (

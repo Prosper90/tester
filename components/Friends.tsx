@@ -1,8 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import Invite1 from "../images/InviteFriend.png";
-import Invite2 from "../images/Invitefriend2.png";
+import Invite1 from "../images/Orange Chest.svg";
+import Invite2 from "../images/Red Chest.svg";
 import Coin from "../images/coin.png";
 import Icon from "../icons/icon.png";
 
@@ -32,8 +32,8 @@ export default function Friends() {
                     <div className="flex items-center justify-center gap-3">
                         <Image
                             src={Invite1}
-                            width={30}
-                            height={30}
+                            width={50}
+                            height={50}
                             alt="Invite Friend"
                         />
                         <div className="flex flex-col">
@@ -60,8 +60,8 @@ export default function Friends() {
                     <div className="flex items-center justify-center gap-3">
                         <Image
                             src={Invite2}
-                            width={30}
-                            height={30}
+                            width={50}
+                            height={50}
                             alt="Invite Friend"
                         />
                         <div className="flex flex-col">
