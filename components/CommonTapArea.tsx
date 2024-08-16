@@ -40,7 +40,7 @@ export default function CommonTapArea({ tapCount, energy, maxEnergy, handleTapCl
             height={200}
             onClick={handleTap}
             alt="Central Tap"
-            className={`transition duration-200 ease-in-out rounded-full ${showIncrement ? "ring-4 ring-indigo-600 top-glow" : ""
+            className={`transition duration-200 ease-in-out rounded-full ${showIncrement ? "ring-4 ring-indigo-600 central-glow" : ""
               }`}
           />
           {showIncrement && <PointIncrement tapCount={tapCount} />}

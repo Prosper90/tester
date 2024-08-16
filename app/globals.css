@@ -21,7 +21,7 @@
 }
 
 .central-glow {
-  box-shadow: 0px 14px 10px  #606cf37e;
+  box-shadow: 0px -5px 14px 10px  #606cf37e;
 }
 
 @keyframes fadeUp {
