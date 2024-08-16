@@ -47,7 +47,7 @@ function TabItem({ greyIcon, whiteIcon, label, activeTab, setActiveTab }: TabIte
 
   return (
     <div onClick={() => setActiveTab(label.toLowerCase())} className="flex w-1/5 flex-col items-center cursor-pointer gap-2">
-      <Image src={icon} width={30} height={24} alt={`${label} Icon`} className="rounded-full h-8" />
+      <Image src={icon} width={30} height={24} alt={`${label} Icon`} className="h-8" />
       <span className={`text-xs ${isActive ? "text-white" : "text-gray-400"}`}>{label}</span>
     </div>
   );
