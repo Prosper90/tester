@@ -110,7 +110,7 @@ interface PointIncrementProps {
 
 function PointIncrement({ tapCount }: PointIncrementProps) {  // Destructure tapCount here
   return (
-    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-full animate-fadeUp text-gray-500 text-2xl font-bold">
+    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-full animate-fadeUp text-white text-3xl font-bold">
       +{tapCount}
     </div>
   );
