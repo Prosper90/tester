@@ -2,11 +2,11 @@
 
 import Image from "next/image";
 import Coin from "../images/coin.png";
-import Stargating from "../images/Stargating.png";
-import Crypto_Space from "../images/Crypto_Space.png";
-import Armadillos_Adventures from "../images/Armadillos_Adventures.png";
-import TG from "../icons/TG.png";
-import X from "../icons/X.png";
+import Stargating from "../images/Stargating Logo V5.png";
+import Crypto_Space from "../images/Crypto Space Logo.png";
+import Armadillos_Adventures from "../images/Armadillos_Adventures_2.png";
+import TG from "../icons/Telegram.svg";
+import X from "../icons/X.svg";
 
 export default function Earn() {
 

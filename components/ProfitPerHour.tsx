@@ -1,7 +1,7 @@
 "use client"; 
 
 import Image from "next/image";
-import AstroIcon from "../icons/astro_icon.png";
+import AstroIcon from "../icons/Astro Circle.png";
 import Coin from "../images/coin.png";
 import Setting from "../icons/setting.png";
 

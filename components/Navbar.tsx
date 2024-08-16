@@ -1,11 +1,11 @@
 "use client"; 
 
 import Image, { StaticImageData } from "next/image";
-import Exchange from "../icons/Exchange.png";
-import Mine from "../icons/Mine.png";
-import Friend from "../icons/Friends.png";
-import Earn from "../icons/Earn.png";
-import Airdrop from "../icons/AirDrop.png";
+import Exchange from "../icons/Menue Icons/Token Grey.svg";
+import Mine from "../icons/Menue Icons/Mine Grey.svg";
+import Friend from "../icons/Menue Icons/Friends Grey.svg";
+import Earn from "../icons/Menue Icons/Earn Grey.svg";
+import Airdrop from "../icons/Menue Icons/Airdrop Grey.svg";
 
 interface NavbarProps {
   activeTab: string;
