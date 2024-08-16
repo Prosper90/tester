@@ -39,12 +39,18 @@ export default function TappingArea({
 }: TappingAreaProps) {
   const [showBoost, setShowBoost] = useState(false);
   const [showIncrement, setShowIncrement] = useState(false);
+  const [tapPosition, setTapPosition] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
 
   const handleBoostClick = () => {
     setShowBoost(true);
   };
 
-  const handleTap = () => {
+  const handleTap = (e: React.MouseEvent<HTMLImageElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    setTapPosition({ x, y });
+
     handleTapClick();
     setShowIncrement(true);
     setTimeout(() => setShowIncrement(false), 500); // hide after 500ms
@@ -68,7 +74,7 @@ export default function TappingArea({
               className={`transition duration-200 ease-in-out rounded-full ${showIncrement ? "ring-4 ring-indigo-600 central-glow" : ""
                 }`}
             />
-            {showIncrement && <PointIncrement tapCount={tapCount} />}
+            {showIncrement && <PointIncrement tapCount={tapCount} tapPosition={tapPosition} />}
           </div>
           <div className="flex items-center justify-between w-full">
             <div className="flex items-center gap-1">
@@ -106,11 +112,19 @@ export default function TappingArea({
 // Component for showing point increment
 interface PointIncrementProps {
   tapCount: number;
+  tapPosition: { x: number; y: number };
 }
 
-function PointIncrement({ tapCount }: PointIncrementProps) {  // Destructure tapCount here
+function PointIncrement({ tapCount, tapPosition }: PointIncrementProps) {
   return (
-    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-full animate-fadeUp text-white text-3xl font-bold">
+    <div
+      className="absolute text-white text-3xl font-bold animate-fadeUp"
+      style={{
+        top: tapPosition.y,
+        left: tapPosition.x,
+        transform: 'translate(-50%, -50%)',
+      }}
+    >
       +{tapCount}
     </div>
   );
