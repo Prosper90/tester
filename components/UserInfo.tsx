@@ -1,7 +1,7 @@
 "use client"; 
 
 import Image from "next/image";
-import Icon from "../icons/icon.png";
+import Icon from "../icons/usericon.png";
 
 // Define the prop types for UserInfo
 interface UserInfoProps {
