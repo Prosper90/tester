@@ -3,11 +3,11 @@
 import Image, { StaticImageData } from "next/image";
 import Central_tap from "../images/central_tap.png";
 import Fire from "../icons/fire.png";
-import Boost1 from "../icons/Boost.png";
+import Boost1 from "../icons/Rocket.svg";
 import Coin from "../images/coin.png";
-import Star from "../icons/Star.svg";
-import Diamond from "../icons/Diamond.svg";
-import Clock from "../icons/Clock.svg";
+import Star from "../icons/Star 1.svg";
+import Diamond from "../icons/Star 2.svg";
+import Clock from "../icons/Satr3.svg";
 import { useState } from "react";
 import Boost from "./Boost";
 
@@ -84,7 +84,7 @@ export default function TappingArea({
               </h4>
             </div>
             <div className="flex items-center" onClick={handleBoostClick}>
-              <Image src={Boost1} width={45} height={45} alt="Boost" />
+              <Image src={Boost1} width={30} height={30} alt="Boost" />
               <h4 className="text-white text-lg">Boost</h4>
             </div>
           </div>

@@ -44,7 +44,7 @@ export default function Home() {
   const [energy, setEnergy] = useState(1000);
   const [maxEnergy, setMaxEnergy] = useState(1000);
   const [activeTab, setActiveTab] = useState("exchange");
-  const [cardTab, setCardTab] = useState("PR&Team");
+  const [cardTab, setCardTab] = useState("Performance");
   const [energyRegenRate, setEnergyRegenRate] = useState(3);
   const [energyRegenInterval, setEnergyRegenInterval] = useState(5000);
   const [tapCount, setTapCount] = useState(1);
@@ -148,7 +148,7 @@ export default function Home() {
           <DailyCombo />
           <Balance userPoints={userPoints} />
           <CardTabs cardTab={cardTab} setCardTab={setCardTab} />
-          {cardTab === 'PR&Team' && (
+          {cardTab === 'Performance' && (
             <Prteam
               userPoints={userPoints}
               setUserPoints={setUserPoints}
@@ -157,7 +157,7 @@ export default function Home() {
               updateProfitPerHour={updateProfitPerHour}
             />
           )}
-          {cardTab === 'Legal' && (
+          {cardTab === 'Incentives' && (
             <Legal
               userPoints={userPoints}
               setUserPoints={setUserPoints}
@@ -166,7 +166,7 @@ export default function Home() {
               updateProfitPerHour={updateProfitPerHour}
             />
           )}
-          {cardTab === 'Markets' && (
+          {cardTab === 'Usability' && (
             <Market
               userPoints={userPoints}
               setUserPoints={setUserPoints}
@@ -175,7 +175,7 @@ export default function Home() {
               updateProfitPerHour={updateProfitPerHour}
             />
           )}
-          {cardTab === 'Special' && (
+          {cardTab === 'Security' && (
             <Special
               userPoints={userPoints}
               setUserPoints={setUserPoints}
