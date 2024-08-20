@@ -2,7 +2,7 @@
 
 import Image, { StaticImageData } from "next/image";
 import Central_tap from "../images/central_tap.png";
-import Fire from "../icons/fire.png";
+import Fire from "../icons/Power.svg";
 import Boost1 from "../icons/Rocket.svg";
 import Coin from "../images/coin.png";
 import Star from "../icons/Star 1.svg";

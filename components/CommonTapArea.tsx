@@ -2,7 +2,7 @@
 
 import Image, { StaticImageData } from "next/image";
 import Central_tap from "../images/central_tap.png";
-import Fire from "../icons/fire.png";
+import Fire from "../icons/Power.svg";
 import { useState } from "react";
 
 // Define the prop types for CommonTapArea

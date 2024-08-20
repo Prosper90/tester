@@ -4,9 +4,9 @@ import Image from "next/image";
 import { useState } from "react";
 import CoinIcon from "../images/coin.png";
 import Arrow from "../icons/Arrow.png";
-import MultitapIcon from "../icons/multitap.png";
-import EnergyLimitIcon from "../icons/energy_limit.png";
-import FullEnergyIcon from "../icons/fire.png";
+import MultitapIcon from "../icons/Multi Tap.svg";
+import EnergyLimitIcon from "../icons/Battery.svg";
+import FullEnergyIcon from "../icons/Power.svg";
 
 interface BoostProps {
     userBalance: number;
