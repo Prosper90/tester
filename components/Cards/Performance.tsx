@@ -34,21 +34,21 @@ interface PerformanceProps {
 }
 
 const cardData: CardData[] = [
-  {avtar:Icon1, title: "Consensus Algorithms", description: "Optimize your consensus algorithms for better performance." },
-  {avtar:Icon2, title: "Network Design", description: "Enhance network design to improve data flow and security." },
-  {avtar:Icon3, title: "Data Structures", description: "Improve data structure efficiency to boost overall performance." },
-  {avtar:Icon4, title: "Shard Technology", description: "Implement shard technology for better scalability." },
-  {avtar:Icon5, title: "Scalability Solutions", description: "Apply scalability solutions to handle more transactions per second." },
-  {avtar:Icon6, title: "Fault Tolerance", description: "Increase fault tolerance to minimize system downtimes." },
-  {avtar:Icon7, title: "Security Protocols", description: "Enhance security protocols to protect against threats." },
-  {avtar:Icon8, title: "Privacy Features", description: "Add privacy features to safeguard user data." },
-  {avtar:Icon9, title: "Cross-Chain Interop", description: "Enable cross-chain interoperability for seamless transactions." },
-  {avtar:Icon10, title: "Energy Efficiency", description: "Optimize energy usage to reduce operational costs." },
-  {avtar:Icon11, title: "Latency Reduction", description: "Implement techniques to reduce latency for faster transactions." },
-  {avtar:Icon12, title: "Hybrid Networks", description: "Utilize hybrid networks to balance speed and security." },
-  {avtar:Icon13, title: "Performance Optimization", description: "Continuous performance optimization for better efficiency." },
-  {avtar:Icon14, title: "Node Infrastructure", description: "Strengthen node infrastructure to enhance network reliability." },
-  {avtar:Icon15, title: "Elastic Network", description: "Implement elastic network technologies for dynamic scalability." },
+  {avtar:Icon1, title: "Consensus Algorithms", description: "Decision-making mechanisms for block validation." },
+  {avtar:Icon2, title: "Network Design", description: "Structure and layout of the blockchain network." },
+  {avtar:Icon3, title: "Data Structures", description: "Methods for organizing and storing data." },
+  {avtar:Icon4, title: "Shard Technology", description: "Dividing the network into smaller partitions for efficiency." },
+  {avtar:Icon5, title: "Scalability Solutions", description: "Ability to handle increasing transactions and users." },
+  {avtar:Icon6, title: "Fault Tolerance", description: "Resilience against network failures or attacks." },
+  {avtar:Icon7, title: "Security Protocols", description: "Measures to protect the network from threats." },
+  {avtar:Icon8, title: "Privacy Features", description: "Techniques to keep user data confidential." },
+  {avtar:Icon9, title: "Cross-Chain Interop", description: "Communication between different blockchain networks." },
+  {avtar:Icon10, title: "Energy Efficiency", description: "Energy consumption and efficiency strategies." },
+  {avtar:Icon11, title: "Latency Reduction", description: "Reducing delays in transaction processing." },
+  {avtar:Icon12, title: "Hybrid Networks", description: "Combining different technologies for optimal performance." },
+  {avtar:Icon13, title: "Performance Optimization", description: "Techniques for improving network performance." },
+  {avtar:Icon14, title: "Node Infrastructure", description: "Types and roles of network participants." },
+  {avtar:Icon15, title: "Elastic Network", description: "Ability to adjust resources based on demand." },
 ];
 
 function Notification({ message, type, onClose }: { message: string; type: 'success' | 'error'; onClose: () => void }) {
