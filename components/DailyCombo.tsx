@@ -28,16 +28,16 @@ export default function DailyCombo() {
                         <div className="w-1/3 h-24 bg-neutral-700 flex flex-col items-center justify-around rounded-xl border border-gray-500 p-2 shadow-inner shadow-indigo-500">
                             <Image
                                 src={ChestBox1}
-                                width={90}
-                                height={90}
+                                width={70}
+                                height={70}
                                 alt="Calender"
                             />
                         </div>
                         <div className="w-1/3 h-24 bg-neutral-700 flex flex-col items-center justify-around rounded-xl border border-gray-500 p-2 shadow-inner shadow-indigo-500">
                             <Image
                                 src={ChestBox1}
-                                width={90}
-                                height={90}
+                                width={70}
+                                height={70}
                                 alt="Lock"
                             />
                         </div>

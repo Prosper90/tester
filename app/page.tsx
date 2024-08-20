@@ -9,10 +9,10 @@ import Loading from "@/components/loading";
 import DailyCombo from "@/components/DailyCombo";
 import Balance from "@/components/Balance";
 import CardTabs from "@/components/CardTabs";
-import Prteam from "@/components/Cards/PR&Team";
-import Legal from "@/components/Cards/Legal";
-import Market from "@/components/Cards/Market";
-import Special from "@/components/Cards/Special";
+import Performance from "@/components/Cards/Performance";
+import Incentives from "@/components/Cards/Incentives";
+import Usability from "@/components/Cards/Usability";
+import Security from "@/components/Cards/Security";
 import CommonTapArea from "@/components/CommonTapArea";
 import Friends from "@/components/Friends";
 import Earn from "@/components/Earn";
@@ -39,7 +39,7 @@ export default function Home() {
 
   const [isLoading, setIsLoading] = useState(true);
   const [levelIndex, setLevelIndex] = useState(0);
-  const [userPoints, setUserPoints] = useState(0);
+  const [userPoints, setUserPoints] = useState(16000);
   const [pointsPerHour, setPointsPerHour] = useState(0);
   const [energy, setEnergy] = useState(1000);
   const [maxEnergy, setMaxEnergy] = useState(1000);
@@ -100,6 +100,14 @@ export default function Home() {
     return () => clearInterval(interval);
   }, [energyRegenRate, energyRegenInterval, maxEnergy]);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setUserPoints((prevPoints) => prevPoints + pointsPerHour);
+    }, 3600000); // 3600000 milliseconds = 1 hour
+
+    return () => clearInterval(interval);
+  }, [pointsPerHour]);
+  
   const calculateProgress = useCallback(() => {
     const prevMinPoints = levelMinPoints[levelIndex];
     const nextMinPoints = levelMinPoints[levelIndex + 1] || prevMinPoints;
@@ -149,7 +157,7 @@ export default function Home() {
           <Balance userPoints={userPoints} />
           <CardTabs cardTab={cardTab} setCardTab={setCardTab} />
           {cardTab === 'Performance' && (
-            <Prteam
+            <Performance
               userPoints={userPoints}
               setUserPoints={setUserPoints}
               cardLevels={cardLevels}
@@ -158,7 +166,7 @@ export default function Home() {
             />
           )}
           {cardTab === 'Incentives' && (
-            <Legal
+            <Incentives
               userPoints={userPoints}
               setUserPoints={setUserPoints}
               cardLevels={cardLevels}
@@ -167,7 +175,7 @@ export default function Home() {
             />
           )}
           {cardTab === 'Usability' && (
-            <Market
+            <Usability
               userPoints={userPoints}
               setUserPoints={setUserPoints}
               cardLevels={cardLevels}
@@ -176,7 +184,7 @@ export default function Home() {
             />
           )}
           {cardTab === 'Security' && (
-            <Special
+            <Security
               userPoints={userPoints}
               setUserPoints={setUserPoints}
               cardLevels={cardLevels}
