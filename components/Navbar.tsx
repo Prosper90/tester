@@ -30,7 +30,7 @@ export default function Navbar({ activeTab, setActiveTab }: NavbarProps) {
     <div className="bottom-0 fixed w-full p-4">
       <div className="w-full bg-neutral-900 border border-black rounded-2xl">
         <div className="flex justify-around h-full p-4">
-          <TabItem greyIcon={ExchangeGrey} whiteIcon={ExchangeWhite} label="Exchange" activeTab={activeTab} setActiveTab={setActiveTab} />
+          <TabItem greyIcon={ExchangeGrey} whiteIcon={ExchangeWhite} label="Protocol Lab" activeTab={activeTab} setActiveTab={setActiveTab} />
           <TabItem greyIcon={MineGrey} whiteIcon={MineWhite} label="Mine" activeTab={activeTab} setActiveTab={setActiveTab} />
           <TabItem greyIcon={FriendGrey} whiteIcon={FriendWhite} label="Friends" activeTab={activeTab} setActiveTab={setActiveTab} />
           <TabItem greyIcon={EarnGrey} whiteIcon={EarnWhite} label="Earn" activeTab={activeTab} setActiveTab={setActiveTab} />
