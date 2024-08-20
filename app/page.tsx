@@ -200,21 +200,9 @@ export default function Home() {
           />
         </div>
       )}
-      {activeTab === 'friends' && (
-        <div className="flex flex-col gap-4 items-center justify-start h-full pt-2 w-full mb-24">
-          <Friends />
-        </div>
-      )}
-      {activeTab === 'earn' && (
-        <div className="flex flex-col gap-4 items-center justify-start h-full pt-2 w-full mb-24">
-          <Earn />
-        </div>
-      )}
-      {activeTab === 'airdrop' && (
-        <div className="flex flex-col gap-4 items-center justify-start h-screen pt-2 w-full mb-24">
-          <Airdrop />
-        </div>
-      )}
+      {activeTab === 'friends' && <Friends />}
+      {activeTab === 'earn' && <Earn />}
+      {activeTab === 'airdrop' && <Airdrop />}
       <Navbar activeTab={activeTab} setActiveTab={setActiveTab} />
     </div>
   );

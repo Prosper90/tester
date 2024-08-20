@@ -1,11 +1,21 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
-import Astro from "../../images/Astro1.png";
+import Image, {StaticImageData} from "next/image";
 import Coin from "../../images/coin.png";
+import Icon1 from "../../images/Mining Icons/Usability/User Interface.svg"
+import Icon2 from "../../images/Mining Icons/Usability/Wallet Solutions.svg"
+import Icon3 from "../../images/Mining Icons/Usability/Onboarding Guides.svg"
+import Icon4 from "../../images/Mining Icons/Usability/Accessibility Options.svg"
+import Icon5 from "../../images/Mining Icons/Usability/User Experience.svg"
+import Icon6 from "../../images/Mining Icons/Usability/Game Elements.svg"
+import Icon7 from "../../images/Mining Icons/Usability/Personalized Content.svg"
+import Icon8 from "../../images/Mining Icons/Usability/Data Analytics.svg"
+import Icon9 from "../../images/Mining Icons/Usability/User Engagement.svg"
+import Icon10 from "../../images/Mining Icons/Usability/Decentralized Apps.svg"
 
 interface CardData {
+  avtar: StaticImageData;
   title: string;
   description: string;
 }
@@ -19,16 +29,16 @@ interface UsabilityProps {
 }
 
 const cardData: CardData[] = [
-  { title: "User Interface", description: "Design an intuitive and visually appealing interface for users." },
-  { title: "Wallet Solutions", description: "Integrate secure and user-friendly wallet options for managing assets." },
-  { title: "Onboarding Guides", description: "Provide clear guides to help users get started with the application." },
-  { title: "Accessibility Options", description: "Ensure the application is accessible to users with various disabilities." },
-  { title: "User Experience", description: "Create a seamless and enjoyable experience for users throughout their journey." },
-  { title: "Game Elements", description: "Incorporate engaging game-like features to enhance user interaction." },
-  { title: "Personalized Content", description: "Offer content tailored to individual user preferences and behaviors." },
-  { title: "Data Analytics", description: "Utilize data to analyze user behavior and improve the application." },
-  { title: "User Engagement", description: "Implement features that encourage regular user interaction and participation." },
-  { title: "Decentralized Apps", description: "Leverage decentralized technology for increased transparency and security." },
+  {avtar:Icon1, title: "User Interface", description: "Design an intuitive and visually appealing interface for users." },
+  {avtar:Icon2, title: "Wallet Solutions", description: "Integrate secure and user-friendly wallet options for managing assets." },
+  {avtar:Icon3, title: "Onboarding Guides", description: "Provide clear guides to help users get started with the application." },
+  {avtar:Icon4, title: "Accessibility Options", description: "Ensure the application is accessible to users with various disabilities." },
+  {avtar:Icon5, title: "User Experience", description: "Create a seamless and enjoyable experience for users throughout their journey." },
+  {avtar:Icon6, title: "Game Elements", description: "Incorporate engaging game-like features to enhance user interaction." },
+  {avtar:Icon7, title: "Personalized Content", description: "Offer content tailored to individual user preferences and behaviors." },
+  {avtar:Icon8, title: "Data Analytics", description: "Utilize data to analyze user behavior and improve the application." },
+  {avtar:Icon9, title: "User Engagement", description: "Implement features that encourage regular user interaction and participation." },
+  {avtar:Icon10, title: "Decentralized Apps", description: "Leverage decentralized technology for increased transparency and security." },
 ];
 
 
@@ -123,7 +133,7 @@ export default function Usability({ userPoints, setUserPoints, cardLevels, setCa
 
             {/* Astro Image and Card Details */}
             <div className="flex items-center gap-2">
-              <Image src={Astro} width={64} height={64} alt="Astro" className="h-full" />
+              <Image src={card.avtar} width={64} height={64} alt="Astro" className="h-full" />
               <div className="flex flex-col pt-4">
                 <h3 className="text-white font-semibold text-sm">{card.title}</h3>
                 <h4 className="text-gray-400 text-xs">Bonus per day</h4>
@@ -153,7 +163,7 @@ export default function Usability({ userPoints, setUserPoints, cardLevels, setCa
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-neutral-800 rounded-t-[46px] border-t-2 border-amber-600 top-glow p-6 w-96 relative">
             <div className="flex flex-col items-center gap-4">
-              <Image src={Astro} width={100} height={100} alt="Astro" />
+              <Image src={selectedCard.avtar} width={100} height={100} alt="Astro" />
               <h3 className="text-white font-semibold text-lg">{selectedCard.title}</h3>
               <p className="text-gray-400 text-sm text-center">{selectedCard.description}</p>
               <div className="flex items-center gap-2">

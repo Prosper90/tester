@@ -1,11 +1,20 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
-import Astro from "../../images/Astro1.png";
+import Image, {StaticImageData} from "next/image";
 import Coin from "../../images/coin.png";
+import Icon1 from "../../images/Mining Icons/Incentives/Token Economy.svg"
+import Icon2 from "../../images/Mining Icons/Incentives/Governance Models.svg"
+import Icon3 from "../../images/Mining Icons/Incentives/Incentive Programs.svg"
+import Icon4 from "../../images/Mining Icons/Incentives/Staking Rewards.svg"
+import Icon5 from "../../images/Mining Icons/Incentives/Bonding Mechanisms.svg"
+import Icon6 from "../../images/Mining Icons/Incentives/DeFi Protocols.svg"
+import Icon7 from "../../images/Mining Icons/Incentives/Dynamic Rewards.svg"
+import Icon8 from "../../images/Mining Icons/Incentives/Community Building.svg"
+import Icon9 from "../../images/Mining Icons/Incentives/Active Participation.svg"
 
 interface CardData {
+  avtar: StaticImageData;
   title: string;
   description: string;
 }
@@ -19,15 +28,15 @@ interface IncentivesProps {
 }
 
 const cardData: CardData[] = [
-  { title: "Token Economy", description: "Enhance the economic aspects of your token." },
-  { title: "Governance Models", description: "Improve governance structures and participation." },
-  { title: "Incentive Programs", description: "Develop and manage incentive programs." },
-  { title: "Staking Rewards", description: "Boost rewards for staking activities." },
-  { title: "Bonding Mechanisms", description: "Enhance bonding mechanisms within the ecosystem." },
-  { title: "DeFi Protocols", description: "Implement and optimize DeFi protocols." },
-  { title: "Dynamic Rewards",  description: "Create dynamic reward systems for users." },
-  { title: "Community Building", description: "Strengthen community engagement and growth." },
-  { title: "Active Participation", description: "Encourage and reward active participation in the ecosystem." },
+  {avtar:Icon1, title: "Token Economy", description: "Enhance the economic aspects of your token." },
+  {avtar:Icon2, title: "Governance Models", description: "Improve governance structures and participation." },
+  {avtar:Icon3, title: "Incentive Programs", description: "Develop and manage incentive programs." },
+  {avtar:Icon4, title: "Staking Rewards", description: "Boost rewards for staking activities." },
+  {avtar:Icon5, title: "Bonding Mechanisms", description: "Enhance bonding mechanisms within the ecosystem." },
+  {avtar:Icon6, title: "DeFi Protocols", description: "Implement and optimize DeFi protocols." },
+  {avtar:Icon7, title: "Dynamic Rewards",  description: "Create dynamic reward systems for users." },
+  {avtar:Icon8, title: "Community Building", description: "Strengthen community engagement and growth." },
+  {avtar:Icon9, title: "Active Participation", description: "Encourage and reward active participation in the ecosystem." },
 ];
 
 
@@ -122,7 +131,7 @@ export default function Incentives({ userPoints, setUserPoints, cardLevels, setC
 
             {/* Astro Image and Card Details */}
             <div className="flex items-center gap-2">
-              <Image src={Astro} width={64} height={64} alt="Astro" className="h-full" />
+              <Image src={card.avtar} width={64} height={64} alt="Astro" className="h-full" />
               <div className="flex flex-col pt-4">
                 <h3 className="text-white font-semibold text-sm">{card.title}</h3>
                 <h4 className="text-gray-400 text-xs">Bonus per day</h4>
@@ -152,7 +161,7 @@ export default function Incentives({ userPoints, setUserPoints, cardLevels, setC
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-neutral-800 rounded-t-[46px] border-t-2 border-amber-600 top-glow p-6 w-96 relative">
             <div className="flex flex-col items-center gap-4">
-              <Image src={Astro} width={100} height={100} alt="Astro" />
+              <Image src={selectedCard.avtar} width={100} height={100} alt="Astro" />
               <h3 className="text-white font-semibold text-lg">{selectedCard.title}</h3>
               <p className="text-gray-400 text-sm text-center">{selectedCard.description}</p>
               <div className="flex items-center gap-2">

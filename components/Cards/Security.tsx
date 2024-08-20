@@ -1,11 +1,22 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
-import Astro from "../../images/Astro1.png";
+import Image, {StaticImageData} from "next/image";
 import Coin from "../../images/coin.png";
+import Icon1 from "../../images/Mining Icons/Security/Threat Detection.svg"
+import Icon2 from "../../images/Mining Icons/Security/Security Audits.svg"
+import Icon3 from "../../images/Mining Icons/Security/Incident Response.svg"
+import Icon4 from "../../images/Mining Icons/Security/Regulatory Compliance.svg"
+import Icon5 from "../../images/Mining Icons/Security/Insurance Protections.svg"
+import Icon6 from "../../images/Mining Icons/Security/Zero-Trust Security.svg"
+import Icon7 from "../../images/Mining Icons/Security/Decentralized Protection.svg"
+import Icon8 from "../../images/Mining Icons/Security/Adaptive Authentication.svg"
+import Icon9 from "../../images/Mining Icons/Security/Network Monitoring.svg"
+import Icon10 from "../../images/Mining Icons/Security/Identity Management.svg"
+import Icon11 from "../../images/Mining Icons/Security/Data Security.svg"
 
 interface CardData {
+  avtar: StaticImageData;
   title: string;
   description: string;
 }
@@ -19,17 +30,17 @@ interface SecurityProps {
 }
 
 const cardData: CardData[] = [
-  { title: "Threat Detection", description: "Identify and address potential security threats proactively." },
-  { title: "Security Audits", description: "Conduct thorough audits to ensure the integrity and safety of systems." },
-  { title: "Incident Response", description: "Prepare and respond effectively to security incidents and breaches." },
-  { title: "Regulatory Compliance", description: "Ensure adherence to relevant laws and regulations for security." },
-  { title: "Insurance Protections", description: "Implement insurance measures to safeguard against potential security risks." },
-  { title: "Zero-Trust Security", description: "Adopt a zero-trust model to verify every request within the network." },
-  { title: "Decentralized Protection", description: "Utilize decentralized technologies to enhance security and reduce vulnerabilities." },
-  { title: "Adaptive Authentication", description: "Employ adaptive methods to adjust authentication processes based on risk factors." },
-  { title: "Network Monitoring", description: "Continuously monitor network activity to detect and respond to anomalies." },
-  { title: "Identity Management", description: "Manage and secure user identities and access permissions." },
-  { title: "Data Security", description: "Protect sensitive data through encryption and secure storage methods." },
+  {avtar:Icon1, title: "Threat Detection", description: "Identify and address potential security threats proactively." },
+  {avtar:Icon2, title: "Security Audits", description: "Conduct thorough audits to ensure the integrity and safety of systems." },
+  {avtar:Icon3, title: "Incident Response", description: "Prepare and respond effectively to security incidents and breaches." },
+  {avtar:Icon4, title: "Regulatory Compliance", description: "Ensure adherence to relevant laws and regulations for security." },
+  {avtar:Icon5, title: "Insurance Protections", description: "Implement insurance measures to safeguard against potential security risks." },
+  {avtar:Icon6, title: "Zero-Trust Security", description: "Adopt a zero-trust model to verify every request within the network." },
+  {avtar:Icon7, title: "Decentralized Protection", description: "Utilize decentralized technologies to enhance security and reduce vulnerabilities." },
+  {avtar:Icon8, title: "Adaptive Authentication", description: "Employ adaptive methods to adjust authentication processes based on risk factors." },
+  {avtar:Icon9, title: "Network Monitoring", description: "Continuously monitor network activity to detect and respond to anomalies." },
+  {avtar:Icon10, title: "Identity Management", description: "Manage and secure user identities and access permissions." },
+  {avtar:Icon11, title: "Data Security", description: "Protect sensitive data through encryption and secure storage methods." },
 ];
 
 
@@ -124,7 +135,7 @@ export default function Security({ userPoints, setUserPoints, cardLevels, setCar
 
             {/* Astro Image and Card Details */}
             <div className="flex items-center gap-2">
-              <Image src={Astro} width={64} height={64} alt="Astro" className="h-full" />
+              <Image src={card.avtar} width={64} height={64} alt="Astro" className="h-full" />
               <div className="flex flex-col pt-4">
                 <h3 className="text-white font-semibold text-sm">{card.title}</h3>
                 <h4 className="text-gray-400 text-xs">Bonus per day</h4>
@@ -154,7 +165,7 @@ export default function Security({ userPoints, setUserPoints, cardLevels, setCar
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-neutral-800 rounded-t-[46px] border-t-2 border-amber-600 top-glow p-6 w-96 relative">
             <div className="flex flex-col items-center gap-4">
-              <Image src={Astro} width={100} height={100} alt="Astro" />
+              <Image src={selectedCard.avtar} width={100} height={100} alt="Astro" />
               <h3 className="text-white font-semibold text-lg">{selectedCard.title}</h3>
               <p className="text-gray-400 text-sm text-center">{selectedCard.description}</p>
               <div className="flex items-center gap-2">

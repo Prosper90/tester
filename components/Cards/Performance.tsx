@@ -1,11 +1,26 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
-import Astro from "../../images/Astro1.png";
+import Image, {StaticImageData} from "next/image";
 import Coin from "../../images/coin.png";
+import Icon1 from "../../images/Mining Icons/Performance/Consensus Algorithms.svg"
+import Icon2 from "../../images/Mining Icons/Performance/Network Design.svg"
+import Icon3 from "../../images/Mining Icons/Performance/Data Structures.svg"
+import Icon4 from "../../images/Mining Icons/Performance/Shard Technology.svg"
+import Icon5 from "../../images/Mining Icons/Performance/Scalability Solutions.svg"
+import Icon6 from "../../images/Mining Icons/Performance/Fault Tolerance.svg"
+import Icon7 from "../../images/Mining Icons/Performance/Security Protocols.svg"
+import Icon8 from "../../images/Mining Icons/Performance/Privacy Features.svg"
+import Icon9 from "../../images/Mining Icons/Performance/Cross-Chain Interop.svg"
+import Icon10 from "../../images/Mining Icons/Performance/Energy Efficiency.svg"
+import Icon11 from "../../images/Mining Icons/Performance/Latency Reduction.svg"
+import Icon12 from "../../images/Mining Icons/Performance/Hybrid Networks.svg"
+import Icon13 from "../../images/Mining Icons/Performance/Performance Optimization.svg"
+import Icon14 from "../../images/Mining Icons/Performance/Node Infrastructure.svg"
+import Icon15 from "../../images/Mining Icons/Performance/Elastic Network.svg"
 
 interface CardData {
+  avtar: StaticImageData;
   title: string;
   description: string;
 }
@@ -19,21 +34,21 @@ interface PerformanceProps {
 }
 
 const cardData: CardData[] = [
-  { title: "Consensus Algorithms", description: "Optimize your consensus algorithms for better performance." },
-  { title: "Network Design", description: "Enhance network design to improve data flow and security." },
-  { title: "Data Structures", description: "Improve data structure efficiency to boost overall performance." },
-  { title: "Shard Technology", description: "Implement shard technology for better scalability." },
-  { title: "Scalability Solutions", description: "Apply scalability solutions to handle more transactions per second." },
-  { title: "Fault Tolerance", description: "Increase fault tolerance to minimize system downtimes." },
-  { title: "Security Protocols", description: "Enhance security protocols to protect against threats." },
-  { title: "Privacy Features", description: "Add privacy features to safeguard user data." },
-  { title: "Cross-Chain Interop", description: "Enable cross-chain interoperability for seamless transactions." },
-  { title: "Energy Efficiency", description: "Optimize energy usage to reduce operational costs." },
-  { title: "Latency Reduction", description: "Implement techniques to reduce latency for faster transactions." },
-  { title: "Hybrid Networks", description: "Utilize hybrid networks to balance speed and security." },
-  { title: "Performance Optimization", description: "Continuous performance optimization for better efficiency." },
-  { title: "Node Infrastructure", description: "Strengthen node infrastructure to enhance network reliability." },
-  { title: "Elastic Network", description: "Implement elastic network technologies for dynamic scalability." },
+  {avtar:Icon1, title: "Consensus Algorithms", description: "Optimize your consensus algorithms for better performance." },
+  {avtar:Icon2, title: "Network Design", description: "Enhance network design to improve data flow and security." },
+  {avtar:Icon3, title: "Data Structures", description: "Improve data structure efficiency to boost overall performance." },
+  {avtar:Icon4, title: "Shard Technology", description: "Implement shard technology for better scalability." },
+  {avtar:Icon5, title: "Scalability Solutions", description: "Apply scalability solutions to handle more transactions per second." },
+  {avtar:Icon6, title: "Fault Tolerance", description: "Increase fault tolerance to minimize system downtimes." },
+  {avtar:Icon7, title: "Security Protocols", description: "Enhance security protocols to protect against threats." },
+  {avtar:Icon8, title: "Privacy Features", description: "Add privacy features to safeguard user data." },
+  {avtar:Icon9, title: "Cross-Chain Interop", description: "Enable cross-chain interoperability for seamless transactions." },
+  {avtar:Icon10, title: "Energy Efficiency", description: "Optimize energy usage to reduce operational costs." },
+  {avtar:Icon11, title: "Latency Reduction", description: "Implement techniques to reduce latency for faster transactions." },
+  {avtar:Icon12, title: "Hybrid Networks", description: "Utilize hybrid networks to balance speed and security." },
+  {avtar:Icon13, title: "Performance Optimization", description: "Continuous performance optimization for better efficiency." },
+  {avtar:Icon14, title: "Node Infrastructure", description: "Strengthen node infrastructure to enhance network reliability." },
+  {avtar:Icon15, title: "Elastic Network", description: "Implement elastic network technologies for dynamic scalability." },
 ];
 
 function Notification({ message, type, onClose }: { message: string; type: 'success' | 'error'; onClose: () => void }) {
@@ -127,7 +142,7 @@ export default function Performance({ userPoints, setUserPoints, cardLevels, set
 
             {/* Astro Image and Card Details */}
             <div className="flex items-center gap-2">
-              <Image src={Astro} width={64} height={64} alt="Astro" className="h-full" />
+              <Image src={card.avtar} width={64} height={64} alt="Astro" className="h-full" />
               <div className="flex flex-col pt-4">
                 <h3 className="text-white font-semibold text-sm">{card.title}</h3>
                 <h4 className="text-gray-400 text-xs">Bonus per day</h4>
@@ -157,7 +172,7 @@ export default function Performance({ userPoints, setUserPoints, cardLevels, set
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-neutral-800 rounded-t-[46px] border-t-2 border-amber-600 top-glow p-6 w-96 relative">
             <div className="flex flex-col items-center gap-4">
-              <Image src={Astro} width={100} height={100} alt="Astro" />
+              <Image src={selectedCard.avtar} width={100} height={100} alt="Astro" />
               <h3 className="text-white font-semibold text-lg">{selectedCard.title}</h3>
               <p className="text-gray-400 text-sm text-center">{selectedCard.description}</p>
               <div className="flex items-center gap-2">

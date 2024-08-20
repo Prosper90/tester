@@ -14,7 +14,7 @@ export default function UserInfo({ levelIndex, levelNames, calculateProgress }: 
   return (
     <div className="flex items-center justify-between w-full p-2">
       <div className="flex items-center justify-center gap-2 h-10">
-        <Image src={Icon} width={30} height={30} alt="User Icon" className="h-full w-full rounded-xl" />
+        <Image src={Icon} width={30} height={30} alt="User Icon" className="h-full w-full rounded-md p-1 bg-zinc-700" />
         <div className="flex flex-col items-left justify-center">
           <h3 className="text-white text-sm">Username</h3>
           <h4 className="text-gray-400 font-bold text-sm">CEO</h4>
