@@ -1,6 +1,6 @@
 import Image, { StaticImageData } from "next/image";
 import Armadillo from "../images/Armadillo_2.svg";
-import Orb from "../images/Orb 1.svg";
+import Orb from "../images/Allien Planets/Allien Planet 3.svg";
 import Fire from "../icons/Power.svg";
 import Boost1 from "../icons/Rocket.svg";
 import Coin from "../images/coin.png";

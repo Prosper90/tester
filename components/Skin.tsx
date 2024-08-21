@@ -1,82 +1,82 @@
-import React from "react";
+import React, { useState } from "react";
 import Arrow from "../icons/Arrow.png";
-import Icon from "../icons/usericon.png";
-import Astro from "../images/Astro1.png";
-import Image from "next/image";
-import Coin from "../images/coin.png"
+import Image, { StaticImageData } from "next/image";
+import Bronze1 from "../images/Skins/Bronze/Bronze_0001.png";
+import Bronze2 from "../images/Skins/Bronze/Bronze_0002.png";
+import Bronze3 from "../images/Skins/Bronze/Bronze_0003.png";
+import Bronze4 from "../images/Skins/Bronze/Bronze_0004.png";
+import Bronze5 from "../images/Skins/Bronze/Bronze_0005.png";
+import Silver1 from "../images/Skins/Silver/Silver_0001.png";
+import Silver2 from "../images/Skins/Silver/Silver_0002.png";
+import Silver3 from "../images/Skins/Silver/Silver_0003.png";
+import Silver4 from "../images/Skins/Silver/Silver_0004.png";
+import Silver5 from "../images/Skins/Silver/Silver_0005.png";
+import Gold1 from "../images/Skins/Gold/Gold_0001.png";
+import Gold2 from "../images/Skins/Gold/Gold_0002.png";
+import Gold3 from "../images/Skins/Gold/Gold_0003.png";
+import Gold4 from "../images/Skins/Gold/Gold_0004.png";
+import Gold5 from "../images/Skins/Gold/Gold_0005.png";
+import UserInfo from "./UserInfo";
 
 interface SkinProps {
-    onClose: () => void;
+  userName: string;
+  levelIndex: number;
+  levelNames: string[];
+  calculateProgress: () => number;
+  onClose: () => void;
 }
 
-const Skin: React.FC<SkinProps> = ({ onClose }) => {
-    return (
-        <div className="fixed inset-0 bg-black flex flex-col z-50 overflow-auto">
-            {/* Header Section */}
-            <div className="flex flex-row items-center justify-between w-full px-4 py-4">
-                <button onClick={onClose} className="p-2">
-                    <Image src={Arrow} width={20} height={20} alt="arrow" />
-                </button>
-                <h3 className="text-white text-2xl text-center flex-1">Progress</h3>
-            </div>
+const skinImages: StaticImageData[] = [
+  Bronze1, Bronze2, Bronze3, Bronze4, Bronze5,
+  Silver1, Silver2, Silver3, Silver4, Silver5,
+  Gold1, Gold2, Gold3, Gold4, Gold5,
+];
 
-            {/* Character Image and Progress Information */}
-            <div className="flex flex-col items-center w-full px-4 mt-4">
-                <Image
-                    src={Astro} // Replace with your character image path
-                    width={200}
-                    height={200}
-                    alt="Character"
-                />
-                <h4 className="text-white text-3xl mt-2">Sapphire</h4>
-                <p className="text-gray-400 text-lg mt-1">7.47M / 10M</p>
+const Skin: React.FC<SkinProps> = ({ userName, levelIndex, levelNames, calculateProgress, onClose }) => {
+  const [selectedSkin, setSelectedSkin] = useState<StaticImageData>(Bronze1);
 
-                {/* Progress Bar */}
-                <div className="w-full mt-4 px-8">
-                    <div className="w-full h-2 bg-gray-700 rounded-full">
-                        <div
-                            className="h-2 bg-gradient-to-r from-green-400 via-purple-400 to-blue-400 rounded-full"
-                            style={{ width: "74.7%" }} // This value should be dynamically calculated
-                        ></div>
-                    </div>
-                </div>
-            </div>
+  return (
+    <div className="fixed inset-0 bg-black flex flex-col z-50">
+      {/* Header Section */}
+      <div className="flex flex-row items-center justify-between w-full px-4 py-4">
+        <button onClick={onClose} className="p-2">
+          <Image src={Arrow} width={20} height={20} alt="arrow" />
+        </button>
+        <h3 className="text-white text-2xl text-center flex-1">Profile</h3>
+      </div>
 
-            {/* User Ranking List */}
-            <div className="w-full mt-8 px-4">
-                {Array(5).fill(0).map((_, index) => (
-                    <div
-                        key={index}
-                        className="flex items-center justify-between bg-gray-800 rounded-lg p-4 mb-2"
-                    >
-                        <div className="flex items-center">
-                            <div className="h-12 w-12 rounded-full bg-gray-600 flex items-center justify-center">
-                                <Image
-                                    src={Icon}
-                                    width={30}
-                                    height={30}
-                                    alt="User Icon"
-                                />
-                            </div>
-                            <div className="ml-4">
-                                <h4 className="text-white">Jones Doe</h4>
-                                <p className="text-gray-400">Rank 1000+</p>
-                            </div>
-                        </div>
-                        <div className="flex gap-1">
-                            <Image
-                                src={Coin}
-                                width={20}
-                                height={20}
-                                alt="User Icon"
-                            />
-                            <p className="text-white">+05.3K</p>
-                        </div>
-                    </div>
-                ))}
-            </div>
+      <UserInfo
+        levelIndex={levelIndex}
+        userName={userName}
+        levelNames={levelNames}
+        calculateProgress={calculateProgress}
+      />
+
+      <h3 className="text-white text-2xl text-center flex-1">Skins</h3>
+
+      <div className="flex flex-row w-full h-full overflow-hidden">
+        {/* Fixed Left Display Area */}
+        <div className="w-1/2 flex items-center justify-center bg-black">
+          <Image src={selectedSkin} width={200} height={200} alt="Selected Skin" />
         </div>
-    );
+
+        {/* Scrollable Right Side */}
+        <div className="w-1/2 h-full overflow-y-auto p-4">
+          <div className="flex flex-wrap items-center justify-center gap-1">
+            {skinImages.map((skin, index) => (
+              <div
+                key={index}
+                className="bg-zinc-700 p-2 rounded-lg cursor-pointer"
+                onClick={() => setSelectedSkin(skin)}
+              >
+                <Image src={skin} width={50} height={40} alt={`Skin ${index + 1}`} />
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default Skin;

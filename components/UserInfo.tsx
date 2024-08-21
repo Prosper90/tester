@@ -4,33 +4,43 @@ import Image from "next/image";
 import React, { useState } from "react";
 import Icon from "../icons/usericon.png";
 import ProgressPage from "./Progress"; // Make sure the path is correct
+import Skin from "./Skin";
 
 // Define the prop types for UserInfo
 interface UserInfoProps {
+  userName: string;
   levelIndex: number;
   levelNames: string[];
   calculateProgress: () => number;
 }
 
 export default function UserInfo({
+  userName,
   levelIndex,
   levelNames,
   calculateProgress,
 }: UserInfoProps) {
   const [showProgressPage, setShowProgressPage] = useState(false);
+  const [showSkinPage, setShowSkinPage] = useState(false);
 
   const handleLevelClick = () => {
     setShowProgressPage(true);
+  };
+  const handleSkinClick = () => {
+    setShowSkinPage(true);
   };
 
   const handleClose = () => {
     setShowProgressPage(false);
   };
+  const handleSkinClose = () => {
+    setShowSkinPage(false);
+  };
 
   return (
     <>
       <div className="flex items-center justify-between w-full p-2">
-        <div className="flex items-center justify-center gap-2 h-10">
+        <div className="flex items-center justify-center gap-2 h-10" onClick={handleSkinClick}>
           <Image
             src={Icon}
             width={30}
@@ -39,7 +49,7 @@ export default function UserInfo({
             className="h-full w-full rounded-md p-1 bg-zinc-700"
           />
           <div className="flex flex-col items-left justify-center">
-            <h3 className="text-white text-sm">Username</h3>
+            <h3 className="text-white text-sm">{userName}</h3>
             <h4 className="text-gray-400 font-bold text-sm">CEO</h4>
           </div>
         </div>
@@ -72,6 +82,7 @@ export default function UserInfo({
         </div>
       </div>
 
+      {showSkinPage && <Skin levelIndex={levelIndex} userName={userName} levelNames={levelNames} calculateProgress={calculateProgress}  onClose={handleSkinClose} />}
       {showProgressPage && <ProgressPage onClose={handleClose} />}
     </>
   );

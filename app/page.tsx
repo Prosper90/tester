@@ -21,18 +21,18 @@ import Airdrop from "@/components/Airdrop";
 type CardLevels = { [key: string]: number };
 
 export default function Home() {
+  const userName="Jones"
   const levelNames = [
-    "Bronze", "Silver", "Gold", "Platinum", "Diamond",
-    "Epic", "Legendary", "Master", "GrandMaster", "Lord"
+    "Bronze", "Silver", "Gold"
   ];
 
   const levelMinPoints = [
-    0, 5000, 25000, 100000, 1000000, 10000000, 100000000, 1000000000, 10000000000, 50000000000
+    0, 50000, 1000000
   ];
 
   const renderSharedComponents = () => (
     <>
-      <UserInfo levelIndex={levelIndex} levelNames={levelNames} calculateProgress={calculateProgress} />
+      <UserInfo levelIndex={levelIndex} userName={userName} levelNames={levelNames} calculateProgress={calculateProgress} />
       <ProfitPerHour pointsPerHour={pointsPerHour} />
     </>
   );

@@ -2,7 +2,7 @@
 
 import Image, { StaticImageData } from "next/image";
 import Armadillo from "../images/Armadillo_2.svg";
-import Orb from "../images/Orb 1.svg";
+import Orb from "../images/Allien Planets/Allien Planet 3.svg";
 import Fire from "../icons/Power.svg";
 import { useState } from "react";
 
@@ -39,7 +39,7 @@ export default function CommonTapArea({ tapCount, energy, maxEnergy, handleTapCl
               height={200}
               onClick={handleTap}
               alt="Central Tap"
-              className={`transition duration-200 ease-in-out rounded-full ${showIncrement ? "ring-4 ring-indigo-600 central-glow" : ""}`}
+              className={`transition duration-200 ease-in-out rounded-full ${showIncrement ? "" : ""}`}
             />
             <Image
               src={Armadillo}
@@ -47,7 +47,7 @@ export default function CommonTapArea({ tapCount, energy, maxEnergy, handleTapCl
               height={100}
               onClick={handleTap}
               alt="Central Tap"
-              className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition duration-200 ease-in-out ${showIncrement ? "" : ""}`}
+              className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition duration-200 ease-in-out ${showIncrement ? "central-glow" : ""}`}
             />
             {showIncrement && <PointIncrement tapCount={tapCount} tapPosition={tapPosition} />}
           </div>
