@@ -43,7 +43,7 @@ export default function Home() {
   const [pointsPerHour, setPointsPerHour] = useState(0);
   const [energy, setEnergy] = useState(1000);
   const [maxEnergy, setMaxEnergy] = useState(1000);
-  const [activeTab, setActiveTab] = useState("exchange");
+  const [activeTab, setActiveTab] = useState("protocol lab");
   const [cardTab, setCardTab] = useState("Performance");
   const [energyRegenRate, setEnergyRegenRate] = useState(3);
   const [energyRegenInterval, setEnergyRegenInterval] = useState(5000);
@@ -163,7 +163,7 @@ export default function Home() {
 
   return (
     <div className="relative flex flex-col w-full h-full justify-center items-center bg-black text-white">
-      {activeTab === 'exchange' && (
+      {activeTab === 'protocol lab' && (
         <div className="flex flex-col gap-4 items-center justify-start h-screen pt-2 w-full">
           {renderSharedComponents()}
           <TappingArea

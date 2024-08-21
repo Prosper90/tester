@@ -1,7 +1,6 @@
-"use client";
-
 import Image, { StaticImageData } from "next/image";
-import Central_tap from "../images/central_tap.png";
+import Armadillo from "../images/Armadillo_2.svg";
+import Orb from "../images/Orb 1.svg";
 import Fire from "../icons/Power.svg";
 import Boost1 from "../icons/Rocket.svg";
 import Coin from "../images/coin.png";
@@ -11,7 +10,6 @@ import Clock from "../icons/Satr3.svg";
 import { useState } from "react";
 import Boost from "./Boost";
 
-// Define the prop types for TappingArea
 interface TappingAreaProps {
   userPoints: number;
   setUserPoints: (newPoints: number) => void;
@@ -66,13 +64,20 @@ export default function TappingArea({
           </div>
           <div className="relative">
             <Image
-              src={Central_tap}
+              src={Orb}
               width={200}
               height={200}
               onClick={handleTap}
               alt="Central Tap"
-              className={`transition duration-200 ease-in-out rounded-full ${showIncrement ? "ring-4 ring-indigo-600 central-glow" : ""
-                }`}
+              className={`transition duration-200 ease-in-out rounded-full ${showIncrement ? "ring-4 ring-indigo-600 central-glow" : ""}`}
+            />
+            <Image
+              src={Armadillo}
+              width={100}
+              height={100}
+              onClick={handleTap}
+              alt="Central Tap"
+              className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition duration-200 ease-in-out ${showIncrement ? "" : ""}`}
             />
             {showIncrement && <PointIncrement tapCount={tapCount} tapPosition={tapPosition} />}
           </div>

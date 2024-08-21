@@ -1,7 +1,7 @@
 'use client'
 
 import Image from "next/image";
-import Astro from "../images/Astro.png";
+import Astro from "../images/Armadillo_5.svg";
 import ChestBox from "../images/chest_box2.png";
 import Logo from "../images/Logo.png";
 
