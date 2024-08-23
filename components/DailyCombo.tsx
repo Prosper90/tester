@@ -1,10 +1,9 @@
 "use client";
 
-import Image, { StaticImageData } from "next/image";
+import Image from "next/image";
 import Coin from "../images/coin.png";
-import ChestBox1 from "../images/ChestBox.png"
-import ChestBox2 from "../images/ChestBox2.png"
-
+import ChestBox1 from "../images/ChestBox.png";
+import ChestBox2 from "../images/ChestBox2.png";
 
 export default function DailyCombo() {
     return (
@@ -25,29 +24,38 @@ export default function DailyCombo() {
                         </button>
                     </div>
                     <div className="flex justify-between gap-1 w-full">
-                        <div className="w-1/3 h-24 bg-neutral-700 flex flex-col items-center justify-around rounded-xl border border-gray-500 p-2 shadow-inner shadow-indigo-500">
+                        <div className="w-1/3 h-24 bg-neutral-700 flex flex-col items-center justify-around rounded-xl border border-gray-500 p-2 shadow-inner shadow-indigo-500 relative">
                             <Image
                                 src={ChestBox1}
                                 width={70}
                                 height={70}
-                                alt="Calender"
+                                alt="Calendar"
                             />
+                            <div className="absolute top-1 right-1 bg-purple-500 text-white rounded-full w-6 h-6 flex items-center justify-center">
+                                ?
+                            </div>
                         </div>
-                        <div className="w-1/3 h-24 bg-neutral-700 flex flex-col items-center justify-around rounded-xl border border-gray-500 p-2 shadow-inner shadow-indigo-500">
+                        <div className="w-1/3 h-24 bg-neutral-700 flex flex-col items-center justify-around rounded-xl border border-gray-500 p-2 shadow-inner shadow-indigo-500 relative">
                             <Image
                                 src={ChestBox1}
                                 width={70}
                                 height={70}
                                 alt="Lock"
                             />
+                            <div className="absolute top-1 right-1 bg-purple-500 text-white rounded-full w-6 h-6 flex items-center justify-center">
+                                ?
+                            </div>
                         </div>
-                        <div className="w-1/3 h-24 bg-neutral-700 flex flex-col items-center justify-around rounded-xl border border-gray-500 p-2 shadow-inner shadow-indigo-500">
+                        <div className="w-1/3 h-24 bg-neutral-700 flex flex-col items-center justify-around rounded-xl border border-gray-500 p-2 shadow-inner shadow-indigo-500 relative">
                             <Image
                                 src={ChestBox2}
                                 width={70}
                                 height={70}
                                 alt="Combo"
                             />
+                            <div className="absolute top-1 right-1 bg-purple-500 text-white rounded-full w-6 h-6 flex items-center justify-center">
+                                ?
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -55,5 +63,3 @@ export default function DailyCombo() {
         </div>
     );
 }
-
-
