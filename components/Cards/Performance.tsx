@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Image, {StaticImageData} from "next/image";
+import Image, { StaticImageData } from "next/image";
 import Coin from "../../images/coin.png";
 import Icon1 from "../../images/Mining Icons/Performance/Consensus Algorithms.svg"
 import Icon2 from "../../images/Mining Icons/Performance/Network Design.svg"
@@ -34,29 +34,82 @@ interface PerformanceProps {
 }
 
 const cardData: CardData[] = [
-  {avtar:Icon1, title: "Consensus Algorithms", description: "Decision-making mechanisms for block validation." },
-  {avtar:Icon2, title: "Network Design", description: "Structure and layout of the blockchain network." },
-  {avtar:Icon3, title: "Data Structures", description: "Methods for organizing and storing data." },
-  {avtar:Icon4, title: "Shard Technology", description: "Dividing the network into smaller partitions for efficiency." },
-  {avtar:Icon5, title: "Scalability Solutions", description: "Ability to handle increasing transactions and users." },
-  {avtar:Icon6, title: "Fault Tolerance", description: "Resilience against network failures or attacks." },
-  {avtar:Icon7, title: "Security Protocols", description: "Measures to protect the network from threats." },
-  {avtar:Icon8, title: "Privacy Features", description: "Techniques to keep user data confidential." },
-  {avtar:Icon9, title: "Cross-Chain Interop", description: "Communication between different blockchain networks." },
-  {avtar:Icon10, title: "Energy Efficiency", description: "Energy consumption and efficiency strategies." },
-  {avtar:Icon11, title: "Latency Reduction", description: "Reducing delays in transaction processing." },
-  {avtar:Icon12, title: "Hybrid Networks", description: "Combining different technologies for optimal performance." },
-  {avtar:Icon13, title: "Performance Optimization", description: "Techniques for improving network performance." },
-  {avtar:Icon14, title: "Node Infrastructure", description: "Types and roles of network participants." },
-  {avtar:Icon15, title: "Elastic Network", description: "Ability to adjust resources based on demand." },
+  { avtar: Icon1, title: "Consensus Algorithms", description: "Decision-making mechanisms for block validation." },
+  { avtar: Icon2, title: "Network Design", description: "Structure and layout of the blockchain network." },
+  { avtar: Icon3, title: "Data Structures", description: "Methods for organizing and storing data." },
+  { avtar: Icon4, title: "Shard Technology", description: "Dividing the network into smaller partitions for efficiency." },
+  { avtar: Icon5, title: "Scalability Solutions", description: "Ability to handle increasing transactions and users." },
+  { avtar: Icon6, title: "Fault Tolerance", description: "Resilience against network failures or attacks." },
+  { avtar: Icon7, title: "Security Protocols", description: "Measures to protect the network from threats." },
+  { avtar: Icon8, title: "Privacy Features", description: "Techniques to keep user data confidential." },
+  { avtar: Icon9, title: "Cross-Chain Interop", description: "Communication between different blockchain networks." },
+  { avtar: Icon10, title: "Energy Efficiency", description: "Energy consumption and efficiency strategies." },
+  { avtar: Icon11, title: "Latency Reduction", description: "Reducing delays in transaction processing." },
+  { avtar: Icon12, title: "Hybrid Networks", description: "Combining different technologies for optimal performance." },
+  { avtar: Icon13, title: "Performance Optimization", description: "Techniques for improving network performance." },
+  { avtar: Icon14, title: "Node Infrastructure", description: "Types and roles of network participants." },
+  { avtar: Icon15, title: "Elastic Network", description: "Ability to adjust resources based on demand." },
 ];
+
+const costMap: { [key: string]: number } = {
+  "Consensus Algorithms": 1500,
+  "Network Design": 1200,
+  "Data Structures": 1000,
+  "Shard Technology": 1200,
+  "Scalability Solutions": 1300,
+  "Fault Tolerance": 1100,
+  "Security Protocols": 1400,
+  "Privacy Features": 900,
+  "Cross-Chain Interop": 1100,
+  "Energy Efficiency": 1000,
+  "Latency Reduction": 1100,
+  "Hybrid Networks": 1200,
+  "Performance Optimization": 1300,
+  "Node Infrastructure": 1100,
+  "Elastic Network": 1200,
+};
+
+const maxLevelMap: { [key: string]: number } = {
+  "Consensus Algorithms": 5,
+  "Network Design": 4,
+  "Data Structures": 4,
+  "Shard Technology": 4,
+  "Scalability Solutions": 4,
+  "Fault Tolerance": 3,
+  "Security Protocols": 4,
+  "Privacy Features": 3,
+  "Cross-Chain Interop": 3,
+  "Energy Efficiency": 3,
+  "Latency Reduction": 3,
+  "Hybrid Networks": 4,
+  "Performance Optimization": 4,
+  "Node Infrastructure": 3,
+  "Elastic Network": 3,
+};
+
+const bonusMap: { [key: string]: number[] } = {
+  "Consensus Algorithms": [100, 200, 300, 400, 500],
+  "Network Design": [80, 160, 240, 320],
+  "Data Structures": [70, 140, 210, 280],
+  "Shard Technology": [80, 160, 240, 320],
+  "Scalability Solutions": [90, 180, 270, 360],
+  "Fault Tolerance": [60, 120, 180],
+  "Security Protocols": [100, 200, 300, 400],
+  "Privacy Features": [50, 100, 150],
+  "Cross-Chain Interop": [60, 120, 180],
+  "Energy Efficiency": [50, 100, 150],
+  "Latency Reduction": [60, 120, 180],
+  "Hybrid Networks": [80, 160, 240, 320],
+  "Performance Optimization": [90, 180, 270, 360],
+  "Node Infrastructure": [60, 120, 180],
+  "Elastic Network": [60, 120, 180],
+};
 
 function Notification({ message, type, onClose }: { message: string; type: 'success' | 'error'; onClose: () => void }) {
   return (
     <div
-      className={`fixed top-4 right-4 p-4 rounded-lg shadow-lg z-50 transition-transform duration-500 transform ${
-        type === 'success' ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
-      }`}
+      className={`fixed top-4 right-4 p-4 rounded-lg shadow-lg z-50 transition-transform duration-500 transform ${type === 'success' ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
+        }`}
     >
       {message}
       <button className="ml-4 text-white" onClick={onClose}>X</button>
@@ -68,37 +121,22 @@ export default function Performance({ userPoints, setUserPoints, cardLevels, set
   const [selectedCard, setSelectedCard] = useState<CardData | null>(null);
   const [notification, setNotification] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
 
-  const calculateCost = (level: number) => {
-    switch (level) {
-      case 0:
-        return 5000; // Cost to purchase L1
-      case 1:
-        return 10000; // Cost to upgrade to L2
-      case 2:
-        return 20000; // Cost to upgrade to L3
-      default:
-        return 0;
-    }
+  const calculateCost = (cardTitle: string, level: number) => {
+    const baseCost = costMap[cardTitle];
+    if (level === 0) return baseCost;
+    return baseCost * (level + 1);
   };
 
-  const calculateBonus = (level: number) => {
-    switch (level) {
-      case 1:
-        return 200; // L1 Bonus
-      case 2:
-        return 500; // L2 Bonus
-      case 3:
-        return 1000; // L3 Bonus
-      default:
-        return 0;
-    }
+  const calculateBonus = (cardTitle: string, level: number) => {
+    return bonusMap[cardTitle][level] || 0;
   };
 
   const handlePurchase = () => {
     if (!selectedCard) return;
 
     const currentLevel = cardLevels[selectedCard.title] || 0;
-    const cost = calculateCost(currentLevel);
+    const maxLevel = maxLevelMap[selectedCard.title];
+    const cost = calculateCost(selectedCard.title, currentLevel);
 
     if (userPoints >= cost && currentLevel < 3) {
       setUserPoints((prevPoints) => prevPoints - cost);
@@ -110,12 +148,12 @@ export default function Performance({ userPoints, setUserPoints, cardLevels, set
       }));
 
       // Apply the bonus for the new level
-      const newBonus = calculateBonus(currentLevel + 1);
+      const newBonus = calculateBonus(selectedCard.title, currentLevel);
       updateProfitPerHour(newBonus);
 
       setNotification({ message: 'Purchase successful!', type: 'success' });
-    } else if (currentLevel >= 3) {
-      setNotification({ message: 'This card is already at the maximum level (L3).', type: 'error' });
+    } else if (currentLevel >= maxLevel) {
+      setNotification({ message: 'This card is already at the maximum level.', type: 'error' });
     } else {
       setNotification({ message: 'You do not have enough points to purchase or upgrade this card.', type: 'error' });
     }
@@ -126,15 +164,22 @@ export default function Performance({ userPoints, setUserPoints, cardLevels, set
     <div className="flex flex-wrap gap-2 w-full p-4 items-center justify-between">
       {cardData.map((card, index) => {
         const currentLevel = cardLevels[card.title] || 0;
-        const currentCost = calculateCost(currentLevel);
-        const currentBonus = calculateBonus(currentLevel + 1);
+        const maxLevel = maxLevelMap[card.title];
+        const cost = calculateCost(card.title, currentLevel);
+        const bonus = calculateBonus(card.title, currentLevel);
+        const atMaxLevel = currentLevel >= maxLevel;
 
         return (
           <div
             key={index}
-            className="relative flex flex-col rounded-2xl bg-neutral-800 py-4 gap-2 w-40 cursor-pointer"
-            onClick={() => setSelectedCard(card)} // Set selected card on click
+            className={`relative flex flex-col rounded-2xl bg-neutral-800 py-4 gap-2 w-40 cursor-pointer shadow-lg${atMaxLevel ? 'opacity-50' : ''}`}
+            onClick={() => !atMaxLevel && setSelectedCard(card)} // Set selected card on click
           >
+            {atMaxLevel && (
+              <div className="absolute inset-0 bg-black opacity-60 flex items-center justify-center text-lg text-white font-bold rounded-lg">
+                
+              </div>
+            )}
             {/* Level Badge */}
             <div className="absolute top-0 right-0 bg-indigo-600 text-white text-xs px-2 py-1 rounded-tr-lg rounded-bl-lg">
               LvL {currentLevel}
@@ -145,10 +190,10 @@ export default function Performance({ userPoints, setUserPoints, cardLevels, set
               <Image src={card.avtar} width={64} height={64} alt="Astro" className="h-full" />
               <div className="flex flex-col pt-4">
                 <h3 className="text-white font-semibold text-sm">{card.title}</h3>
-                <h4 className="text-gray-400 text-xs">Bonus per day</h4>
+                <h4 className="text-gray-400 text-xs">Bonus per hour</h4>
                 <div className="flex items-center gap-1">
                   <Image src={Coin} width={14} height={14} alt="Coin" />
-                  <span className="text-green-400 text-lg">+{currentBonus}</span>
+                  <span className="text-green-400 text-lg">+{bonus}</span>
                 </div>
               </div>
             </div>
@@ -159,7 +204,7 @@ export default function Performance({ userPoints, setUserPoints, cardLevels, set
                 <h3 className="text-white text-xs">{currentLevel === 0 ? 'Purchase' : 'Upgrade'}</h3>
                 <div className="flex items-center justify-center gap-1 mt-1">
                   <Image src={Coin} width={14} height={14} alt="Coin" />
-                  <span className="text-yellow-400 text-xs">{currentCost.toLocaleString()}</span>
+                  <span className="text-yellow-400 text-xs">{cost.toLocaleString()}</span>
                 </div>
               </div>
             </div>
@@ -177,11 +222,11 @@ export default function Performance({ userPoints, setUserPoints, cardLevels, set
               <p className="text-gray-400 text-sm text-center">{selectedCard.description}</p>
               <div className="flex items-center gap-2">
                 <span className="text-gray-400 text-xs">Bonus per Day:</span>
-                <span className="text-green-400 text-lg">+{calculateBonus(cardLevels[selectedCard.title] || 0)}</span>
+                <span className="text-green-400 text-lg">+{calculateBonus(selectedCard.title, (cardLevels[selectedCard.title] || 0))}</span>
               </div>
               <div className="flex items-center gap-2">
                 <span className="text-gray-400 text-xs">{cardLevels[selectedCard.title] === 0 ? 'Purchase' : 'Upgrade'} Cost:</span>
-                <span className="text-yellow-400 text-lg">{calculateCost(cardLevels[selectedCard.title] || 0).toLocaleString()}</span>
+                <span className="text-yellow-400 text-lg">{calculateCost(selectedCard.title, cardLevels[selectedCard.title] || 0)}</span>
               </div>
               <div className="flex gap-2 mt-4">
                 <button
