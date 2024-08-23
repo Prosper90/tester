@@ -56,6 +56,15 @@ export default function TappingArea({
 
   return (
     <div className="my-10 w-full h-full bg-gray-950 rounded-t-[46px] border-t-2 border-amber-600 top-glow">
+            <svg style={{ display: "none" }}>
+        <filter id="glow">
+          <feGaussianBlur stdDeviation="15" operator="out" result="coloredBlur" />
+          <feMerge>
+            <feMergeNode in="coloredBlur" />
+            <feMergeNode in="SourceGraphic" />
+          </feMerge>
+        </filter>
+      </svg>
       {!showBoost ? (
         <div className="flex flex-col items-center justify-start h-full p-2 gap-4">
           <div className="flex items-center justify-center gap-2">
@@ -69,16 +78,19 @@ export default function TappingArea({
               height={200}
               onClick={handleTap}
               alt="Central Tap"
-              className={`transition duration-200 ease-in-out rounded-full ${showIncrement ? "ring-4 ring-indigo-600 central-glow" : ""}`}
+              className="transition duration-200 ease-in-out rounded-full"
             />
             <Image
-              src={Armadillo}
-              width={100}
-              height={100}
-              onClick={handleTap}
-              alt="Central Tap"
-              className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition duration-200 ease-in-out ${showIncrement ? "" : ""}`}
-            />
+            src={Armadillo}
+            width={100}
+            height={100}
+            onClick={handleTap}
+            alt="Armadillo"
+            style={{
+              filter: showIncrement ? "url(#glow)" : "none",
+            }}
+            className="w-full h-full absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition duration-200 ease-in-out"
+          />
             {showIncrement && <PointIncrement tapCount={tapCount} tapPosition={tapPosition} />}
           </div>
           <div className="flex items-center justify-between w-full">

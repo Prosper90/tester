@@ -22,7 +22,7 @@ import Airdrop from "@/components/Airdrop";
 type CardLevels = { [key: string]: number };
 
 export default function Home() {
-  const userName="Jones";
+  const userName = "Jones";
 
   const levelNames = [
     "Bronze", "Silver", "Gold"
@@ -140,7 +140,7 @@ export default function Home() {
 
     return () => clearInterval(interval);
   }, [pointsPerHour]);
-  
+
   const calculateProgress = useCallback(() => {
     const prevMinPoints = levelMinPoints[levelIndex];
     const nextMinPoints = levelMinPoints[levelIndex + 1] || prevMinPoints;
@@ -226,7 +226,7 @@ export default function Home() {
             />
           )}
           <CommonTapArea
-          tapCount={tapCount}
+            tapCount={tapCount}
             energy={energy}
             maxEnergy={maxEnergy}
             handleTapClick={handleTapClick}
@@ -234,7 +234,10 @@ export default function Home() {
         </div>
       )}
       {activeTab === 'friends' && <Friends />}
-      {activeTab === 'earn' && <Earn />}
+      {activeTab === 'earn' &&
+        <div className="mb-20">
+          <Earn />
+        </div>}
       {activeTab === 'airdrop' && <Airdrop />}
       <Navbar activeTab={activeTab} setActiveTab={setActiveTab} />
     </div>
