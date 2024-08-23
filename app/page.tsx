@@ -31,6 +31,9 @@ export default function Home() {
   const [userName, setUserName] = useState<string>("");
 
   useEffect(() => {
+    // Initialize the Telegram WebApp
+    WebApp.ready();
+
     // Check if Telegram WebApp user data exists
     if (WebApp.initDataUnsafe?.user) {
       const user = WebApp.initDataUnsafe.user as UserData;
