@@ -28,13 +28,14 @@ type CardLevels = { [key: string]: number };
 
 export default function Home() {
   const [userData, setUserData] = useState<UserData | null>(null);
-  const [userName, setUserName] = useState<string>(""); // State to store username
+  const [userName, setUserName] = useState<string>("");
 
   useEffect(() => {
-    if (WebApp.initDataUnsafe.user) {
+    // Check if Telegram WebApp user data exists
+    if (WebApp.initDataUnsafe?.user) {
       const user = WebApp.initDataUnsafe.user as UserData;
       setUserData(user);
-      setUserName(user.username); // Set username from Telegram userData
+      setUserName(user.username || ""); // Use fallback if username is not available
     }
   }, []);
 
