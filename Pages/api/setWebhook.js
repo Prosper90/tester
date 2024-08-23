@@ -1,4 +1,3 @@
-// pages/api/setWebhook.js
 import axios from 'axios';
 
 const TOKEN = process.env.TELEGRAM_BOT_TOKEN;
@@ -6,10 +5,14 @@ const BASE_URL = `https://api.telegram.org/bot${TOKEN}`;
 
 export default async function handler(req, res) {
   if (req.method === 'POST') {
-    const url = `https://YOUR_SERVER_URL/api/telegram`; // Replace with your deployed URL
+    const url = `https://galactic-gold-rush.vercel.app/api/telegram`; // Replace with your deployed URL
 
     try {
-      await axios.post(`${BASE_URL}/setWebhook`, { url: url });
+      await axios.get(`${BASE_URL}/setWebhook`, {
+        params: {
+          url: url
+        }
+      });
       res.status(200).json({ status: 'Webhook set' });
     } catch (error) {
       console.error('Error setting webhook:', error);
