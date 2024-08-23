@@ -31,16 +31,17 @@ export default function Home() {
   const [userName, setUserName] = useState<string>("");
 
   useEffect(() => {
-    // Initialize the Telegram WebApp
-    WebApp.ready();
-
-    // Check if Telegram WebApp user data exists
-    if (WebApp.initDataUnsafe?.user) {
-      const user = WebApp.initDataUnsafe.user as UserData;
-      setUserData(user);
-      setUserName(user.username || ""); // Use fallback if username is not available
+    if (typeof WebApp !== "undefined") {
+      WebApp.ready();
+      // Check if Telegram WebApp user data exists
+      if (WebApp.initDataUnsafe?.user) {
+        const user = WebApp.initDataUnsafe.user as UserData;
+        setUserData(user);
+        setUserName(user.username || ""); // Use fallback if username is not available
+      }
     }
   }, []);
+  
 
   const levelNames = [
     "Bronze", "Silver", "Gold"
