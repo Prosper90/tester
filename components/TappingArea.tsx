@@ -1,6 +1,7 @@
 import Image, { StaticImageData } from "next/image";
 import Armadillo from "../images/Armadillo_2.svg";
 import Orb from "../images/Allien Planets/Allien Planet 3.svg";
+import OrbCipher from "../images/Allien Planets/Allien Planet 5.svg";
 import Fire from "../icons/Power.svg";
 import Boost1 from "../icons/Rocket.svg";
 import Coin from "../images/coin.png";
@@ -40,6 +41,7 @@ export default function TappingArea({
   const [showBoost, setShowBoost] = useState(false);
   const [showIncrement, setShowIncrement] = useState(false);
   const [tapPosition, setTapPosition] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
+  const [orbImage, setOrbImage] = useState(Orb); // State for the orb image
 
   const handleBoostClick = () => {
     setShowBoost(true);
@@ -55,12 +57,18 @@ export default function TappingArea({
     setShowIncrement(true);
     setTimeout(() => setShowIncrement(false), 500); // hide after 500ms
   };
-  const handleDailyComboClick = () => {
-    setActiveTab('mine'); 
+
+  const handleDailyCipherClick = () => {
+    setOrbImage(OrbCipher); // Change the orb image to the cipher version
   };
+
+  const handleDailyComboClick = () => {
+    setActiveTab("mine");
+  };
+
   return (
     <div className="my-10 w-full h-full bg-gray-950 rounded-t-[46px] border-t-2 border-amber-600 top-glow">
-            <svg style={{ display: "none" }}>
+      <svg style={{ display: "none" }}>
         <filter id="glow">
           <feGaussianBlur stdDeviation="15" operator="out" result="coloredBlur" />
           <feMerge>
@@ -77,7 +85,7 @@ export default function TappingArea({
           </div>
           <div className="relative">
             <Image
-              src={Orb}
+              src={orbImage} // Use the orb image state
               width={200}
               height={200}
               onClick={handleTap}
@@ -85,16 +93,16 @@ export default function TappingArea({
               className="transition duration-200 ease-in-out rounded-full"
             />
             <Image
-            src={Armadillo}
-            width={100}
-            height={100}
-            onClick={handleTap}
-            alt="Armadillo"
-            style={{
-              filter: showIncrement ? "url(#glow)" : "none",
-            }}
-            className="w-full h-full absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition duration-200 ease-in-out"
-          />
+              src={Armadillo}
+              width={100}
+              height={100}
+              onClick={handleTap}
+              alt="Armadillo"
+              style={{
+                filter: showIncrement ? "url(#glow)" : "none",
+              }}
+              className="w-full h-full absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition duration-200 ease-in-out"
+            />
             {showIncrement && <PointIncrement tapCount={tapCount} tapPosition={tapPosition} />}
           </div>
           <div className="flex items-center justify-between w-full">
@@ -111,7 +119,7 @@ export default function TappingArea({
           </div>
           <div className="flex gap-2 text-sm items-center justify-between w-full h-20">
             <RewardCard icon={Star} label="Daily Reward" />
-            <RewardCard icon={Diamond} label="Daily Cipher" />
+            <RewardCard icon={Diamond} label="Daily Cipher" onClick={handleDailyCipherClick} /> {/* Attach click handler */}
             <RewardCard icon={Clock} label="Daily Combo" onClick={handleDailyComboClick} />
           </div>
         </div>
@@ -143,7 +151,7 @@ function PointIncrement({ tapCount, tapPosition }: PointIncrementProps) {
       style={{
         top: tapPosition.y,
         left: tapPosition.x,
-        transform: 'translate(-50%, -50%)',
+        transform: "translate(-50%, -50%)",
       }}
     >
       +{tapCount}
@@ -160,9 +168,10 @@ interface RewardCardProps {
 
 function RewardCard({ icon, label, onClick }: RewardCardProps) {
   return (
-    <div className="w-1/3 h-24 bg-neutral-800 flex flex-col items-start justify-around rounded-xl border border-gray-500 p-2 shadow-inner shadow-indigo-500"
-    onClick={onClick} 
-    style={{ cursor: onClick ? 'pointer' : 'default' }} 
+    <div
+      className="w-1/3 h-24 bg-neutral-800 flex flex-col items-start justify-around rounded-xl border border-gray-500 p-2 shadow-inner shadow-indigo-500"
+      onClick={onClick}
+      style={{ cursor: onClick ? "pointer" : "default" }}
     >
       <Image src={icon} width={35} height={35} alt={label} />
       <h3 className="text-white">{label}</h3>

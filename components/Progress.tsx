@@ -6,10 +6,22 @@ import Icon from "../icons/usericon.png";
 import Astro from "../images/Astro1.png";
 
 interface ProgressPageProps {
+    
+    levelIndex: number;
+    levelNames: string[];
+    calculateProgress: () => number;
+    userPoints: number;
     onClose: () => void;
 }
 
-const ProgressPage: React.FC<ProgressPageProps> = ({ onClose }) => {
+const ProgressPage: React.FC<ProgressPageProps> = ({
+    
+    levelIndex,
+    levelNames,
+    calculateProgress,
+    userPoints,
+    onClose,
+}) => {
     return (
         <div className="fixed inset-0 bg-black flex flex-col z-50 overflow-auto">
             {/* Header Section */}
@@ -34,15 +46,15 @@ const ProgressPage: React.FC<ProgressPageProps> = ({ onClose }) => {
                         className="relative z-10"
                     />
                 </div>
-                <h4 className="text-white text-3xl mt-2">Sapphire</h4>
-                <p className="text-gray-400 text-lg mt-1">7.47M / 10M</p>
+                <h4 className="text-white text-3xl mt-2">{levelNames[levelIndex]}</h4>
+                <p className="text-gray-400 text-lg mt-1">{userPoints}</p>
 
                 {/* Progress Bar */}
                 <div className="w-full mt-4 px-8">
-                    <div className="w-full h-2 bg-gray-700 rounded-full">
+                    <div className="w-full h-2 bg-[#43433b]/[0.6] rounded-full">
                         <div
-                            className="h-2 bg-gradient-to-r from-green-400 via-purple-400 to-blue-400 rounded-full"
-                            style={{ width: "74.7%" }} // This value should be dynamically calculated
+                            className="bg-gradient-to-r from-[#90ef89] via-[#d692dd] to-[#726edd] h-2 rounded-full"
+                            style={{ width: `${calculateProgress()}%` }}
                         ></div>
                     </div>
                 </div>
@@ -50,7 +62,7 @@ const ProgressPage: React.FC<ProgressPageProps> = ({ onClose }) => {
 
             {/* User Ranking List */}
             <div className="w-full mt-8 px-4">
-                {Array(5).fill(0).map((_, index) => (
+                {Array(15).fill(0).map((_, index) => (
                     <div
                         key={index}
                         className="flex items-center justify-between bg-gray-800 rounded-lg p-4 mb-2"

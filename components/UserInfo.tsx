@@ -85,7 +85,7 @@ export default function UserInfo({
       </div>
 
       {showSkinPage && <Skin levelIndex={levelIndex} userPoints={userPoints} userName={userName} levelNames={levelNames} calculateProgress={calculateProgress}  onClose={handleSkinClose} />}
-      {showProgressPage && <ProgressPage onClose={handleClose} />}
+      {showProgressPage && <ProgressPage levelIndex={levelIndex} userPoints={userPoints} levelNames={levelNames} calculateProgress={calculateProgress} onClose={handleClose} />}
     </>
   );
 }
