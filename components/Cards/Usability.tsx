@@ -29,16 +29,16 @@ interface UsabilityProps {
 }
 
 const cardData: CardData[] = [
-  {avtar:Icon1, title: "User Interface", description: "Design an intuitive and visually appealing interface for users." },
-  {avtar:Icon2, title: "Wallet Solutions", description: "Integrate secure and user-friendly wallet options for managing assets." },
-  {avtar:Icon3, title: "Onboarding Guides", description: "Provide clear guides to help users get started with the application." },
-  {avtar:Icon4, title: "Accessibility Options", description: "Ensure the application is accessible to users with various disabilities." },
-  {avtar:Icon5, title: "User Experience", description: "Create a seamless and enjoyable experience for users throughout their journey." },
-  {avtar:Icon6, title: "Game Elements", description: "Incorporate engaging game-like features to enhance user interaction." },
-  {avtar:Icon7, title: "Personalized Content", description: "Offer content tailored to individual user preferences and behaviors." },
-  {avtar:Icon8, title: "Data Analytics", description: "Utilize data to analyze user behavior and improve the application." },
-  {avtar:Icon9, title: "User Engagement", description: "Implement features that encourage regular user interaction and participation." },
-  {avtar:Icon10, title: "Decentralized Apps", description: "Leverage decentralized technology for increased transparency and security." },
+  {avtar:Icon1, title: "User Interface", description: "User interface design for ease of use." },
+  {avtar:Icon2, title: "Wallet Solutions", description: "Secure tools for managing digital assets." },
+  {avtar:Icon3, title: "Onboarding Guides", description: "Processes for introducing new users." },
+  {avtar:Icon4, title: "Accessibility Options", description: "Ensuring the platform is usable by everyone." },
+  {avtar:Icon5, title: "User Experience", description: "User experience optimization." },
+  {avtar:Icon6, title: "Game Elements", description: "Adding game-like elements to enhance engagement." },
+  {avtar:Icon7, title: "Personalized Content", description: "Customizing user experiences." },
+  {avtar:Icon8, title: "Data Analytics", description: "Tracking and analyzing user behavior." },
+  {avtar:Icon9, title: "User Engagement", description: "Keeping users actively involved." },
+  {avtar:Icon10, title: "Decentralized Apps", description: "Decentralized applications built on blockchain." },
 ];
 
 

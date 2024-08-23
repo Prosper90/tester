@@ -8,6 +8,7 @@ import Skin from "./Skin";
 
 // Define the prop types for UserInfo
 interface UserInfoProps {
+  userPoints: number;
   userName: string;
   levelIndex: number;
   levelNames: string[];
@@ -15,6 +16,7 @@ interface UserInfoProps {
 }
 
 export default function UserInfo({
+  userPoints,
   userName,
   levelIndex,
   levelNames,
@@ -82,7 +84,7 @@ export default function UserInfo({
         </div>
       </div>
 
-      {showSkinPage && <Skin levelIndex={levelIndex} userName={userName} levelNames={levelNames} calculateProgress={calculateProgress}  onClose={handleSkinClose} />}
+      {showSkinPage && <Skin levelIndex={levelIndex} userPoints={userPoints} userName={userName} levelNames={levelNames} calculateProgress={calculateProgress}  onClose={handleSkinClose} />}
       {showProgressPage && <ProgressPage onClose={handleClose} />}
     </>
   );

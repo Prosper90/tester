@@ -28,15 +28,15 @@ interface IncentivesProps {
 }
 
 const cardData: CardData[] = [
-  {avtar:Icon1, title: "Token Economy", description: "Enhance the economic aspects of your token." },
-  {avtar:Icon2, title: "Governance Models", description: "Improve governance structures and participation." },
-  {avtar:Icon3, title: "Incentive Programs", description: "Develop and manage incentive programs." },
-  {avtar:Icon4, title: "Staking Rewards", description: "Boost rewards for staking activities." },
-  {avtar:Icon5, title: "Bonding Mechanisms", description: "Enhance bonding mechanisms within the ecosystem." },
-  {avtar:Icon6, title: "DeFi Protocols", description: "Implement and optimize DeFi protocols." },
-  {avtar:Icon7, title: "Dynamic Rewards",  description: "Create dynamic reward systems for users." },
-  {avtar:Icon8, title: "Community Building", description: "Strengthen community engagement and growth." },
-  {avtar:Icon9, title: "Active Participation", description: "Encourage and reward active participation in the ecosystem." },
+  {avtar:Icon1, title: "Token Economy", description: "Digital assets used within the network." },
+  {avtar:Icon2, title: "Governance Models", description: "Systems for community decision-making." },
+  {avtar:Icon3, title: "Incentive Programs", description: "Rewards for contributing to the network." },
+  {avtar:Icon4, title: "Staking Rewards", description: "Locking tokens to support network operations and earn rewards." },
+  {avtar:Icon5, title: "Bonding Mechanisms", description: "Mechanisms to support token liquidity." },
+  {avtar:Icon6, title: "DeFi Protocols", description: "Financial services built on blockchain." },
+  {avtar:Icon7, title: "Dynamic Rewards",  description: "Adaptive incentive structures." },
+  {avtar:Icon8, title: "Community Building", description: "Engagement and participation strategies." },
+  {avtar:Icon9, title: "Active Participation", description: "Encouragging active involvement in the network." },
 ];
 
 

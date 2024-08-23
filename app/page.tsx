@@ -32,7 +32,7 @@ export default function Home() {
 
   const renderSharedComponents = () => (
     <>
-      <UserInfo levelIndex={levelIndex} userName={userName} levelNames={levelNames} calculateProgress={calculateProgress} />
+      <UserInfo levelIndex={levelIndex} userPoints={userPoints} userName={userName} levelNames={levelNames} calculateProgress={calculateProgress} />
       <ProfitPerHour pointsPerHour={pointsPerHour} />
     </>
   );

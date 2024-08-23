@@ -30,17 +30,17 @@ interface SecurityProps {
 }
 
 const cardData: CardData[] = [
-  {avtar:Icon1, title: "Threat Detection", description: "Identify and address potential security threats proactively." },
-  {avtar:Icon2, title: "Security Audits", description: "Conduct thorough audits to ensure the integrity and safety of systems." },
-  {avtar:Icon3, title: "Incident Response", description: "Prepare and respond effectively to security incidents and breaches." },
-  {avtar:Icon4, title: "Regulatory Compliance", description: "Ensure adherence to relevant laws and regulations for security." },
-  {avtar:Icon5, title: "Insurance Protections", description: "Implement insurance measures to safeguard against potential security risks." },
-  {avtar:Icon6, title: "Zero-Trust Security", description: "Adopt a zero-trust model to verify every request within the network." },
-  {avtar:Icon7, title: "Decentralized Protection", description: "Utilize decentralized technologies to enhance security and reduce vulnerabilities." },
-  {avtar:Icon8, title: "Adaptive Authentication", description: "Employ adaptive methods to adjust authentication processes based on risk factors." },
-  {avtar:Icon9, title: "Network Monitoring", description: "Continuously monitor network activity to detect and respond to anomalies." },
-  {avtar:Icon10, title: "Identity Management", description: "Manage and secure user identities and access permissions." },
-  {avtar:Icon11, title: "Data Security", description: "Protect sensitive data through encryption and secure storage methods." },
+  {avtar:Icon1, title: "Threat Detection", description: "Identifying and mitigating potential risks." },
+  {avtar:Icon2, title: "Security Audits", description: "Regular security checks and assessments." },
+  {avtar:Icon3, title: "Incident Response", description: "Plans for addressing security incidents." },
+  {avtar:Icon4, title: "Regulatory Compliance", description: "Adhering to legal and regulatory requirements." },
+  {avtar:Icon5, title: "Insurance Protections", description: "Protection against losses or failures." },
+  {avtar:Icon6, title: "Zero-Trust Security", description: "Strict access control principles." },
+  {avtar:Icon7, title: "Decentralized Protection", description: "Distributed security measures." },
+  {avtar:Icon8, title: "Adaptive Authentication", description: "Authentication based on user risk profiles." },
+  {avtar:Icon9, title: "Network Monitoring", description: "Continuous oversight of network activity." },
+  {avtar:Icon10, title: "Identity Management", description: "Managing user identities securely." },
+  {avtar:Icon11, title: "Data Security", description: "Protecting and managing information." },
 ];
 
 

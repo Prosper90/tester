@@ -16,6 +16,7 @@ import Gold2 from "../images/Skins/Gold/Gold_0002.png";
 import Gold3 from "../images/Skins/Gold/Gold_0003.png";
 import Gold4 from "../images/Skins/Gold/Gold_0004.png";
 import Gold5 from "../images/Skins/Gold/Gold_0005.png";
+import Lock from "../icons/Lock.svg";
 import UserInfo from "./UserInfo";
 
 interface SkinProps {
@@ -23,17 +24,108 @@ interface SkinProps {
   levelIndex: number;
   levelNames: string[];
   calculateProgress: () => number;
+  userPoints: number;
   onClose: () => void;
 }
 
-const skinImages: StaticImageData[] = [
-  Bronze1, Bronze2, Bronze3, Bronze4, Bronze5,
-  Silver1, Silver2, Silver3, Silver4, Silver5,
-  Gold1, Gold2, Gold3, Gold4, Gold5,
-];
+interface SkinImages {
+  Bronze: StaticImageData[];
+  Silver: StaticImageData[];
+  Gold: StaticImageData[];
+}
 
-const Skin: React.FC<SkinProps> = ({ userName, levelIndex, levelNames, calculateProgress, onClose }) => {
-  const [selectedSkin, setSelectedSkin] = useState<StaticImageData>(Bronze1);
+const skinPrices: number[] = [0, 100, 100, 100, 100]; // First skin free, others cost 100 points
+
+const skinImages: SkinImages = {
+  Bronze: [Bronze1, Bronze2, Bronze3, Bronze4, Bronze5],
+  Silver: [Silver1, Silver2, Silver3, Silver4, Silver5],
+  Gold: [Gold1, Gold2, Gold3, Gold4, Gold5],
+};
+
+const Skin: React.FC<SkinProps> = ({
+  userName,
+  levelIndex,
+  levelNames,
+  calculateProgress,
+  userPoints,
+  onClose,
+}) => {
+  const [selectedSkin, setSelectedSkin] = useState<StaticImageData | null>(null);
+  const [points, setPoints] = useState<number>(userPoints);
+  const [purchasedSkins, setPurchasedSkins] = useState<{
+    [key: string]: number[];
+  }>(JSON.parse(localStorage.getItem("purchasedSkins") || "{}"));
+
+  const isSkinLocked = (skinLevel: string, index: number): boolean => {
+    const skinLevelIndex = levelNames.indexOf(skinLevel);
+    return (
+      skinLevelIndex > levelIndex ||
+      (index > 0 && !isSkinUnlocked(skinLevel, index))
+    );
+  };
+
+  const isSkinUnlocked = (skinLevel: string, index: number): boolean => {
+    return purchasedSkins[skinLevel]?.includes(index);
+  };
+
+  const purchaseSkin = (skinLevel: string, index: number) => {
+    if (points >= skinPrices[index]) {
+      const updatedPurchasedSkins = { ...purchasedSkins };
+      if (!updatedPurchasedSkins[skinLevel]) updatedPurchasedSkins[skinLevel] = [];
+      updatedPurchasedSkins[skinLevel].push(index);
+      setPurchasedSkins(updatedPurchasedSkins);
+      localStorage.setItem("purchasedSkins", JSON.stringify(updatedPurchasedSkins));
+      setPoints(points - skinPrices[index]);
+    } else {
+      alert("Not enough points to purchase this skin.");
+    }
+  };
+
+  const renderSkinBox = (skin: StaticImageData, skinLevel: string, index: number) => {
+    const skinLevelIndex = levelNames.indexOf(skinLevel);
+
+    if (skinLevelIndex > levelIndex) {
+      return (
+        <div
+          key={`${skinLevel}-${index}`}
+          className="relative bg-zinc-700 p-2 rounded-lg"
+        >
+          <div className="flex items-center justify-center h-full">
+            <Image src={Lock} width={50} height={50} alt="Locked" />
+          </div>
+          <div className="absolute top-1 right-1 text-xs text-white bg-black px-2 py-1 rounded">
+            Level {skinLevelIndex + 1} Required
+          </div>
+        </div>
+      );
+    }
+
+    return (
+      <div
+        key={`${skinLevel}-${index}`}
+        className="relative bg-zinc-700 p-2 rounded-lg cursor-pointer"
+        onClick={() => {
+          if (!isSkinLocked(skinLevel, index)) {
+            setSelectedSkin(skin);
+          } else if (index > 0 && !isSkinUnlocked(skinLevel, index)) {
+            purchaseSkin(skinLevel, index);
+          }
+        }}
+      >
+        <Image src={skin} width={50} height={40} alt={`Skin ${skinLevel} ${index + 1}`} />
+        {skinPrices[index] > 0 && (
+          <div className="absolute bottom-1 right-1 text-xs text-white bg-black px-2 py-1 rounded">
+            {skinPrices[index]} Points
+          </div>
+        )}
+        {isSkinLocked(skinLevel, index) && (
+          <div className="absolute top-0 right-0 p-1">
+            <Image src={Lock} width={15} height={15} alt="Locked" />
+          </div>
+        )}
+      </div>
+    );
+  };
 
   return (
     <div className="fixed inset-0 bg-black flex flex-col z-50">
@@ -47,6 +139,7 @@ const Skin: React.FC<SkinProps> = ({ userName, levelIndex, levelNames, calculate
 
       <UserInfo
         levelIndex={levelIndex}
+        userPoints={userPoints}
         userName={userName}
         levelNames={levelNames}
         calculateProgress={calculateProgress}
@@ -56,25 +149,55 @@ const Skin: React.FC<SkinProps> = ({ userName, levelIndex, levelNames, calculate
 
       <div className="flex flex-row w-full h-full overflow-hidden">
         {/* Fixed Left Display Area */}
-        <div className="w-1/2 flex items-center justify-center bg-black">
-          <Image src={selectedSkin} width={200} height={200} alt="Selected Skin" />
+        <div className="w-1/2 flex items-center justify-center bg-black relative">
+          {selectedSkin ? (
+            <Image src={selectedSkin} width={200} height={200} alt="Selected Skin" />
+          ) : (
+            <div className="text-white text-center">Select a Skin</div>
+          )}
+          {selectedSkin && isSkinLocked(
+            Object.keys(skinImages)[levelIndex] as keyof typeof skinImages,
+            skinImages[Object.keys(skinImages)[levelIndex] as keyof typeof skinImages].indexOf(selectedSkin)
+          ) && (
+            <div className="absolute top-0 right-0 p-1">
+              <Image src={Lock} width={20} height={20} alt="Locked" />
+            </div>
+          )}
         </div>
 
         {/* Scrollable Right Side */}
         <div className="w-1/2 h-full overflow-y-auto p-4">
           <div className="flex flex-wrap items-center justify-center gap-1">
-            {skinImages.map((skin, index) => (
-              <div
-                key={index}
-                className="bg-zinc-700 p-2 rounded-lg cursor-pointer"
-                onClick={() => setSelectedSkin(skin)}
-              >
-                <Image src={skin} width={50} height={40} alt={`Skin ${index + 1}`} />
-              </div>
-            ))}
+            {Object.keys(skinImages).map((skinLevel) =>
+              skinImages[skinLevel as keyof typeof skinImages].map((skin, index) =>
+                renderSkinBox(skin, skinLevel, index)
+              )
+            )}
           </div>
         </div>
       </div>
+
+      {/* Purchase Button */}
+      {selectedSkin && isSkinLocked(
+        Object.keys(skinImages)[levelIndex] as keyof typeof skinImages,
+        skinImages[Object.keys(skinImages)[levelIndex] as keyof typeof skinImages].indexOf(selectedSkin)
+      ) && (
+        <div className="flex items-center justify-center bg-black p-4">
+          <button
+            onClick={() =>
+              purchaseSkin(
+                Object.keys(skinImages)[levelIndex] as keyof typeof skinImages,
+                skinImages[Object.keys(skinImages)[levelIndex] as keyof typeof skinImages].indexOf(selectedSkin)
+              )
+            }
+            className="bg-red-500 text-white px-4 py-2 rounded"
+          >
+            Purchase for {skinPrices[
+              skinImages[Object.keys(skinImages)[levelIndex] as keyof typeof skinImages].indexOf(selectedSkin)
+            ]} Points
+          </button>
+        </div>
+      )}
     </div>
   );
 };
