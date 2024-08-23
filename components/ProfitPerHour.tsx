@@ -3,7 +3,9 @@
 import Image from "next/image";
 import AstroIcon from "../icons/Astro Circle.png";
 import Coin from "../images/coin.png";
-import Setting from "../icons/Gear.svg";
+import SettingIcon from "../icons/Gear.svg";
+import { useState } from "react";
+import Setting from "./Setting";
 
 // Define the prop types
 interface ProfitPerHourProps {
@@ -11,6 +13,14 @@ interface ProfitPerHourProps {
 }
 
 export default function ProfitPerHour({ pointsPerHour }: ProfitPerHourProps) {
+  const [showSettingPage, setShowSettingPage] = useState(false);
+
+  const handleSettingClick = () => {
+    setShowSettingPage(true);
+  };
+  const handleClose = () => {
+    setShowSettingPage(false);
+  };
   return (
     <div className="px-4 w-full">
       <div className="flex items-center justify-around rounded-full border border-zinc-500 bg-neutral-800 h-full p-2">
@@ -27,9 +37,10 @@ export default function ProfitPerHour({ pointsPerHour }: ProfitPerHourProps) {
           </div>
         </div>
         <div className="w-1/3 flex items-center justify-center">
-          <Image src={Setting} width={24} height={24} alt="Settings Icon" className="rounded-full" />
+          <Image src={SettingIcon} width={24} height={24} alt="Settings Icon" className="rounded-full" onClick={handleSettingClick} />
         </div>
       </div>
+      {showSettingPage && <Setting onClose={handleClose} />}
     </div>
   );
 }
