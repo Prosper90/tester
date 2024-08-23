@@ -21,6 +21,7 @@ interface TappingAreaProps {
   increaseTapCount: () => void;
   increaseMaxEnergy: () => void;
   handleTapClick: () => void;
+  setActiveTab: (tabName: string) => void;
 }
 
 export default function TappingArea({
@@ -34,6 +35,7 @@ export default function TappingArea({
   increaseTapCount,
   increaseMaxEnergy,
   handleTapClick,
+  setActiveTab,
 }: TappingAreaProps) {
   const [showBoost, setShowBoost] = useState(false);
   const [showIncrement, setShowIncrement] = useState(false);
@@ -53,7 +55,9 @@ export default function TappingArea({
     setShowIncrement(true);
     setTimeout(() => setShowIncrement(false), 500); // hide after 500ms
   };
-
+  const handleDailyComboClick = () => {
+    setActiveTab('mine'); 
+  };
   return (
     <div className="my-10 w-full h-full bg-gray-950 rounded-t-[46px] border-t-2 border-amber-600 top-glow">
             <svg style={{ display: "none" }}>
@@ -108,7 +112,7 @@ export default function TappingArea({
           <div className="flex gap-2 text-sm items-center justify-between w-full h-20">
             <RewardCard icon={Star} label="Daily Reward" />
             <RewardCard icon={Diamond} label="Daily Cipher" />
-            <RewardCard icon={Clock} label="Daily Combo" />
+            <RewardCard icon={Clock} label="Daily Combo" onClick={handleDailyComboClick} />
           </div>
         </div>
       ) : (
@@ -151,11 +155,15 @@ function PointIncrement({ tapCount, tapPosition }: PointIncrementProps) {
 interface RewardCardProps {
   icon: StaticImageData;
   label: string;
+  onClick?: () => void;
 }
 
-function RewardCard({ icon, label }: RewardCardProps) {
+function RewardCard({ icon, label, onClick }: RewardCardProps) {
   return (
-    <div className="w-1/3 h-24 bg-neutral-800 flex flex-col items-start justify-around rounded-xl border border-gray-500 p-2 shadow-inner shadow-indigo-500">
+    <div className="w-1/3 h-24 bg-neutral-800 flex flex-col items-start justify-around rounded-xl border border-gray-500 p-2 shadow-inner shadow-indigo-500"
+    onClick={onClick} 
+    style={{ cursor: onClick ? 'pointer' : 'default' }} 
+    >
       <Image src={icon} width={35} height={35} alt={label} />
       <h3 className="text-white">{label}</h3>
     </div>

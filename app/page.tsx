@@ -180,6 +180,7 @@ export default function Home() {
             increaseTapCount={increaseTapCount}
             increaseMaxEnergy={increaseMaxEnergy}
             handleTapClick={handleTapClick}
+            setActiveTab={setActiveTab} 
           />
         </div>
       )}
