@@ -17,31 +17,12 @@ import CommonTapArea from "@/components/CommonTapArea";
 import Friends from "@/components/Friends";
 import Earn from "@/components/Earn";
 import Airdrop from "@/components/Airdrop";
-import WebApp from "@twa-dev/sdk";
 
-interface UserData {
-  id: number;
-  username: string;
-}
 
 type CardLevels = { [key: string]: number };
 
 export default function Home() {
-  const [userData, setUserData] = useState<UserData | null>(null);
-  const [userName, setUserName] = useState<string>("");
-
-  useEffect(() => {
-    if (typeof WebApp !== "undefined") {
-      WebApp.ready();
-      // Check if Telegram WebApp user data exists
-      if (WebApp.initDataUnsafe?.user) {
-        const user = WebApp.initDataUnsafe.user as UserData;
-        setUserData(user);
-        setUserName(user.username || ""); // Use fallback if username is not available
-      }
-    }
-  }, []);
-  
+  const userName="Jones";
 
   const levelNames = [
     "Bronze", "Silver", "Gold"
