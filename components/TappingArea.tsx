@@ -11,6 +11,7 @@ import Clock from "../icons/Satr3.svg";
 import { useState, useEffect } from "react";
 import Boost from "./Boost";
 import PointIncrement from "./PointIncrement";
+import DailyRewardPopup from "./DailyReward"; // Import the DailyRewardPopup component
 
 interface TappingAreaProps {
   userPoints: number;
@@ -86,6 +87,7 @@ export default function TappingArea({
 }: TappingAreaProps) {
   const [showBoost, setShowBoost] = useState(false);
   const [showIncrement, setShowIncrement] = useState(false);
+  const [showDailyReward, setShowDailyReward] = useState(false); // State to control Daily Reward Popup visibility
   const [tapPosition, setTapPosition] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
   const [isCipherMode, setIsCipherMode] = useState(false); // State to track cipher mode
   const [tapSymbol, setTapSymbol] = useState<string | null>(null); // State to track the symbol
@@ -115,6 +117,14 @@ export default function TappingArea({
 
   const handleBoostClick = () => {
     setShowBoost(true);
+  };
+
+  const handleDailyRewardClick = () => {
+    setShowDailyReward(true); // Show the Daily Reward Popup
+  };
+
+  const closeDailyRewardPopup = () => {
+    setShowDailyReward(false); // Close the Daily Reward Popup
   };
 
   // Handle tap or long press
@@ -272,7 +282,7 @@ export default function TappingArea({
             </div>
           </div>
           <div className="flex gap-2 text-sm items-center justify-between w-full h-20">
-            <RewardCard icon={Star} label="Daily Reward" />
+            <RewardCard icon={Star} label="Daily Reward" onClick={handleDailyRewardClick} /> {/* Show Daily Reward Popup on click */}
             <RewardCard icon={Diamond} label="Daily Cipher" onClick={handleDailyCipherClick} /> {/* Attach click handler */}
             <RewardCard icon={Clock} label="Daily Combo" onClick={handleDailyComboClick} />
           </div>
@@ -288,6 +298,9 @@ export default function TappingArea({
           setShowBoost={setShowBoost}
         />
       )}
+      
+      {/* Show the Daily Reward Popup if showDailyReward is true */}
+      {showDailyReward && <DailyRewardPopup userPoints={userPoints} setUserPoints={setUserPoints} onClose={closeDailyRewardPopup}/>}
     </div>
   );
 }
