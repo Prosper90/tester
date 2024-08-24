@@ -8,7 +8,7 @@ import Coin from "../images/coin.png";
 import Star from "../icons/Star 1.svg";
 import Diamond from "../icons/Star 2.svg";
 import Clock from "../icons/Satr3.svg";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Boost from "./Boost";
 
 interface TappingAreaProps {
@@ -42,24 +42,46 @@ export default function TappingArea({
   const [showIncrement, setShowIncrement] = useState(false);
   const [tapPosition, setTapPosition] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
   const [orbImage, setOrbImage] = useState(Orb); // State for the orb image
+  const [isCipherMode, setIsCipherMode] = useState(false); // State to track cipher mode
+  const [tapSymbol, setTapSymbol] = useState<string | null>(null); // State to track the symbol
 
   const handleBoostClick = () => {
     setShowBoost(true);
   };
 
+  // Handle tap or long press
   const handleTap = (e: React.MouseEvent<HTMLImageElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
     setTapPosition({ x, y });
 
-    handleTapClick();
-    setShowIncrement(true);
-    setTimeout(() => setShowIncrement(false), 500); // hide after 500ms
+    if (isCipherMode) {
+      // Show dot on tap
+      handleTapClick();
+      setTapSymbol(".");
+      setShowIncrement(true);
+      setTimeout(() => setShowIncrement(false), 500);
+    } else {
+      handleTapClick();
+      setShowIncrement(true);
+      setTimeout(() => setShowIncrement(false), 500);
+    }
+  };
+
+  // Handle long press for dash
+  const handleLongPress = () => {
+    if (isCipherMode) {
+      handleTapClick();
+      setTapSymbol("-");
+      setShowIncrement(true);
+      setTimeout(() => setShowIncrement(false), 500);
+    }
   };
 
   const handleDailyCipherClick = () => {
-    setOrbImage(OrbCipher); // Change the orb image to the cipher version
+    setIsCipherMode(!isCipherMode); // Toggle cipher mode
+    setOrbImage((prevImage: StaticImageData) => (prevImage === Orb ? OrbCipher : Orb));
   };
 
   const handleDailyComboClick = () => {
@@ -89,6 +111,10 @@ export default function TappingArea({
               width={200}
               height={200}
               onClick={handleTap}
+              onContextMenu={(e) => e.preventDefault()} // Prevent context menu on right click
+              onMouseDown={(e) => {
+                if (e.button === 2) handleLongPress(); // Right click for long press
+              }}
               alt="Central Tap"
               className="transition duration-200 ease-in-out rounded-full"
             />
@@ -97,13 +123,23 @@ export default function TappingArea({
               width={100}
               height={100}
               onClick={handleTap}
+              onContextMenu={(e) => e.preventDefault()} // Prevent context menu on right click
+              onMouseDown={(e) => {
+                if (e.button === 2) handleLongPress(); // Right click for long press
+              }}
               alt="Armadillo"
               style={{
                 filter: showIncrement ? "url(#glow)" : "none",
               }}
               className="w-full h-full absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition duration-200 ease-in-out"
             />
-            {showIncrement && <PointIncrement tapCount={tapCount} tapPosition={tapPosition} />}
+            {showIncrement && (
+              isCipherMode ? (
+                <CipherIncrement symbol={tapSymbol} tapCount={tapCount} tapPosition={tapPosition} />
+              ) : (
+                <PointIncrement tapCount={tapCount} tapPosition={tapPosition} />
+              )
+            )}
           </div>
           <div className="flex items-center justify-between w-full">
             <div className="flex items-center gap-1">
@@ -159,6 +195,28 @@ function PointIncrement({ tapCount, tapPosition }: PointIncrementProps) {
   );
 }
 
+// Component for showing cipher symbols
+interface CipherIncrementProps {
+  tapCount: number;
+  symbol: string | null;
+  tapPosition: { x: number; y: number };
+}
+
+function CipherIncrement({ tapCount, symbol, tapPosition }: CipherIncrementProps) {
+  return (
+    <div
+      className="absolute text-white text-3xl font-bold animate-fadeUp"
+      style={{
+        top: tapPosition.y,
+        left: tapPosition.x,
+        transform: "translate(-50%, -50%)",
+      }}
+    >
+      {symbol}
+    </div>
+  );
+}
+
 // Define the prop types for RewardCard
 interface RewardCardProps {
   icon: StaticImageData;
@@ -169,12 +227,11 @@ interface RewardCardProps {
 function RewardCard({ icon, label, onClick }: RewardCardProps) {
   return (
     <div
-      className="w-1/3 h-24 bg-neutral-800 flex flex-col items-start justify-around rounded-xl border border-gray-500 p-2 shadow-inner shadow-indigo-500"
-      onClick={onClick}
-      style={{ cursor: onClick ? "pointer" : "default" }}
+      className="flex flex-col items-center justify-center bg-gray-800 p-2 rounded-xl cursor-pointer w-full h-full border border-gray-500 shadow-inner shadow-indigo-500"
+      onClick={onClick} 
     >
-      <Image src={icon} width={35} height={35} alt={label} />
-      <h3 className="text-white">{label}</h3>
+      <Image src={icon} width={35} height={35} alt={`${label} Icon`} />
+      <h4 className="text-white text-xs">{label}</h4>
     </div>
   );
 }
