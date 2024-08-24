@@ -8,7 +8,7 @@ import Coin from "../images/coin.png";
 import Star from "../icons/Star 1.svg";
 import Diamond from "../icons/Star 2.svg";
 import Clock from "../icons/Satr3.svg";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Boost from "./Boost";
 import PointIncrement from "./PointIncrement";
 
@@ -29,6 +29,47 @@ interface TappingAreaProps {
 const MORSE_CODE = "...- .- .-.. .. -.. .- - --- .-.";
 const TRANSLATION = "VALIDATOR";
 const BONUS_POINTS = 2000;
+const ONE_DAY_IN_MS = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
+
+// Morse code map for letters and digits
+const morseCodeMap: { [key: string]: string } = {
+  A: ".-",
+  B: "-...",
+  C: "-.-.",
+  D: "-..",
+  E: ".",
+  F: "..-.",
+  G: "--.",
+  H: "....",
+  I: "..",
+  J: ".---",
+  K: "-.-",
+  L: ".-..",
+  M: "--",
+  N: "-.",
+  O: "---",
+  P: ".--.",
+  Q: "--.-",
+  R: ".-.",
+  S: "...",
+  T: "-",
+  U: "..-",
+  V: "...-",
+  W: ".--",
+  X: "-..-",
+  Y: "-.--",
+  Z: "--..",
+  "0": "-----",
+  "1": ".----",
+  "2": "..---",
+  "3": "...--",
+  "4": "....-",
+  "5": ".....",
+  "6": "-....",
+  "7": "--...",
+  "8": "---..",
+  "9": "----."
+};
 
 export default function TappingArea({
   userPoints,
@@ -46,10 +87,31 @@ export default function TappingArea({
   const [showBoost, setShowBoost] = useState(false);
   const [showIncrement, setShowIncrement] = useState(false);
   const [tapPosition, setTapPosition] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
-  const [orbImage, setOrbImage] = useState(Orb); // State for the orb image
   const [isCipherMode, setIsCipherMode] = useState(false); // State to track cipher mode
   const [tapSymbol, setTapSymbol] = useState<string | null>(null); // State to track the symbol
   const [userInput, setUserInput] = useState<string>(""); // State to track user Morse code input
+  const [displayText, setDisplayText] = useState<string>("");
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const [lastCompletionTime, setLastCompletionTime] = useState<number | null>(null);
+  const [canUseCipher, setCanUseCipher] = useState<boolean>(true); // State to control cipher mode usage
+
+  useEffect(() => {
+    // Retrieve the last completion time from local storage on component mount
+    const storedTime = localStorage.getItem("lastCompletionTime");
+    if (storedTime) {
+      setLastCompletionTime(parseInt(storedTime));
+      checkCipherAvailability(parseInt(storedTime));
+    }
+  }, []);
+
+  const checkCipherAvailability = (storedTime: number) => {
+    const currentTime = Date.now();
+    if (currentTime - storedTime < ONE_DAY_IN_MS) {
+      setCanUseCipher(false); // Disable cipher mode if 24 hours haven't passed
+    } else {
+      setCanUseCipher(true); // Enable cipher mode after 24 hours
+    }
+  };
 
   const handleBoostClick = () => {
     setShowBoost(true);
@@ -57,24 +119,18 @@ export default function TappingArea({
 
   // Handle tap or long press
   const handleTap = (e: React.MouseEvent<HTMLImageElement>) => {
+    e.preventDefault();
     const rect = e.currentTarget.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
     setTapPosition({ x, y });
 
-    if (isCipherMode) {
+    if (isCipherMode && canUseCipher) {
+      handleTapClick();
       const newSymbol = ".";
       setTapSymbol(newSymbol);
-      setUserInput((prevInput) => prevInput + newSymbol); // Append the new symbol
-      setShowIncrement(true);
-      setTimeout(() => setShowIncrement(false), 500);
-
-      // Check if the Morse code matches
-      if (userInput + newSymbol === MORSE_CODE) {
-        setUserPoints((prevPoints) => prevPoints + BONUS_POINTS); // Add bonus points
-        setUserInput(""); // Reset user input after awarding points
-      }
-    } else {
+      updateUserInput(newSymbol); // Use function to update input and handle logic
+    } else if (!isCipherMode) {
       handleTapClick();
       setShowIncrement(true);
       setTimeout(() => setShowIncrement(false), 500);
@@ -83,24 +139,51 @@ export default function TappingArea({
 
   // Handle long press for dash
   const handleLongPress = () => {
-    if (isCipherMode) {
+    if (isCipherMode && canUseCipher) {
+      handleTapClick();
       const newSymbol = "-";
       setTapSymbol(newSymbol);
-      setUserInput((prevInput) => prevInput + newSymbol); // Append the new symbol
-      setShowIncrement(true);
-      setTimeout(() => setShowIncrement(false), 500);
+      updateUserInput(newSymbol); // Use function to update input and handle logic
+    }
+  };
 
-      // Check if the Morse code matches
-      if (userInput + newSymbol === MORSE_CODE) {
+  // Update user input and check if it matches the Morse code for the current letter
+  const updateUserInput = (newSymbol: string) => {
+    const updatedInput = userInput + newSymbol; // Update the Morse code string
+    setUserInput(updatedInput); // Update state with new input
+    setShowIncrement(true);
+    setTimeout(() => setShowIncrement(false), 500);
+
+    const currentLetter = TRANSLATION[currentIndex]; // Get the current letter to match
+    const currentLetterMorse = morseCodeMap[currentLetter]; // Get Morse code for the current letter
+
+    if (updatedInput === currentLetterMorse) {
+      // If input matches the Morse code for the current letter
+      setDisplayText((prev) => prev + currentLetter); // Update display text with the current letter
+      setCurrentIndex((prev) => prev + 1); // Move to the next letter
+      setUserInput(""); // Reset user input for the next letter
+
+      // If all letters are matched, award bonus points
+      if (currentIndex + 1 === TRANSLATION.length) {
         setUserPoints((prevPoints) => prevPoints + BONUS_POINTS); // Add bonus points
-        setUserInput(""); // Reset user input after awarding points
+        const completionTime = Date.now();
+        localStorage.setItem("lastCompletionTime", completionTime.toString());
+        setLastCompletionTime(completionTime);
+        setCanUseCipher(false); // Disable cipher mode until 24 hours pass
+        setCurrentIndex(0); // Reset for next round
+        setDisplayText(""); // Clear display text
+        setIsCipherMode(false); // Automatically switch back to normal mode
       }
+    } else if (!currentLetterMorse.startsWith(updatedInput)) {
+      // If the input does not match or is incorrect, reset input
+      setUserInput(""); // Reset user input for the next attempt
     }
   };
 
   const handleDailyCipherClick = () => {
-    setIsCipherMode(!isCipherMode); // Toggle cipher mode
-    setOrbImage((prevImage: StaticImageData) => (prevImage === Orb ? OrbCipher : Orb));
+    if (canUseCipher) {
+      setIsCipherMode((prev) => !prev); // Toggle cipher mode
+    }
   };
 
   const handleDailyComboClick = () => {
@@ -126,9 +209,8 @@ export default function TappingArea({
           </div>
           {isCipherMode && (
             <div className="morse-code-input w-full flex items-center justify-between bg-gray-800 p-2 rounded-md text-white">
-              {/* Make this div more prominent */}
               <p className="font-bold w-1/3">Daily cipher</p>
-              <p className="w-1/3 break-words">{userInput}</p>
+              <p className="w-1/3 break-words">{displayText}</p> {/* Display matched letters */}
               <button className="p-1 w-1/3 flex rounded-lg bg-gradient-to-r from-indigo-500 to-pink-600 gap-1 items-center justify-center">
                 <Image
                   src={Coin}
@@ -143,7 +225,7 @@ export default function TappingArea({
           )}
           <div className="relative">
             <Image
-              src={orbImage} // Use the orb image state
+              src={isCipherMode ? OrbCipher : Orb} // Use the selected orb image based on the mode
               width={200}
               height={200}
               onClick={handleTap}
@@ -194,7 +276,6 @@ export default function TappingArea({
             <RewardCard icon={Diamond} label="Daily Cipher" onClick={handleDailyCipherClick} /> {/* Attach click handler */}
             <RewardCard icon={Clock} label="Daily Combo" onClick={handleDailyComboClick} />
           </div>
-
         </div>
       ) : (
         <Boost

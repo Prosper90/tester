@@ -166,7 +166,7 @@ export default function Home() {
   return (
     <div className="relative flex flex-col w-full h-full justify-center items-center bg-black text-white">
       {activeTab === 'protocol lab' && (
-        <div className="flex flex-col gap-4 items-center justify-start h-screen pt-2 w-full">
+        <div className="flex flex-col gap-4 mb-10 items-center justify-start h-screen pt-2 w-full">
           {renderSharedComponents()}
           <TappingArea
             userPoints={userPoints}
