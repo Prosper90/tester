@@ -8,12 +8,13 @@ import Coin from "../images/coin.png";
 import Star from "../icons/Star 1.svg";
 import Diamond from "../icons/Star 2.svg";
 import Clock from "../icons/Satr3.svg";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Boost from "./Boost";
+import PointIncrement from "./PointIncrement";
 
 interface TappingAreaProps {
   userPoints: number;
-  setUserPoints: (newPoints: number) => void;
+  setUserPoints: (newPoints: number | ((prevPoints: number) => number)) => void;
   tapCount: number;
   energy: number;
   maxEnergy: number;
@@ -24,6 +25,10 @@ interface TappingAreaProps {
   handleTapClick: () => void;
   setActiveTab: (tabName: string) => void;
 }
+
+const MORSE_CODE = "...- .- .-.. .. -.. .- - --- .-.";
+const TRANSLATION = "VALIDATOR";
+const BONUS_POINTS = 2000;
 
 export default function TappingArea({
   userPoints,
@@ -44,6 +49,7 @@ export default function TappingArea({
   const [orbImage, setOrbImage] = useState(Orb); // State for the orb image
   const [isCipherMode, setIsCipherMode] = useState(false); // State to track cipher mode
   const [tapSymbol, setTapSymbol] = useState<string | null>(null); // State to track the symbol
+  const [userInput, setUserInput] = useState<string>(""); // State to track user Morse code input
 
   const handleBoostClick = () => {
     setShowBoost(true);
@@ -57,11 +63,17 @@ export default function TappingArea({
     setTapPosition({ x, y });
 
     if (isCipherMode) {
-      // Show dot on tap
-      handleTapClick();
-      setTapSymbol(".");
+      const newSymbol = ".";
+      setTapSymbol(newSymbol);
+      setUserInput((prevInput) => prevInput + newSymbol); // Append the new symbol
       setShowIncrement(true);
       setTimeout(() => setShowIncrement(false), 500);
+
+      // Check if the Morse code matches
+      if (userInput + newSymbol === MORSE_CODE) {
+        setUserPoints((prevPoints) => prevPoints + BONUS_POINTS); // Add bonus points
+        setUserInput(""); // Reset user input after awarding points
+      }
     } else {
       handleTapClick();
       setShowIncrement(true);
@@ -72,10 +84,17 @@ export default function TappingArea({
   // Handle long press for dash
   const handleLongPress = () => {
     if (isCipherMode) {
-      handleTapClick();
-      setTapSymbol("-");
+      const newSymbol = "-";
+      setTapSymbol(newSymbol);
+      setUserInput((prevInput) => prevInput + newSymbol); // Append the new symbol
       setShowIncrement(true);
       setTimeout(() => setShowIncrement(false), 500);
+
+      // Check if the Morse code matches
+      if (userInput + newSymbol === MORSE_CODE) {
+        setUserPoints((prevPoints) => prevPoints + BONUS_POINTS); // Add bonus points
+        setUserInput(""); // Reset user input after awarding points
+      }
     }
   };
 
@@ -105,6 +124,23 @@ export default function TappingArea({
             <Image src={Coin} width={34} height={34} alt="Coin Icon" className="rounded-full" />
             <h5 className="text-white text-2xl">{userPoints}</h5>
           </div>
+          {isCipherMode && (
+            <div className="morse-code-input w-full flex items-center justify-between bg-gray-800 p-2 rounded-md text-white">
+              {/* Make this div more prominent */}
+              <p className="font-bold w-1/3">Daily cipher</p>
+              <p className="w-1/3 break-words">{userInput}</p>
+              <button className="p-1 w-1/3 flex rounded-lg bg-gradient-to-r from-indigo-500 to-pink-600 gap-1 items-center justify-center">
+                <Image
+                  src={Coin}
+                  width={20}
+                  height={20}
+                  alt="Coin Icon"
+                  className="rounded-full"
+                />
+                <h5 className="text-white text-sm">+2,000</h5>
+              </button>
+            </div>
+          )}
           <div className="relative">
             <Image
               src={orbImage} // Use the orb image state
@@ -158,6 +194,7 @@ export default function TappingArea({
             <RewardCard icon={Diamond} label="Daily Cipher" onClick={handleDailyCipherClick} /> {/* Attach click handler */}
             <RewardCard icon={Clock} label="Daily Combo" onClick={handleDailyComboClick} />
           </div>
+
         </div>
       ) : (
         <Boost
@@ -174,35 +211,14 @@ export default function TappingArea({
   );
 }
 
-// Component for showing point increment
-interface PointIncrementProps {
-  tapCount: number;
-  tapPosition: { x: number; y: number };
-}
-
-function PointIncrement({ tapCount, tapPosition }: PointIncrementProps) {
-  return (
-    <div
-      className="absolute text-white text-3xl font-bold animate-fadeUp"
-      style={{
-        top: tapPosition.y,
-        left: tapPosition.x,
-        transform: "translate(-50%, -50%)",
-      }}
-    >
-      +{tapCount}
-    </div>
-  );
-}
-
-// Component for showing cipher symbols
+// CipherIncrement Component
 interface CipherIncrementProps {
-  tapCount: number;
   symbol: string | null;
+  tapCount: number;
   tapPosition: { x: number; y: number };
 }
 
-function CipherIncrement({ tapCount, symbol, tapPosition }: CipherIncrementProps) {
+function CipherIncrement({ symbol, tapPosition }: CipherIncrementProps) {
   return (
     <div
       className="absolute text-white text-7xl font-bold animate-fadeUp"
@@ -217,21 +233,21 @@ function CipherIncrement({ tapCount, symbol, tapPosition }: CipherIncrementProps
   );
 }
 
-// Define the prop types for RewardCard
+// RewardCard Component
 interface RewardCardProps {
   icon: StaticImageData;
   label: string;
-  onClick?: () => void;
+  onClick?: () => void; // Optional click handler
 }
 
 function RewardCard({ icon, label, onClick }: RewardCardProps) {
   return (
     <div
-      className="flex flex-col items-center justify-center bg-gray-800 p-2 rounded-xl cursor-pointer w-full h-full border border-gray-500 shadow-inner shadow-indigo-500"
-      onClick={onClick} 
+      className="flex flex-col items-center cursor-pointer hover:opacity-75 border-gray-500 rounded-lg p-2 bg-gray-800 shadow-inner shadow-indigo-500"
+      onClick={onClick}
     >
-      <Image src={icon} width={35} height={35} alt={`${label} Icon`} />
-      <h4 className="text-white text-xs">{label}</h4>
+      <Image src={icon} width={50} height={50} alt={label} />
+      <p className="text-white text-xs">{label}</p>
     </div>
   );
 }
