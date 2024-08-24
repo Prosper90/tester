@@ -205,7 +205,7 @@ interface CipherIncrementProps {
 function CipherIncrement({ tapCount, symbol, tapPosition }: CipherIncrementProps) {
   return (
     <div
-      className="absolute text-white text-3xl font-bold animate-fadeUp"
+      className="absolute text-white text-7xl font-bold animate-fadeUp"
       style={{
         top: tapPosition.y,
         left: tapPosition.x,
