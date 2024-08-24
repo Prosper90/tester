@@ -1,5 +1,4 @@
 import Image, { StaticImageData } from "next/image";
-import Armadillo from "../images/Armadillo_2.svg";
 import Orb from "../images/Allien Planets/Allien Planet 3.svg";
 import OrbCipher from "../images/Allien Planets/Allien Planet 5.svg";
 import Fire from "../icons/Power.svg";
@@ -17,6 +16,7 @@ interface TappingAreaProps {
   userPoints: number;
   setUserPoints: (newPoints: number | ((prevPoints: number) => number)) => void;
   tapCount: number;
+  GalacticGoldRush: StaticImageData;
   energy: number;
   maxEnergy: number;
   multitapLevel: number;
@@ -73,6 +73,7 @@ const morseCodeMap: { [key: string]: string } = {
 };
 
 export default function TappingArea({
+  GalacticGoldRush,
   userPoints,
   setUserPoints,
   tapCount,
@@ -247,8 +248,8 @@ export default function TappingArea({
               className="transition duration-200 ease-in-out rounded-full"
             />
             <Image
-              src={Armadillo}
-              width={100}
+              src={GalacticGoldRush}
+              width={170}
               height={100}
               onClick={handleTap}
               onContextMenu={(e) => e.preventDefault()} // Prevent context menu on right click
@@ -259,7 +260,7 @@ export default function TappingArea({
               style={{
                 filter: showIncrement ? "url(#glow)" : "none",
               }}
-              className="w-full h-full absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition duration-200 ease-in-out"
+              className="h-full absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition duration-200 ease-in-out"
             />
             {showIncrement && (
               isCipherMode ? (

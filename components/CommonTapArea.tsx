@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import { useState } from "react";
 import Armadillo from "../images/Armadillo_2.svg";
 import Orb from "../images/Allien Planets/Allien Planet 3.svg";
@@ -6,13 +6,14 @@ import Fire from "../icons/Power.svg";
 
 // Define the prop types for CommonTapArea
 interface CommonTapAreaProps {
+  GalacticGoldRush: StaticImageData;
   tapCount: number;
   energy: number;
   maxEnergy: number;
   handleTapClick: () => void;
 }
 
-export default function CommonTapArea({ tapCount, energy, maxEnergy, handleTapClick }: CommonTapAreaProps) {
+export default function CommonTapArea({ GalacticGoldRush, tapCount, energy, maxEnergy, handleTapClick }: CommonTapAreaProps) {
   const [showIncrement, setShowIncrement] = useState(false);
   const [tapPosition, setTapPosition] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
 
@@ -50,15 +51,15 @@ export default function CommonTapArea({ tapCount, energy, maxEnergy, handleTapCl
             className="transition duration-200 ease-in-out rounded-full"
           />
           <Image
-            src={Armadillo}
-            width={100}
+            src={GalacticGoldRush}
+            width={170}
             height={100}
             onClick={handleTap}
             alt="Armadillo"
             style={{
               filter: showIncrement ? "url(#glow)" : "none",
             }}
-            className="w-full h-full absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition duration-200 ease-in-out"
+            className="h-full absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition duration-200 ease-in-out"
           />
           {showIncrement && <PointIncrement tapCount={tapCount} tapPosition={tapPosition} />}
         </div>

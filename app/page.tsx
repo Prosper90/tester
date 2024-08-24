@@ -17,13 +17,13 @@ import CommonTapArea from "@/components/CommonTapArea";
 import Friends from "@/components/Friends";
 import Earn from "@/components/Earn";
 import Airdrop from "@/components/Airdrop";
-
+import BronzeSkim1 from "../images/Armadillo_2.svg"
+import { StaticImageData } from "next/image";
 
 type CardLevels = { [key: string]: number };
 
 export default function Home() {
   const userName = "Jones";
-
   const levelNames = [
     "Bronze", "Silver", "Gold"
   ];
@@ -34,7 +34,7 @@ export default function Home() {
 
   const renderSharedComponents = () => (
     <>
-      <UserInfo levelIndex={levelIndex} userPoints={userPoints} userName={userName} levelNames={levelNames} calculateProgress={calculateProgress} />
+      <UserInfo GalacticGoldRush={GalacticGoldRush} setGalacticGoldRush={setGalacticGoldRush} levelIndex={levelIndex} userPoints={userPoints} setUserPoints={setUserPoints} userName={userName} levelNames={levelNames} calculateProgress={calculateProgress} />
       <ProfitPerHour pointsPerHour={pointsPerHour} />
     </>
   );
@@ -42,6 +42,7 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [levelIndex, setLevelIndex] = useState(0);
   const [userPoints, setUserPoints] = useState(16000);
+  const [GalacticGoldRush, setGalacticGoldRush] = useState<StaticImageData>(BronzeSkim1);
   const [pointsPerHour, setPointsPerHour] = useState(0);
   const [energy, setEnergy] = useState(1000);
   const [maxEnergy, setMaxEnergy] = useState(1000);
@@ -169,6 +170,7 @@ export default function Home() {
         <div className="flex flex-col gap-4 mb-10 items-center justify-start h-screen pt-2 w-full">
           {renderSharedComponents()}
           <TappingArea
+            GalacticGoldRush={GalacticGoldRush}
             userPoints={userPoints}
             setUserPoints={setUserPoints}
             tapCount={tapCount}
@@ -180,7 +182,7 @@ export default function Home() {
             increaseTapCount={increaseTapCount}
             increaseMaxEnergy={increaseMaxEnergy}
             handleTapClick={handleTapClick}
-            setActiveTab={setActiveTab} 
+            setActiveTab={setActiveTab}
           />
         </div>
       )}
@@ -227,6 +229,7 @@ export default function Home() {
             />
           )}
           <CommonTapArea
+            GalacticGoldRush={GalacticGoldRush}
             tapCount={tapCount}
             energy={energy}
             maxEnergy={maxEnergy}

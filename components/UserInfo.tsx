@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import React, { useState } from "react";
 import Icon from "../icons/usericon.png";
 import ProgressPage from "./Progress"; // Make sure the path is correct
@@ -8,7 +8,10 @@ import Skin from "./Skin";
 
 // Define the prop types for UserInfo
 interface UserInfoProps {
+  GalacticGoldRush: StaticImageData;
+  setGalacticGoldRush: (newSkin: StaticImageData) => void; // Setter to update the global skin
   userPoints: number;
+  setUserPoints: (newPoints: number | ((prevPoints: number) => number)) => void;
   userName: string;
   levelIndex: number;
   levelNames: string[];
@@ -16,7 +19,10 @@ interface UserInfoProps {
 }
 
 export default function UserInfo({
+  GalacticGoldRush,
+  setGalacticGoldRush,
   userPoints,
+  setUserPoints,
   userName,
   levelIndex,
   levelNames,
@@ -84,7 +90,7 @@ export default function UserInfo({
         </div>
       </div>
 
-      {showSkinPage && <Skin levelIndex={levelIndex} userPoints={userPoints} userName={userName} levelNames={levelNames} calculateProgress={calculateProgress}  onClose={handleSkinClose} />}
+      {showSkinPage && <Skin GalacticGoldRush={GalacticGoldRush} setGalacticGoldRush={setGalacticGoldRush}  levelIndex={levelIndex} userPoints={userPoints} setUserPoints={setUserPoints} userName={userName} levelNames={levelNames} calculateProgress={calculateProgress}  onClose={handleSkinClose} />}
       {showProgressPage && <ProgressPage levelIndex={levelIndex} userPoints={userPoints} levelNames={levelNames} calculateProgress={calculateProgress} onClose={handleClose} />}
     </>
   );
