@@ -21,13 +21,13 @@ import UserInfo from "./UserInfo";
 
 interface SkinProps {
   userName: string;
-  GalacticGoldRush: StaticImageData; // Default image for the game
-  levelIndex: number; // Current user level index: 0 for Bronze, 1 for Silver, 2 for Gold
+  GalacticGoldRush: StaticImageData;
+  levelIndex: number;
   levelNames: string[];
   calculateProgress: () => number;
   userPoints: number;
   setUserPoints: (newPoints: number | ((prevPoints: number) => number)) => void;
-  setGalacticGoldRush: (newSkin: StaticImageData) => void; // Setter to update the global skin
+  setGalacticGoldRush: (newSkin: StaticImageData) => void;
   onClose: () => void;
 }
 
@@ -38,7 +38,7 @@ interface SkinImages {
 }
 
 const skinPrices: { [key: string]: number } = {
-  Bronze1: 0, // Default skin is free
+  Bronze1: 100, 
   Bronze2: 100,
   Bronze3: 100,
   Bronze4: 100,
@@ -78,7 +78,6 @@ const Skin: React.FC<SkinProps> = ({
   );
 
   useEffect(() => {
-    // Sync with localStorage to ensure data persists across sessions
     localStorage.setItem("purchasedSkins", JSON.stringify(purchasedSkins));
   }, [purchasedSkins]);
 
@@ -153,21 +152,23 @@ const Skin: React.FC<SkinProps> = ({
         <div className="w-1/2 flex flex-col items-center justify-center bg-gray-800">
           <Image src={selectedSkin} width={200} height={200} alt="Selected Skin" />
           {/* Show Price or Choose Button */}
-          {!isSkinLocked(selectedSkin) ? (
-            <button onClick={chooseSkin} className="bg-blue-500 text-white px-4 py-2 mt-4 rounded">
-              Choose
-            </button>
-          ) : (
-            <div className="text-white mt-4">
-              <p>Price: {getSkinPrice(selectedSkin)} Points</p>
-              <button
-                onClick={() => purchaseSkin(selectedSkin)}
-                className="bg-red-500 text-white px-4 py-2 mt-2 rounded"
-              >
-                Purchase for {getSkinPrice(selectedSkin)} Points
+          <div className="text-white mt-4">
+            {isSkinLocked(selectedSkin) ? (
+              <>
+                <p>Price: {getSkinPrice(selectedSkin)} Points</p>
+                <button
+                  onClick={() => purchaseSkin(selectedSkin)}
+                  className="bg-red-500 text-white px-4 py-2 mt-2 rounded"
+                >
+                  Purchase for {getSkinPrice(selectedSkin)} Points
+                </button>
+              </>
+            ) : (
+              <button onClick={chooseSkin} className="bg-blue-500 text-white px-4 py-2 mt-4 rounded">
+                Choose
               </button>
-            </div>
-          )}
+            )}
+          </div>
         </div>
 
         {/* Skins List */}
@@ -180,7 +181,7 @@ const Skin: React.FC<SkinProps> = ({
                   className={`relative bg-gray-700 p-2 rounded-lg cursor-pointer ${
                     selectedSkin === skin ? "border-2 border-blue-500" : ""
                   }`}
-                  onClick={() => !isSkinLocked(skin) && setSelectedSkin(skin)}
+                  onClick={() => setSelectedSkin(skin)}
                 >
                   <Image src={skin} width={50} height={50} alt={`Skin ${index + 1}`} />
                   {levelNames.indexOf(skinLevel) > levelIndex ? (
