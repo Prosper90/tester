@@ -2,8 +2,8 @@
 
 import Image from "next/image";
 import Astro from "../images/Armadillo_5.svg";
-import ChestBox from "../images/chest_box2.png";
-import Logo from "../images/Logo.png";
+import ChestBox from "../images/Chest.svg";
+import Logo from "../images/Galactic Gold Rush.svg";
 
 export default function Loading() {
   return (
