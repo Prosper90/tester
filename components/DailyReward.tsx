@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
-import Calender from '../icons/Calender.png';
+import Calender from '../icons/calendar.svg';
 import Coin from '../images/coin.png';
 
 interface DailyRewardProps {
