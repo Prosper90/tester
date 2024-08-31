@@ -123,6 +123,8 @@ const Skin: React.FC<SkinProps> = ({
     setShowPopup(false);
   };
 
+  const isActiveSkin = selectedSkin === GalacticGoldRush;
+
   return (
     <div className="fixed inset-0 bg-black flex flex-col z-50 overflow-auto">
       <div className="flex flex-row items-center justify-between w-full px-4 py-4">
@@ -148,10 +150,18 @@ const Skin: React.FC<SkinProps> = ({
           <Image src={selectedSkin} width={200} height={200} alt="Selected Skin" />
           <button
             onClick={pendingPurchase ? handlePurchase : () => setGalacticGoldRush(selectedSkin)}
-            className="mt-4 px-4 py-2 bg-blue-500 text-white rounded"
-            disabled={!pendingPurchase && selectedSkin === Default}
+            className={`mt-4 px-4 py-2 rounded ${
+              isActiveSkin
+                ? "bg-gray-500 text-gray-300 cursor-not-allowed"
+                : "bg-blue-500 text-white"
+            }`}
+            disabled={isActiveSkin || (!pendingPurchase && selectedSkin === Default)}
           >
-            {pendingPurchase ? (ownedSkins.has(pendingPurchase) ? "Choose" : `Purchase for ${skinPrices[pendingPurchase]} Points`) : "Choose"}
+            {pendingPurchase
+              ? ownedSkins.has(pendingPurchase)
+                ? "Choose"
+                : `Purchase for ${skinPrices[pendingPurchase]} Points`
+              : "Choose"}
           </button>
         </div>
 
@@ -188,15 +198,25 @@ const Skin: React.FC<SkinProps> = ({
 
       {showPopup && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75">
-          <div className="bg-gray-500 p-6 rounded-lg text-center">
-            <h2 className="text-lg mb-4">Confirm Purchase</h2>
-            <p className="mb-4 ">Are you sure you want to purchase this skin?</p>
-            <button onClick={handleConfirmPurchase} className="px-4 py-2 bg-blue-500 text-white rounded mr-2">
-              Confirm
-            </button>
-            <button onClick={handleCancelPurchase} className="px-4 py-2 bg-red-500 text-white rounded">
-              Cancel
-            </button>
+          <div className="bg-neutral-800 border-t-2 border-amber-600 p-6 rounded-t-[46px] top-glow">
+            <h2 className="text-purple-500 font-bold text-center text-2xl mb-4">Confirm Purchase</h2>
+            <p className="text-white mb-4">
+              Are you sure you want to purchase this skin for {skinPrices[pendingPurchase!]} Points?
+            </p>
+            <div className="flex gap-2 justify-center">
+              <button
+                onClick={handleConfirmPurchase}
+                className="bg-gradient-to-r from-indigo-600 to-purple-500 text-white px-4 py-2 rounded"
+              >
+                Yes
+              </button>
+              <button
+                onClick={handleCancelPurchase}
+                className="bg-gray-600 px-4 py-2 rounded text-white"
+              >
+                No
+              </button>
+            </div>
           </div>
         </div>
       )}
