@@ -18,30 +18,46 @@ import Friends from "@/components/Friends";
 import Earn from "@/components/Earn";
 import Airdrop from "@/components/Airdrop";
 import BronzeSkim1 from "../images/Armadillo_2.svg"
-import { StaticImageData } from "next/image";
+import { StaticImageData } from "next/image"
+import IconLevel1 from "../images/Achivment Levels/Blockchain Junior Developer.svg"
+import IconLevel2 from "../images/Achivment Levels/Senior DeFi Coder.svg"
+import IconLevel3 from '../images/Achivment Levels/Web3 Solutions Architect.svg'
+import IconLevel4 from '../images/Achivment Levels/Crypto Tech Strategist.svg'
+import IconLevel5 from '../images/Achivment Levels/Chief Blockchain Architect.svg'
 
 type CardLevels = { [key: string]: number };
+
 
 export default function Home() {
   const userName = "Jones";
   const levelNames = [
-    "Blockchain Junior Developer", "Senior DeFi Coder", "Web3 Solutions Architect", "Crypto Tech Strategist", "Chief Blockchain Architect"
+    "Blockchain Junior Developer", "Senior DeFi Coder", "Web3 Solutions Architect", "Crypto Tech Strategist", "Chief Blockchain Architect"
   ];
 
   const levelMinPoints = [
     0, 60000, 120000, 420000, 780000
   ];
 
+  // Ensure the levelIcons array is typed as StaticImageData[]
+  const levelIcons: StaticImageData[] = [
+    IconLevel1,
+    IconLevel2,
+    IconLevel3,
+    IconLevel4,
+    IconLevel5
+  ];
+
   const renderSharedComponents = () => (
     <>
-      <UserInfo GalacticGoldRush={GalacticGoldRush} setGalacticGoldRush={setGalacticGoldRush} levelIndex={levelIndex} userPoints={userPoints} setUserPoints={setUserPoints} userName={userName} levelNames={levelNames} calculateProgress={calculateProgress} />
+      <UserInfo GalacticGoldRush={GalacticGoldRush} setGalacticGoldRush={setGalacticGoldRush} levelIndex={levelIndex} levelIcons={levelIcons} userPoints={userPoints} setUserPoints={setUserPoints} userName={userName} levelNames={levelNames} calculateProgress={calculateProgress} />
       <ProfitPerHour pointsPerHour={pointsPerHour} />
     </>
   );
 
   const [isLoading, setIsLoading] = useState(true);
   const [levelIndex, setLevelIndex] = useState(0);
-  const [userPoints, setUserPoints] = useState(16000);
+  const [levelIcon, setLevelIcon]= useState<StaticImageData>(levelIcons[0]); 
+  const [userPoints, setUserPoints] = useState(6000000);
   const [GalacticGoldRush, setGalacticGoldRush] = useState<StaticImageData>(BronzeSkim1);
   const [pointsPerHour, setPointsPerHour] = useState(0);
   const [energy, setEnergy] = useState(1000);
@@ -141,6 +157,11 @@ export default function Home() {
 
     return () => clearInterval(interval);
   }, [pointsPerHour]);
+
+  useEffect(() => {
+    // Update levelIcon based on the current levelIndex
+    setLevelIcon(levelIcons[levelIndex]);
+  }, [levelIndex, levelIcons]);
 
   const calculateProgress = useCallback(() => {
     const prevMinPoints = levelMinPoints[levelIndex];

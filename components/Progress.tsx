@@ -1,5 +1,5 @@
 import React from "react";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import Coin from "../images/coin.png"
 import Arrow from "../icons/Arrow.png";
 import Icon from "../icons/usericon.png";
@@ -11,11 +11,12 @@ interface ProgressPageProps {
     levelNames: string[];
     calculateProgress: () => number;
     userPoints: number;
+    levelIcons: StaticImageData[];
     onClose: () => void;
 }
 
 const ProgressPage: React.FC<ProgressPageProps> = ({
-    
+    levelIcons,
     levelIndex,
     levelNames,
     calculateProgress,
@@ -39,7 +40,7 @@ const ProgressPage: React.FC<ProgressPageProps> = ({
                     <div className="absolute inset-0 rounded-full filter blur-3xl opacity-80 bg-gradient-to-r from-amber-300 via-orange-400 to-amber-300"></div>
 
                     <Image
-                        src={Astro}
+                        src={levelIcons[levelIndex]}
                         width={200}
                         height={200}
                         alt="Character"
@@ -59,7 +60,9 @@ const ProgressPage: React.FC<ProgressPageProps> = ({
                     </div>
                 </div>
             </div>
-
+            <div className="mt-10">
+            <h3 className="text-white text-2xl text-center text-bold flex-1">Leaderboard</h3>
+            </div>
             {/* User Ranking List */}
             <div className="w-full mt-8 px-4">
                 {Array(15).fill(0).map((_, index) => (

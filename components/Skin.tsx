@@ -30,6 +30,7 @@ interface SkinProps {
   userName: string;
   levelIndex: number;
   levelNames: string[];
+  levelIcons: StaticImageData[];
   calculateProgress: () => number;
   onClose: () => void;
 }
@@ -71,6 +72,7 @@ const Skin: React.FC<SkinProps> = ({
   userPoints,
   levelIndex,
   levelNames,
+  levelIcons,
   calculateProgress,
   onClose,
 }) => {
@@ -141,6 +143,7 @@ const Skin: React.FC<SkinProps> = ({
         userPoints={userPoints}
         setUserPoints={setUserPoints}
         userName={userName}
+        levelIcons={levelIcons}
         levelNames={levelNames}
         calculateProgress={calculateProgress}
       />

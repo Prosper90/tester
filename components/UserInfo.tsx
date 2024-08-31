@@ -15,6 +15,7 @@ interface UserInfoProps {
   userName: string;
   levelIndex: number;
   levelNames: string[];
+  levelIcons: StaticImageData[];
   calculateProgress: () => number;
 }
 
@@ -23,6 +24,7 @@ export default function UserInfo({
   setGalacticGoldRush,
   userPoints,
   setUserPoints,
+  levelIcons,
   userName,
   levelIndex,
   levelNames,
@@ -64,12 +66,15 @@ export default function UserInfo({
         <div className="flex items-center w-1/3">
           <div className="w-full">
             <div className="flex justify-between">
+              <div className="flex gap-1 items-center">
+                <Image src={levelIcons[levelIndex]} width={25} height={25} alt="achievement"/>
               <p
                 className="text-sm text-white cursor-pointer"
                 onClick={handleLevelClick}
-              >
+                >
                 {levelNames[levelIndex]}
               </p>
+                </div>
               <p
                 className="text-sm text-white cursor-pointer"
                 onClick={handleLevelClick}
@@ -90,8 +95,8 @@ export default function UserInfo({
         </div>
       </div>
 
-      {showSkinPage && <Skin GalacticGoldRush={GalacticGoldRush} setGalacticGoldRush={setGalacticGoldRush}  levelIndex={levelIndex} userPoints={userPoints} setUserPoints={setUserPoints} userName={userName} levelNames={levelNames} calculateProgress={calculateProgress}  onClose={handleSkinClose} />}
-      {showProgressPage && <ProgressPage levelIndex={levelIndex} userPoints={userPoints} levelNames={levelNames} calculateProgress={calculateProgress} onClose={handleClose} />}
+      {showSkinPage && <Skin GalacticGoldRush={GalacticGoldRush} levelIcons={levelIcons} setGalacticGoldRush={setGalacticGoldRush}  levelIndex={levelIndex} userPoints={userPoints} setUserPoints={setUserPoints} userName={userName} levelNames={levelNames} calculateProgress={calculateProgress}  onClose={handleSkinClose} />}
+      {showProgressPage && <ProgressPage levelIndex={levelIndex} levelIcons={levelIcons} userPoints={userPoints} levelNames={levelNames} calculateProgress={calculateProgress} onClose={handleClose} />}
     </>
   );
 }
