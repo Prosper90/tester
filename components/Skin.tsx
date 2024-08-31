@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Arrow from "../icons/Arrow.png";
 import Image, { StaticImageData } from "next/image";
+import Default from "../images/Armadillo_2.svg";
 import Bronze1 from "../images/Skins/Bronze/Bronze_0001.png";
 import Bronze2 from "../images/Skins/Bronze/Bronze_0002.png";
 import Bronze3 from "../images/Skins/Bronze/Bronze_0003.png";
@@ -16,7 +17,6 @@ import Gold2 from "../images/Skins/Gold/Gold_0002.png";
 import Gold3 from "../images/Skins/Gold/Gold_0003.png";
 import Gold4 from "../images/Skins/Gold/Gold_0004.png";
 import Gold5 from "../images/Skins/Gold/Gold_0005.png";
-import Default from "../images/Armadillo_2.svg";
 import Lock from "../icons/Lock.svg";
 import UserInfo from "./UserInfo";
 
