@@ -5,7 +5,6 @@ import Airdrop1 from "../images/Airdrop.svg";
 
 export default function Airdrop() {
 
-
     return (
         <div className="friends_background">
         <div className="m-4 flex flex-col items-center justify-center gap-4">
