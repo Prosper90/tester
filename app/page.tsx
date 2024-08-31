@@ -57,7 +57,7 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [levelIndex, setLevelIndex] = useState(0);
   const [levelIcon, setLevelIcon]= useState<StaticImageData>(levelIcons[0]); 
-  const [userPoints, setUserPoints] = useState(6000000);
+  const [userPoints, setUserPoints] = useState(6000);
   const [GalacticGoldRush, setGalacticGoldRush] = useState<StaticImageData>(BronzeSkim1);
   const [pointsPerHour, setPointsPerHour] = useState(0);
   const [energy, setEnergy] = useState(1000);
@@ -211,7 +211,6 @@ export default function Home() {
         <div className="flex flex-col gap-4 items-center justify-start h-full pt-2 w-full mb-24">
           {renderSharedComponents()}
           <DailyCombo />
-          <Balance userPoints={userPoints} />
           <CardTabs cardTab={cardTab} setCardTab={setCardTab} />
           {cardTab === 'Performance' && (
             <Performance
@@ -249,6 +248,7 @@ export default function Home() {
               updateProfitPerHour={updateProfitPerHour}
             />
           )}
+          <Balance userPoints={userPoints} />
           <CommonTapArea
             GalacticGoldRush={GalacticGoldRush}
             tapCount={tapCount}

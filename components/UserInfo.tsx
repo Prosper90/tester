@@ -63,20 +63,18 @@ export default function UserInfo({
             <h4 className="text-gray-400 font-bold text-sm">CEO</h4>
           </div>
         </div>
-        <div className="flex items-center w-1/3">
+        <div className="flex items-center w-2/3">
           <div className="w-full">
-            <div className="flex justify-between">
-              <div className="flex gap-1 items-center">
-                <Image src={levelIcons[levelIndex]} width={25} height={25} alt="achievement"/>
+            <div className="flex gap-1 items-center justify-evenly">
+              <Image src={levelIcons[levelIndex]} width={25} height={25} alt="achievement" />
               <p
                 className="text-sm text-white cursor-pointer"
                 onClick={handleLevelClick}
-                >
+              >
                 {levelNames[levelIndex]}
               </p>
-                </div>
               <p
-                className="text-sm text-white cursor-pointer"
+                className="text-sm w-1/5 text-white cursor-pointer"
                 onClick={handleLevelClick}
               >
                 {levelIndex + 1}{" "}
@@ -95,7 +93,7 @@ export default function UserInfo({
         </div>
       </div>
 
-      {showSkinPage && <Skin GalacticGoldRush={GalacticGoldRush} levelIcons={levelIcons} setGalacticGoldRush={setGalacticGoldRush}  levelIndex={levelIndex} userPoints={userPoints} setUserPoints={setUserPoints} userName={userName} levelNames={levelNames} calculateProgress={calculateProgress}  onClose={handleSkinClose} />}
+      {showSkinPage && <Skin GalacticGoldRush={GalacticGoldRush} levelIcons={levelIcons} setGalacticGoldRush={setGalacticGoldRush} levelIndex={levelIndex} userPoints={userPoints} setUserPoints={setUserPoints} userName={userName} levelNames={levelNames} calculateProgress={calculateProgress} onClose={handleSkinClose} />}
       {showProgressPage && <ProgressPage levelIndex={levelIndex} levelIcons={levelIcons} userPoints={userPoints} levelNames={levelNames} calculateProgress={calculateProgress} onClose={handleClose} />}
     </>
   );
