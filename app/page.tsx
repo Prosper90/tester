@@ -25,11 +25,11 @@ type CardLevels = { [key: string]: number };
 export default function Home() {
   const userName = "Jones";
   const levelNames = [
-    "Bronze", "Silver", "Gold"
+    "Blockchain Junior Developer", "Senior DeFi Coder", "Web3 Solutions Architect", "Crypto Tech Strategist", "Chief Blockchain Architect"
   ];
 
   const levelMinPoints = [
-    0, 50000, 1000000
+    0, 60000, 120000, 420000, 780000
   ];
 
   const renderSharedComponents = () => (

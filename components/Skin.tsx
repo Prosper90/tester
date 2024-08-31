@@ -16,29 +16,31 @@ import Gold2 from "../images/Skins/Gold/Gold_0002.png";
 import Gold3 from "../images/Skins/Gold/Gold_0003.png";
 import Gold4 from "../images/Skins/Gold/Gold_0004.png";
 import Gold5 from "../images/Skins/Gold/Gold_0005.png";
+import Default from "../images/Armadillo_2.svg";
 import Lock from "../icons/Lock.svg";
 import UserInfo from "./UserInfo";
 
+type SkinName = "Default" | "Bronze1" | "Bronze2" | "Bronze3" | "Bronze4" | "Bronze5" | "Silver1" | "Silver2" | "Silver3" | "Silver4" | "Silver5" | "Gold1" | "Gold2" | "Gold3" | "Gold4" | "Gold5";
+
 interface SkinProps {
-  userName: string;
   GalacticGoldRush: StaticImageData;
+  setGalacticGoldRush: (newSkin: StaticImageData) => void;
+  userPoints: number;
+  setUserPoints: (newPoints: number | ((prevPoints: number) => number)) => void;
+  userName: string;
   levelIndex: number;
   levelNames: string[];
   calculateProgress: () => number;
-  userPoints: number;
-  setUserPoints: (newPoints: number | ((prevPoints: number) => number)) => void;
-  setGalacticGoldRush: (newSkin: StaticImageData) => void;
   onClose: () => void;
 }
 
 interface SkinImages {
-  Bronze: StaticImageData[];
-  Silver: StaticImageData[];
-  Gold: StaticImageData[];
+  [tier: string]: StaticImageData[];
 }
 
-const skinPrices: { [key: string]: number } = {
-  Bronze1: 100, 
+const skinPrices: { [key in SkinName]: number } = {
+  Default: 0,
+  Bronze1: 100,
   Bronze2: 100,
   Bronze3: 100,
   Bronze4: 100,
@@ -66,67 +68,63 @@ const Skin: React.FC<SkinProps> = ({
   setGalacticGoldRush,
   userName,
   setUserPoints,
+  userPoints,
   levelIndex,
   levelNames,
   calculateProgress,
-  userPoints,
   onClose,
 }) => {
   const [selectedSkin, setSelectedSkin] = useState<StaticImageData>(GalacticGoldRush);
-  const [purchasedSkins, setPurchasedSkins] = useState<{ [key: string]: number[] }>(
-    JSON.parse(localStorage.getItem("purchasedSkins") || "{}")
-  );
+  const [ownedSkins, setOwnedSkins] = useState<Set<SkinName>>(new Set<SkinName>(["Default"]));
+  const [pendingPurchase, setPendingPurchase] = useState<SkinName | null>(null);
+  const [showPopup, setShowPopup] = useState<boolean>(false);
 
   useEffect(() => {
-    localStorage.setItem("purchasedSkins", JSON.stringify(purchasedSkins));
-  }, [purchasedSkins]);
+    const savedSkin = localStorage.getItem('selectedSkin');
+    if (savedSkin) {
+      setSelectedSkin(JSON.parse(savedSkin));
+    }
 
-  const isSkinLocked = (skin: StaticImageData): boolean => {
-    if (skin === GalacticGoldRush) return false;
+    const savedOwnedSkins = localStorage.getItem('ownedSkins');
+    if (savedOwnedSkins) {
+      setOwnedSkins(new Set(JSON.parse(savedOwnedSkins)));
+    }
+  }, []);
 
-    const skinLevel = Object.keys(skinImages).find((level) => skinImages[level as keyof SkinImages].includes(skin)) as keyof SkinImages;
-    const index = skinImages[skinLevel].indexOf(skin);
+  useEffect(() => {
+    localStorage.setItem('selectedSkin', JSON.stringify(selectedSkin));
+    localStorage.setItem('ownedSkins', JSON.stringify(Array.from(ownedSkins)));
+  }, [selectedSkin, ownedSkins]);
 
-    return levelNames.indexOf(skinLevel) > levelIndex || !isSkinUnlocked(skinLevel, index);
+  const handleSkinSelect = (skin: StaticImageData, skinName: SkinName, price: number) => {
+    setSelectedSkin(skin);
+    setPendingPurchase(ownedSkins.has(skinName) ? null : skinName);
   };
 
-  const isSkinUnlocked = (skinLevel: keyof SkinImages, index: number): boolean => {
-    return purchasedSkins[skinLevel]?.includes(index) ?? false;
-  };
-
-  const purchaseSkin = (skin: StaticImageData): void => {
-    const skinLevel = Object.keys(skinImages).find((level) => skinImages[level as keyof SkinImages].includes(skin)) as keyof SkinImages;
-    const index = skinImages[skinLevel].indexOf(skin);
-    const skinKey = `${skinLevel}${index + 1}`;
-
-    if (userPoints >= skinPrices[skinKey]) {
-      const updatedPurchasedSkins = {
-        ...purchasedSkins,
-        [skinLevel]: [...(purchasedSkins[skinLevel] || []), index],
-      };
-      setPurchasedSkins(updatedPurchasedSkins);
-      setUserPoints(userPoints - skinPrices[skinKey]);
+  const handlePurchase = () => {
+    if (pendingPurchase && userPoints >= skinPrices[pendingPurchase]) {
+      setShowPopup(true);
     } else {
-      alert("Not enough points to purchase this skin.");
+      alert("You do not have enough points to purchase this skin.");
     }
   };
 
-  const chooseSkin = () => {
-    setGalacticGoldRush(selectedSkin);
-    onClose();
+  const handleConfirmPurchase = () => {
+    if (pendingPurchase) {
+      setUserPoints(prev => prev - skinPrices[pendingPurchase]);
+      setOwnedSkins(prev => new Set(prev).add(pendingPurchase));
+      setGalacticGoldRush(selectedSkin);
+      setPendingPurchase(null);
+      setShowPopup(false);
+    }
   };
 
-  const getSkinPrice = (skin: StaticImageData): number => {
-    if (skin === GalacticGoldRush) return 0;
-    const skinLevel = Object.keys(skinImages).find((level) => skinImages[level as keyof SkinImages].includes(skin)) as keyof SkinImages;
-    const index = skinImages[skinLevel].indexOf(skin);
-    const skinKey = `${skinLevel}${index + 1}`;
-    return skinPrices[skinKey];
+  const handleCancelPurchase = () => {
+    setShowPopup(false);
   };
 
   return (
     <div className="fixed inset-0 bg-black flex flex-col z-50 overflow-auto">
-      {/* Header with Close Button */}
       <div className="flex flex-row items-center justify-between w-full px-4 py-4">
         <button onClick={onClose} className="p-2">
           <Image src={Arrow} width={20} height={20} alt="arrow" />
@@ -134,71 +132,74 @@ const Skin: React.FC<SkinProps> = ({
         <h3 className="text-white text-2xl text-center flex-1">Profile</h3>
       </div>
 
-      {/* User Info */}
       <UserInfo
         GalacticGoldRush={GalacticGoldRush}
         setGalacticGoldRush={setGalacticGoldRush}
-        userName={userName}
         levelIndex={levelIndex}
         userPoints={userPoints}
         setUserPoints={setUserPoints}
+        userName={userName}
         levelNames={levelNames}
         calculateProgress={calculateProgress}
       />
 
-      {/* Main Content Area */}
       <div className="flex flex-1">
-        {/* Selected Skin Display */}
         <div className="w-1/2 flex flex-col items-center justify-center bg-gray-800">
           <Image src={selectedSkin} width={200} height={200} alt="Selected Skin" />
-          {/* Show Price or Choose Button */}
-          <div className="text-white mt-4">
-            {isSkinLocked(selectedSkin) ? (
-              <>
-                <p>Price: {getSkinPrice(selectedSkin)} Points</p>
-                <button
-                  onClick={() => purchaseSkin(selectedSkin)}
-                  className="bg-red-500 text-white px-4 py-2 mt-2 rounded"
-                >
-                  Purchase for {getSkinPrice(selectedSkin)} Points
-                </button>
-              </>
-            ) : (
-              <button onClick={chooseSkin} className="bg-blue-500 text-white px-4 py-2 mt-4 rounded">
-                Choose
-              </button>
-            )}
-          </div>
+          <button
+            onClick={pendingPurchase ? handlePurchase : () => setGalacticGoldRush(selectedSkin)}
+            className="mt-4 px-4 py-2 bg-blue-500 text-white rounded"
+            disabled={!pendingPurchase && selectedSkin === Default}
+          >
+            {pendingPurchase ? (ownedSkins.has(pendingPurchase) ? "Choose" : `Purchase for ${skinPrices[pendingPurchase]} Points`) : "Choose"}
+          </button>
         </div>
 
-        {/* Skins List */}
         <div className="w-1/2 p-4 overflow-y-auto">
           <div className="grid grid-cols-2 gap-4">
-            {Object.entries(skinImages).map(([skinLevel, skins]) =>
-              skins.map((skin: StaticImageData, index: number) => (
-                <div
-                  key={`${skinLevel}-${index}`}
-                  className={`relative bg-gray-700 p-2 rounded-lg cursor-pointer ${
-                    selectedSkin === skin ? "border-2 border-blue-500" : ""
-                  }`}
-                  onClick={() => setSelectedSkin(skin)}
-                >
-                  <Image src={skin} width={50} height={50} alt={`Skin ${index + 1}`} />
-                  {levelNames.indexOf(skinLevel) > levelIndex ? (
-                    <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
-                      <Image src={Lock} width={50} height={50} alt="Locked Level" />
-                    </div>
-                  ) : isSkinLocked(skin) ? (
-                    <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
-                      <Image src={Lock} width={20} height={20} alt="Locked" />
-                    </div>
-                  ) : null}
-                </div>
-              ))
+            {Object.entries(skinImages).map(([tier, skins]) =>
+              skins.map((skin: StaticImageData, index: number) => {
+                const skinName = `${tier}${index + 1}` as SkinName;
+                const price = skinPrices[skinName];
+                const isOwned = ownedSkins.has(skinName);
+
+                return (
+                  <div
+                    key={skinName}
+                    className={`relative bg-gray-700 p-2 rounded-lg cursor-pointer ${
+                      isOwned ? "border-2 border-blue-500" : "border-2 border-red-500"
+                    }`}
+                    onClick={() => handleSkinSelect(skin, skinName, price)}
+                  >
+                    <Image src={skin} width={50} height={50} alt={skinName} />
+                    {!isOwned && (
+                      <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                        <Image src={Lock} width={20} height={20} alt="Locked" />
+                        <p className="text-white">{price} Points</p>
+                      </div>
+                    )}
+                  </div>
+                );
+              })
             )}
           </div>
         </div>
       </div>
+
+      {showPopup && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75">
+          <div className="bg-gray-500 p-6 rounded-lg text-center">
+            <h2 className="text-lg mb-4">Confirm Purchase</h2>
+            <p className="mb-4 ">Are you sure you want to purchase this skin?</p>
+            <button onClick={handleConfirmPurchase} className="px-4 py-2 bg-blue-500 text-white rounded mr-2">
+              Confirm
+            </button>
+            <button onClick={handleCancelPurchase} className="px-4 py-2 bg-red-500 text-white rounded">
+              Cancel
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
