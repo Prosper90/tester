@@ -24,6 +24,7 @@ import IconLevel2 from "../images/Achivment Levels/Senior DeFi Coder.svg"
 import IconLevel3 from '../images/Achivment Levels/Web3 Solutions Architect.svg'
 import IconLevel4 from '../images/Achivment Levels/Crypto Tech Strategist.svg'
 import IconLevel5 from '../images/Achivment Levels/Chief Blockchain Architect.svg'
+import Redeem from "@/components/Redeem";
 
 type CardLevels = { [key: string]: number };
 
@@ -50,6 +51,7 @@ export default function Home() {
   const renderSharedComponents = () => (
     <>
       <UserInfo GalacticGoldRush={GalacticGoldRush} setGalacticGoldRush={setGalacticGoldRush} levelIndex={levelIndex} levelIcons={levelIcons} userPoints={userPoints} setUserPoints={setUserPoints} userName={userName} levelNames={levelNames} calculateProgress={calculateProgress} />
+      <Redeem userPoints={userPoints} setUserPoints={setUserPoints}/>
       <ProfitPerHour pointsPerHour={pointsPerHour} />
     </>
   );
