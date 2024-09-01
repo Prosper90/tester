@@ -87,7 +87,7 @@ const DailyRewardPopup: React.FC<DailyRewardProps> = ({
         <div className="flex flex-col items-center mb-4">
           <div className="relative w-14 h-14 flex items-center justify-center">
             <div className="absolute inset-0 rounded-full filter blur-lg bg-gradient-to-r from-purple-700 via-purple-900 to-purple-800"></div>
-            <Image src={Calender} alt="Daily Reward" className="w-10 relative z-10 h-10" />
+            <Image src={Calender} alt="Daily Reward" className="w-20 relative z-10 h-20" />
           </div>
           <h2 className="text-2xl font-semibold">Daily Reward</h2>
           <p className="text-sm text-center text-gray-400 mt-1">
