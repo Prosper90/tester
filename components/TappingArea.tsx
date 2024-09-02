@@ -7,7 +7,7 @@ import Coin from "../images/coin.png";
 import Star from "../icons/Star 1.svg";
 import Diamond from "../icons/Star 2.svg";
 import Clock from "../icons/Satr3.svg";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import Boost from "./Boost";
 import PointIncrement from "./PointIncrement";
 import DailyRewardPopup from "./DailyReward"; // Import the DailyRewardPopup component
@@ -27,11 +27,10 @@ interface TappingAreaProps {
   setActiveTab: (tabName: string) => void;
 }
 
-const MORSE_CODE = "...- .- .-.. .. -.. .- - --- .-.";
 const TRANSLATION = "VALIDATOR";
 const BONUS_POINTS = 2000;
 const ONE_DAY_IN_MS = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
-
+const LONG_PRESS_DURATION = 500;
 // Morse code map for letters and digits
 const morseCodeMap: { [key: string]: string } = {
   A: ".-",
@@ -55,7 +54,7 @@ const morseCodeMap: { [key: string]: string } = {
   S: "...",
   T: "-",
   U: "..-",
-  V: "...",
+  V: "...-",
   W: ".--",
   X: "-..-",
   Y: "-.--",
@@ -97,6 +96,7 @@ export default function TappingArea({
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [lastCompletionTime, setLastCompletionTime] = useState<number | null>(null);
   const [canUseCipher, setCanUseCipher] = useState<boolean>(true); // State to control cipher mode usage
+  const longPressTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     // Retrieve the last completion time from local storage on component mount
@@ -129,23 +129,41 @@ export default function TappingArea({
   };
 
   // Handle tap or long press
-  const handleTap = (e: React.MouseEvent<HTMLImageElement>) => {
+  const handleTap = useCallback((e: React.MouseEvent<HTMLImageElement>) => {
     e.preventDefault();
     const rect = e.currentTarget.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
     setTapPosition({ x, y });
-
+  
     if (isCipherMode && canUseCipher) {
-      handleTapClick();
-      const newSymbol = ".";
-      setTapSymbol(newSymbol);
-      updateUserInput(newSymbol); // Use function to update input and handle logic
-    } else if (!isCipherMode) {
+      longPressTimerRef.current = setTimeout(() => {
+        handleLongPress();
+      }, LONG_PRESS_DURATION);
+    } else {
       handleTapClick();
       setShowIncrement(true);
       setTimeout(() => setShowIncrement(false), 500);
     }
+  }, [isCipherMode, canUseCipher, handleTapClick]);
+
+  const handleMouseUp = () => {
+    if (longPressTimerRef.current) {
+      clearTimeout(longPressTimerRef.current);
+      longPressTimerRef.current = null;
+    }
+    if (tapSymbol === null) {
+      // Regular tap detected
+      setTapSymbol('.');
+    }
+  };
+  const handleMouseDown = (e: React.MouseEvent<HTMLImageElement>) => {
+    e.preventDefault();
+    longPressTimerRef.current = setTimeout(() => {
+      if (isCipherMode && canUseCipher) {
+        handleLongPress();
+      }
+    }, LONG_PRESS_DURATION);
   };
 
   // Handle long press for dash
@@ -241,9 +259,8 @@ export default function TappingArea({
               height={200}
               onClick={handleTap}
               onContextMenu={(e) => e.preventDefault()} // Prevent context menu on right click
-              onMouseDown={(e) => {
-                if (e.button === 2) handleLongPress(); // Right click for long press
-              }}
+              onMouseDown={handleMouseDown}
+              onMouseUp={handleMouseUp}
               alt="Central Tap"
               className="transition duration-200 ease-in-out rounded-full"
             />
@@ -253,9 +270,8 @@ export default function TappingArea({
               height={100}
               onClick={handleTap}
               onContextMenu={(e) => e.preventDefault()} // Prevent context menu on right click
-              onMouseDown={(e) => {
-                if (e.button === 2) handleLongPress(); // Right click for long press
-              }}
+              onMouseDown={handleMouseDown}
+              onMouseUp={handleMouseUp}
               alt="Armadillo"
               style={{
                 filter: showIncrement ? "url(#glow)" : "none",
@@ -299,9 +315,9 @@ export default function TappingArea({
           setShowBoost={setShowBoost}
         />
       )}
-      
+
       {/* Show the Daily Reward Popup if showDailyReward is true */}
-      {showDailyReward && <DailyRewardPopup userPoints={userPoints} setUserPoints={setUserPoints} onClose={closeDailyRewardPopup}/>}
+      {showDailyReward && <DailyRewardPopup userPoints={userPoints} setUserPoints={setUserPoints} onClose={closeDailyRewardPopup} />}
     </div>
   );
 }
