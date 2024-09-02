@@ -47,7 +47,7 @@ const ProgressPage: React.FC<ProgressPageProps> = ({
                         className="relative z-10"
                     />
                 </div>
-                <h4 className="text-white text-3xl mt-2">{levelNames[levelIndex]}</h4>
+                <h4 className="text-white text-center text-3xl mt-2">{levelNames[levelIndex]}</h4>
                 <p className="text-gray-400 text-lg mt-1">{userPoints}</p>
 
                 {/* Progress Bar */}

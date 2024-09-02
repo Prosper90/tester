@@ -17,13 +17,13 @@ const Setting: React.FC<SettingProps> = ({ onClose }) => {
             </div>
             {/* Settings Options */}
             <div className="flex flex-col space-y-4 px-4 mt-4">
-                <div className="flex justify-between items-center bg-zinc-800 px-4 py-3 rounded-lg">
+                {/* <div className="flex justify-between items-center bg-zinc-800 px-4 py-3 rounded-lg">
                     <span className="text-white text-lg">Select Exchanger</span>
                     <span className="text-gray-400 text-lg">Binance</span>
-                </div>
+                </div> */}
                 <div className="flex justify-between items-center bg-zinc-800 px-4 py-3 rounded-lg">
                     <span className="text-white text-lg">Delete Account</span>
-                    <span className="text-gray-400 bg-red-800 px-1 rounded-md text-lg">Delete</span>
+                    <span className="text-gray-400 bg-red-600 px-1 rounded-md text-lg">Delete</span>
                 </div>
             </div>
         </div>

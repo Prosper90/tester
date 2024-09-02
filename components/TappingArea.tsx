@@ -7,7 +7,7 @@ import Coin from "../images/coin.png";
 import Star from "../icons/Star 1.svg";
 import Diamond from "../icons/Star 2.svg";
 import Clock from "../icons/Satr3.svg";
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef } from "react";
 import Boost from "./Boost";
 import PointIncrement from "./PointIncrement";
 import DailyRewardPopup from "./DailyReward"; // Import the DailyRewardPopup component
@@ -129,23 +129,30 @@ export default function TappingArea({
   };
 
   // Handle tap or long press
-  const handleTap = useCallback((e: React.MouseEvent<HTMLImageElement>) => {
+  const handleTap = (e: React.MouseEvent<HTMLImageElement>) => {
     e.preventDefault();
     const rect = e.currentTarget.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
     setTapPosition({ x, y });
-  
-    if (isCipherMode && canUseCipher) {
-      longPressTimerRef.current = setTimeout(() => {
+
+    longPressTimerRef.current = setTimeout(() => {
+      if (isCipherMode && canUseCipher) {
         handleLongPress();
-      }, LONG_PRESS_DURATION);
-    } else {
+      }
+    }, LONG_PRESS_DURATION);
+
+    if (isCipherMode && canUseCipher) {
+      handleTapClick();
+      const newSymbol = ".";
+      setTapSymbol(newSymbol);
+      updateUserInput(newSymbol); // Use function to update input and handle logic
+    } else if (!isCipherMode) {
       handleTapClick();
       setShowIncrement(true);
       setTimeout(() => setShowIncrement(false), 500);
     }
-  }, [isCipherMode, canUseCipher, handleTapClick]);
+  };
 
   const handleMouseUp = () => {
     if (longPressTimerRef.current) {
@@ -259,8 +266,9 @@ export default function TappingArea({
               height={200}
               onClick={handleTap}
               onContextMenu={(e) => e.preventDefault()} // Prevent context menu on right click
-              onMouseDown={handleMouseDown}
-              onMouseUp={handleMouseUp}
+              onMouseDown={(e) => {
+                if (e.button === 2) handleLongPress(); // Right click for long press
+              }}
               alt="Central Tap"
               className="transition duration-200 ease-in-out rounded-full"
             />
@@ -270,8 +278,9 @@ export default function TappingArea({
               height={100}
               onClick={handleTap}
               onContextMenu={(e) => e.preventDefault()} // Prevent context menu on right click
-              onMouseDown={handleMouseDown}
-              onMouseUp={handleMouseUp}
+              onMouseDown={(e) => {
+                if (e.button === 2) handleLongPress(); // Right click for long press
+              }}
               alt="Armadillo"
               style={{
                 filter: showIncrement ? "url(#glow)" : "none",
@@ -315,9 +324,9 @@ export default function TappingArea({
           setShowBoost={setShowBoost}
         />
       )}
-
+      
       {/* Show the Daily Reward Popup if showDailyReward is true */}
-      {showDailyReward && <DailyRewardPopup userPoints={userPoints} setUserPoints={setUserPoints} onClose={closeDailyRewardPopup} />}
+      {showDailyReward && <DailyRewardPopup userPoints={userPoints} setUserPoints={setUserPoints} onClose={closeDailyRewardPopup}/>}
     </div>
   );
 }
