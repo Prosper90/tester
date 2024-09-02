@@ -1,53 +1,30 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Coin from "../images/coin.png";
 import OrbCipher from "../images/Allien Planets/Allien Planet 5.svg";
 import Armadillo from "../images/Armadillo_2.svg";
 
-// Morse code constants
-const MORSE_CODE = "...- .- .-.. .. -.. .- - --- .-."; // Morse code for "VALIDATOR"
-const TRANSLATION = "VALIDATOR";
-const BONUS_POINTS = 2000;
-
-// Morse code map for letters and digits
-const morseCodeMap: { [key: string]: string } = {
-  A: ".-",
-  B: "-...",
-  C: "-.-.",
-  D: "-..",
-  E: ".",
-  F: "..-.",
-  G: "--.",
-  H: "....",
-  I: "..",
-  J: ".---",
-  K: "-.-",
-  L: ".-..",
-  M: "--",
-  N: "-.",
-  O: "---",
-  P: ".--.",
-  Q: "--.-",
-  R: ".-.",
-  S: "...",
-  T: "-",
-  U: "..-",
-  V: "...-",
-  W: ".--",
-  X: "-..-",
-  Y: "-.--",
-  Z: "--..",
-  "0": "-----",
-  "1": ".----",
-  "2": "..---",
-  "3": "...--",
-  "4": "....-",
-  "5": ".....",
-  "6": "-....",
-  "7": "--...",
-  "8": "---..",
-  "9": "----."
-};
+// List of cipher codes and their translations
+const DAILY_CIPHERS = [
+  { translation: "VALIDATOR", morse: "...- .- .-.. .. -.. .- - --- .-.", bonusPoints: 2000 },
+  { translation: "CONSENSUS", morse: "-.-. --- -. ... . -. ... ..- ...", bonusPoints: 2000 },
+  { translation: "BLOCKCHAIN", morse: "-... .-.. --- -.-. -.- -.-. .... .- .. -. ", bonusPoints: 2000 },
+  { translation: "PROOFOFWORK", morse: ".--. .-. --- --- ..-. --- ..-. .-- --- .-. -.-", bonusPoints: 2000 },
+  { translation: "HASH", morse: ".... .- ... ....", bonusPoints: 2000 },
+  { translation: "ALGORITHM", morse: ".- .-.. --. --- .-. .. - .... --", bonusPoints: 2000 },
+  { translation: "CORDIAL", morse: "-.-. --- .-. -.. .. .- .-..", bonusPoints: 2000 },
+  { translation: "COIN", morse: "-.-. --- .. -. ", bonusPoints: 2000 },
+  { translation: "UP", morse: "..- .--.", bonusPoints: 2000 },
+  { translation: "CHAIN", morse: "-.-. .... .- .. -. ", bonusPoints: 2000 },
+  { translation: "STACK", morse: "... - .- -.-. -.-", bonusPoints: 2000 },
+  { translation: "HAVE", morse: ".... .- ...- .", bonusPoints: 2000 },
+  { translation: "HASHL", morse: ".... .- ... .... .-..", bonusPoints: 2000 },
+  { translation: "BLOCK", morse: "-... .-.. --- -.-. -.-", bonusPoints: 2000 },
+  { translation: "PROOF", morse: ".--. .-. --- --- ..-.", bonusPoints: 2000 },
+  { translation: "CRYPTO", morse: "-.-. .-. -.-- .--. - ---", bonusPoints: 2000 },
+  { translation: "SCALE", morse: "... -.-. .- .-.. .", bonusPoints: 2000 },
+  { translation: "UNITS", morse: "..- -. .. - ...", bonusPoints: 2000 }
+];
 
 interface CipherModeProps {
   userPoints: number;
@@ -67,16 +44,23 @@ export default function CipherMode({
     x: 0,
     y: 0,
   });
-  const [orbImage, setOrbImage] = useState(OrbCipher); // State for the orb image
-  const [userInput, setUserInput] = useState<string>(""); // State to track user Morse code input
-  const [displayText, setDisplayText] = useState<string>(""); // State to track the display text
-  const [currentIndex, setCurrentIndex] = useState<number>(0); // State to track the current letter index
-  const [tapSymbol, setTapSymbol] = useState<string | null>(null); // State to track the symbol
+  const [orbImage, setOrbImage] = useState(OrbCipher);
+  const [userInput, setUserInput] = useState<string>("");
+  const [displayText, setDisplayText] = useState<string>("");
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const [tapSymbol, setTapSymbol] = useState<string | null>(null);
+
+  // Determine the daily cipher based on the current date
+  const today = new Date();
+  const dayOfYear = Math.floor((today.getTime() - new Date(today.getFullYear(), 0, 0).getTime()) / 1000 / 60 / 60 / 24);
+  const dailyCipher = DAILY_CIPHERS[dayOfYear % DAILY_CIPHERS.length]; // Cycle through cipher codes
+
+  const { translation, morse, bonusPoints } = dailyCipher;
 
   // Handle tap for dot input
   const handleTap = (e: React.MouseEvent<HTMLImageElement>) => {
     handleTapClick();
-    e.preventDefault(); // Prevent default action to avoid any unwanted behavior
+    e.preventDefault();
     if (e.type === 'click') {
       const rect = e.currentTarget.getBoundingClientRect();
       const x = e.clientX - rect.left;
@@ -88,51 +72,44 @@ export default function CipherMode({
       updateUserInput(newSymbol);
 
       setShowIncrement(true);
-      setTimeout(() => setShowIncrement(false), 500); // Ensure timeout matches animation duration
+      setTimeout(() => setShowIncrement(false), 500);
     }
   };
 
-  // Handle mouse down to distinguish between left and right click
   const handleMouseDown = (e: React.MouseEvent<HTMLImageElement>) => {
     if (e.button === 2) {
-      // Right-click for dash
-      e.preventDefault(); // Prevent default context menu
+      e.preventDefault();
       handleLongPress();
     }
   };
 
-  // Handle long press for dash input
   const handleLongPress = () => {
     const newSymbol = "-";
     setTapSymbol(newSymbol);
     updateUserInput(newSymbol);
   };
 
-  // Update user input and check if it matches the Morse code for the current letter
   const updateUserInput = (newSymbol: string) => {
-    const updatedInput = userInput + newSymbol; // Update the Morse code string
-    setUserInput(updatedInput); // Update state with new input
+    const updatedInput = userInput + newSymbol;
+    setUserInput(updatedInput);
     setShowIncrement(true);
     setTimeout(() => setShowIncrement(false), 500);
 
-    const currentLetter = TRANSLATION[currentIndex]; // Get the current letter to match
-    const currentLetterMorse = morseCodeMap[currentLetter]; // Get Morse code for the current letter
+    const currentLetter = translation[currentIndex];
+    const currentLetterMorse = morseCodeMap[currentLetter];
 
     if (updatedInput === currentLetterMorse) {
-      // If input matches the Morse code for the current letter
-      setDisplayText(displayText + currentLetter); // Update display text with the current letter
-      setCurrentIndex(currentIndex + 1); // Move to the next letter
-      setUserInput(""); // Reset user input for the next letter
+      setDisplayText(displayText + currentLetter);
+      setCurrentIndex(currentIndex + 1);
+      setUserInput("");
 
-      // If all letters are matched, award bonus points
-      if (currentIndex + 1 === TRANSLATION.length) {
-        setUserPoints((prevPoints) => prevPoints + BONUS_POINTS); // Add bonus points
-        setCurrentIndex(0); // Reset for next round
-        setDisplayText(""); // Clear display text
+      if (currentIndex + 1 === translation.length) {
+        setUserPoints((prevPoints) => prevPoints + bonusPoints);
+        setCurrentIndex(0);
+        setDisplayText("");
       }
     } else if (!currentLetterMorse.startsWith(updatedInput)) {
-      // If the input does not match or is incorrect, reset input
-      setUserInput(""); // Reset user input for the next attempt
+      setUserInput("");
     }
   };
 
@@ -150,7 +127,7 @@ export default function CipherMode({
       </div>
       <div className="morse-code-input w-full flex items-center justify-between bg-gray-800 p-2 rounded-md text-white">
         <p className="font-bold w-1/3">Daily cipher</p>
-        <p className="w-1/3 break-words">{displayText}</p> {/* Display matched letters */}
+        <p className="w-1/3 break-words">{displayText}</p>
         <button className="p-1 w-1/3 flex rounded-lg bg-gradient-to-r from-indigo-500 to-pink-600 gap-1 items-center justify-center">
           <Image
             src={Coin}
@@ -159,7 +136,7 @@ export default function CipherMode({
             alt="Coin Icon"
             className="rounded-full"
           />
-          <h5 className="text-white text-sm">+2,000</h5>
+          <h5 className="text-white text-sm">+{bonusPoints}</h5>
         </button>
       </div>
       <div className="relative">
@@ -168,8 +145,8 @@ export default function CipherMode({
           width={200}
           height={200}
           onClick={handleTap}
-          onMouseDown={handleMouseDown} // Add mouse down handler to detect right click
-          onContextMenu={(e) => e.preventDefault()} // Prevent context menu on right click
+          onMouseDown={handleMouseDown}
+          onContextMenu={(e) => e.preventDefault()}
           alt="Central Tap"
           className="transition duration-200 ease-in-out rounded-full"
         />
@@ -180,7 +157,7 @@ export default function CipherMode({
           onClick={handleTap}
           alt="Armadillo"
           style={{
-            filter:  "url(#glow)" ,
+            filter: "url(#glow)",
           }}
           className="w-full h-full absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition duration-200 ease-in-out"
         />
@@ -196,24 +173,57 @@ export default function CipherMode({
   );
 }
 
-// CipherIncrement Component
 interface CipherIncrementProps {
   symbol: string | null;
   tapCount: number;
   tapPosition: { x: number; y: number };
 }
 
-function CipherIncrement({ symbol, tapPosition }: CipherIncrementProps) {
+function CipherIncrement({ symbol, tapCount, tapPosition }: CipherIncrementProps) {
+  if (!symbol) return null;
+
   return (
     <div
-      className="absolute text-white text-7xl font-bold animate-fadeUp"
       style={{
-        top: `${tapPosition.y}px`,
-        left: `${tapPosition.x}px`,
-        transform: "translate(-50%, -50%)",
+        position: "absolute",
+        top: tapPosition.y - 50,
+        left: tapPosition.x - 10,
+        fontSize: 24,
+        color: "#fff",
+        fontWeight: "bold",
       }}
     >
       {symbol}
     </div>
   );
 }
+
+const morseCodeMap: { [key: string]: string } = {
+  "A": ".-",
+  "B": "-...",
+  "C": "-.-.",
+  "D": "-..",
+  "E": ".",
+  "F": "..-.",
+  "G": "--.",
+  "H": "....",
+  "I": "..",
+  "J": ".---",
+  "K": "-.-",
+  "L": ".-..",
+  "M": "--",
+  "N": "-.",
+  "O": "---",
+  "P": ".--.",
+  "Q": "--.-",
+  "R": ".-.",
+  "S": "...",
+  "T": "-",
+  "U": "..-",
+  "V": "...-",
+  "W": ".--",
+  "X": "-..-",
+  "Y": "-.--",
+  "Z": "--..",
+};
+
