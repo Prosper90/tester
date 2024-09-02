@@ -7,7 +7,7 @@ import Coin from "../images/coin.png";
 import Star from "../icons/Star 1.svg";
 import Diamond from "../icons/Star 2.svg";
 import Clock from "../icons/Satr3.svg";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import Boost from "./Boost";
 import PointIncrement from "./PointIncrement";
 import DailyRewardPopup from "./DailyReward"; // Import the DailyRewardPopup component
@@ -30,7 +30,7 @@ interface TappingAreaProps {
 const TRANSLATION = "VALIDATOR";
 const BONUS_POINTS = 2000;
 const ONE_DAY_IN_MS = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
-const LONG_PRESS_DURATION = 500;
+
 // Morse code map for letters and digits
 const morseCodeMap: { [key: string]: string } = {
   A: ".-",
@@ -96,8 +96,7 @@ export default function TappingArea({
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [lastCompletionTime, setLastCompletionTime] = useState<number | null>(null);
   const [canUseCipher, setCanUseCipher] = useState<boolean>(true); // State to control cipher mode usage
-  const longPressTimerRef = useRef<NodeJS.Timeout | null>(null);
-
+  
   useEffect(() => {
     // Retrieve the last completion time from local storage on component mount
     const storedTime = localStorage.getItem("lastCompletionTime");
@@ -136,12 +135,6 @@ export default function TappingArea({
     const y = e.clientY - rect.top;
     setTapPosition({ x, y });
 
-    longPressTimerRef.current = setTimeout(() => {
-      if (isCipherMode && canUseCipher) {
-        handleLongPress();
-      }
-    }, LONG_PRESS_DURATION);
-
     if (isCipherMode && canUseCipher) {
       handleTapClick();
       const newSymbol = ".";
@@ -154,24 +147,6 @@ export default function TappingArea({
     }
   };
 
-  const handleMouseUp = () => {
-    if (longPressTimerRef.current) {
-      clearTimeout(longPressTimerRef.current);
-      longPressTimerRef.current = null;
-    }
-    if (tapSymbol === null) {
-      // Regular tap detected
-      setTapSymbol('.');
-    }
-  };
-  const handleMouseDown = (e: React.MouseEvent<HTMLImageElement>) => {
-    e.preventDefault();
-    longPressTimerRef.current = setTimeout(() => {
-      if (isCipherMode && canUseCipher) {
-        handleLongPress();
-      }
-    }, LONG_PRESS_DURATION);
-  };
 
   // Handle long press for dash
   const handleLongPress = () => {
