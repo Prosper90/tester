@@ -20,7 +20,7 @@ export default function DailyCombo() {
                                 alt="Coin Icon"
                                 className="rounded-full"
                             />
-                            <h5 className="text-white text-sm">+2,000,000</h5>
+                            <h5 className="text-white text-sm">+10,000</h5>
                         </button>
                     </div>
                     <div className="flex justify-between gap-1 w-full">

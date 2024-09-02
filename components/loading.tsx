@@ -8,10 +8,10 @@ import Logo from "../images/Galactic Gold Rush.svg";
 export default function Loading() {
   return (
     <main className="bg-black">
-      <div className="bg-[#100115] relative h-screen loading-background">
+      <div className="bg-[#100115] relative h-screen flex items-start justify-center loading-background">
         <Image
           src={Logo}
-          className="absolute top-4 left-1/2 transform -translate-x-1/2"
+          className="mt-4 absolute left-10"
           width={500}
           height={500}
           alt="Company logo"
