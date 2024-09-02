@@ -55,7 +55,7 @@ const morseCodeMap: { [key: string]: string } = {
   S: "...",
   T: "-",
   U: "..-",
-  V: "...-",
+  V: "...",
   W: ".--",
   X: "-..-",
   Y: "-.--",
