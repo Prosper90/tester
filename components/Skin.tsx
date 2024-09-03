@@ -179,10 +179,10 @@ const Skin: React.FC<SkinProps> = ({
           {/* Display Selected Skin */}
           <div className="flex flex-col items-center justify-center">
             <Image src={skinsData[selectedSkin].image} width={200} height={200} alt="Selected Skin" />
-            <div className="text-center bg-zinc-700 p-2 mx-2 rounded-lg text-white mt-4">
+            <div className="bg-zinc-700 p-2 mx-2 rounded-lg text-white mt-4">
               <h4 className="text-sm text-center font-bold pb-2">{skinsData[selectedSkin].title}</h4>
               <p className="text-xs font-semibold text-center">{skinsData[selectedSkin].subtitle}</p>
-              <p className="text-xs text-justify mt-2">{skinsData[selectedSkin].description}</p>
+              <p className="text-xs mt-2">{skinsData[selectedSkin].description}</p>
               <p className="flex items-center justify-center gap-2 text-xl font-bold mt-2">
                 <Image src={Coin} width={24} height={24} alt="Coin Icon" className="rounded-full" />
                 {skinsData[selectedSkin].price.toLocaleString()}
