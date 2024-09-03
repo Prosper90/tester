@@ -174,7 +174,7 @@ const Skin: React.FC<SkinProps> = ({
             <Image src={skinsData[selectedSkin].image} width={200} height={200} alt="Selected Skin" />
             <div className="text-center bg-gray-800 p-2 rounded-lg text-white mt-4">
               <h4 className="text-sm font-bold">{skinsData[selectedSkin].title}</h4>
-              <p className="text-xs text-justify">{skinsData[selectedSkin].subtitle}</p>
+              <p className="text-xs text-center">{skinsData[selectedSkin].subtitle}</p>
               <p className="text-xs text-justify mt-2">{skinsData[selectedSkin].description}</p>
               <p className="text-xl font-bold mt-2">
                 <span role="img" aria-label="coin">🪙</span> {skinsData[selectedSkin].price.toLocaleString()}
