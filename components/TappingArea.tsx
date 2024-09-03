@@ -328,6 +328,8 @@ export default function TappingArea({
               onClick={handleTap}
               onMouseDown={handleMouseDown}
               onMouseUp={handleMouseUp}
+              onTouchStart={handleTouchStart}
+              onTouchEnd={handleTouchEnd}
               onMouseLeave={handleMouseUp} // Clear the timer if the mouse leaves the element
               onContextMenu={(e) => e.preventDefault()}
               alt="Armadillo"
