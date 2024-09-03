@@ -56,7 +56,7 @@ export default function UserInfo({
             width={30}
             height={30}
             alt="User Icon"
-            className="h-full w-full rounded-md p-1 bg-zinc-700"
+            className="rounded-md p-1 bg-zinc-700"
           />
           <div className="flex flex-col items-left justify-center">
             <h3 className="text-white text-sm">{userName}</h3>
