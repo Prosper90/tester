@@ -12,7 +12,7 @@ import Icon6 from "../../images/Mining Icons/Incentives/DeFi Protocols.svg"
 import Icon7 from "../../images/Mining Icons/Incentives/Dynamic Rewards.svg"
 import Icon8 from "../../images/Mining Icons/Incentives/Community Building.svg"
 import Icon9 from "../../images/Mining Icons/Incentives/Active Participation.svg"
-import Icon10 from "../../images/Mining Icons/Incentives/Dynamic Rewards.svg"
+import Icon10 from "../../images/Mining Icons/Incentives/Reward Multiplier.svg"
 interface CardData {
   avtar: StaticImageData;
   title: string;

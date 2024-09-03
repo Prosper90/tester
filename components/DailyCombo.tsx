@@ -46,6 +46,7 @@ import DeFiProtocols from "../images/Mining Icons/Incentives/DeFi Protocols.svg"
 import DynamicRewards from "../images/Mining Icons/Incentives/Dynamic Rewards.svg";
 import CommunityBuilding from "../images/Mining Icons/Incentives/Community Building.svg";
 import ActiveParticipation from "../images/Mining Icons/Incentives/Active Participation.svg";
+import RewardMultiplier from "../images/Mining Icons/Incentives/Reward Multiplier.svg";
 
 // Security Card Images
 import ThreatDetection from "../images/Mining Icons/Security/Threat Detection.svg";
@@ -59,7 +60,7 @@ import AdaptiveAuthentication from "../images/Mining Icons/Security/Adaptive Aut
 import NetworkMonitoring from "../images/Mining Icons/Security/Network Monitoring.svg";
 import IdentityManagement from "../images/Mining Icons/Security/Identity Management.svg";
 import DataSecurity from "../images/Mining Icons/Security/Data Security.svg";
-
+import BlockchainForensics from "../images/Mining Icons/Security/Blockchain Forensics.svg";
 
 interface DailyComboProps {
   userPoints: number;
@@ -108,6 +109,7 @@ const getImageForCard = (title: string): StaticImageData => {
       case "DeFi Protocols": return DeFiProtocols;
       case "Dynamic Rewards": return DynamicRewards;
       case "Community Building": return CommunityBuilding;
+      case "Reward Multiplier": return RewardMultiplier;
       case "Active Participation": return ActiveParticipation;
   
       // Security
@@ -122,7 +124,8 @@ const getImageForCard = (title: string): StaticImageData => {
       case "Network Monitoring": return NetworkMonitoring;
       case "Identity Management": return IdentityManagement;
       case "Data Security": return DataSecurity;
-  
+      case "BlockchainForensics": return BlockchainForensics;
+      
       default: return ChestBox2; // default image in case of an error
     }
   };

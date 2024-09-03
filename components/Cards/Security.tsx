@@ -14,7 +14,7 @@ import Icon8 from "../../images/Mining Icons/Security/Adaptive Authentication.sv
 import Icon9 from "../../images/Mining Icons/Security/Network Monitoring.svg"
 import Icon10 from "../../images/Mining Icons/Security/Identity Management.svg"
 import Icon11 from "../../images/Mining Icons/Security/Data Security.svg"
-
+import Icon12 from "../../images/Mining Icons/Security/Blockchain Forensics.svg"
 interface CardData {
   avtar: StaticImageData;
   title: string;
@@ -33,6 +33,7 @@ const cardData: CardData[] = [
   {avtar:Icon1, title: "Threat Detection", description: "Identifying and mitigating potential risks." },
   {avtar:Icon7, title: "Decentralized Protection", description: "Distributed security measures." },
   {avtar:Icon2, title: "Security Audits", description: "Regular security checks and assessments." },
+  {avtar:Icon12, title: "Blockchain Forensics", description: ""},
   {avtar:Icon6, title: "Zero-Trust Security", description: "Strict access control principles." },
   {avtar:Icon4, title: "Regulatory Compliance", description: "Adhering to legal and regulatory requirements." },
   {avtar:Icon9, title: "Network Monitoring", description: "Continuous oversight of network activity." },
@@ -50,6 +51,7 @@ const costMap: { [key: string]: number } = {
   "Incident Response": 1000,
   "Regulatory Compliance": 1100,
   "Insurance Protections": 1000,
+  "Blockchain Forensics": 1200,
   "Zero-Trust Security": 1200,
   "Decentralized Protection": 1300,
   "Adaptive Authentication": 1000,
@@ -63,6 +65,7 @@ const maxLevelMap: { [key: string]: number } = {
   "Security Audits": 4,
   "Incident Response": 3,
   "Regulatory Compliance": 3,
+  "Blockchain Forensics": 4,
   "Insurance Protections": 3,
   "Zero-Trust Security": 4,
   "Decentralized Protection": 4,
@@ -77,6 +80,7 @@ const bonusMap: { [key: string]: number[] } = {
   "Security Audits": [80, 160, 240, 320],
   "Incident Response": [50, 100, 150],
   "Regulatory Compliance": [60, 120, 180],
+  "Blockchain Forensics": [80,160,240,320],
   "Insurance Protections": [50, 100, 150],
   "Zero-Trust Security": [80, 160, 240, 320],
   "Decentralized Protection": [90, 180, 270, 360],

@@ -23,7 +23,7 @@ interface CardCombo {
     ],
     Security: [
       "Threat Detection", "Security Audits", "Incident Response", "Regulatory Compliance", "Insurance Protections",
-      "Zero-Trust Security", "Decentralized Protection", "Adaptive Authentication", "Network Monitoring",
+      "Zero-Trust Security","Blockchain Forensics" ,"Decentralized Protection", "Adaptive Authentication", "Network Monitoring",
       "Identity Management", "Data Security"
     ]
   };
