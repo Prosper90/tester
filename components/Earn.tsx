@@ -8,8 +8,16 @@ import Armadillos_Adventures from "../images/Armadillos_Adventures_2.png";
 import TG from "../icons/Telegram.svg";
 import X from "../icons/X.svg";
 
-export default function Earn() {
+interface EarnProps {
+    userPoints: number;
+    setUserPoints: (newPoints: number | ((prevPoints: number) => number)) => void;
+}
 
+export default function Earn({ userPoints, setUserPoints }: EarnProps) {
+    // Function to handle point addition
+    const handleAddPoints = (points: number) => {
+        setUserPoints(prevPoints => prevPoints + points);
+    };
 
     return (
         <div className="my-4 friends_background">
@@ -19,7 +27,7 @@ export default function Earn() {
             {/* Astro Armadillos Adventures */}
             <h4 className="text-white text-base text-left mt-4">Astro Armadillos Adventures</h4>
             <div className="flex flex-wrap gap-2 w-full mt-4">
-                <div className="bg-neutral-800 p-2 flex flex-col items-center justify-center w-40 gap-3 rounded-xl">
+                <a href="https://example.com/astro1" onClick={() => handleAddPoints(100000)} target="_blank" rel="noopener noreferrer" className="bg-neutral-800 p-2 flex flex-col items-center justify-center w-40 gap-3 rounded-xl">
                     <Image
                         src={Armadillos_Adventures}
                         width={100}
@@ -36,8 +44,8 @@ export default function Earn() {
                         />
                         <h5 className="text-white text-sm">+100,000</h5>
                     </div>
-                </div>
-                <div className="bg-neutral-800 p-2 flex flex-col items-center justify-center w-40 gap-3 rounded-xl">
+                </a>
+                <a href="https://example.com/astro2" onClick={() => handleAddPoints(100000)} target="_blank" rel="noopener noreferrer" className="bg-neutral-800 p-2 flex flex-col items-center justify-center w-40 gap-3 rounded-xl">
                     <Image
                         src={Armadillos_Adventures}
                         width={100}
@@ -54,13 +62,13 @@ export default function Earn() {
                         />
                         <h5 className="text-white text-sm">+100,000</h5>
                     </div>
-                </div>
+                </a>
             </div>
 
             {/* Daily tasks */}
             <h4 className="text-white text-base text-left mt-4">Daily tasks</h4>
             <div className="flex flex-wrap gap-2 w-full mt-4">
-                <div className="bg-neutral-800 p-2 flex flex-col items-center justify-center w-40 gap-3 rounded-xl">
+                <a href="https://example.com/crypto" onClick={() => handleAddPoints(100000)} target="_blank" rel="noopener noreferrer" className="bg-neutral-800 p-2 flex flex-col items-center justify-center w-40 gap-3 rounded-xl">
                     <Image
                         src={Crypto_Space}
                         width={100}
@@ -77,8 +85,8 @@ export default function Earn() {
                         />
                         <h5 className="text-white text-sm">+100,000</h5>
                     </div>
-                </div>
-                <div className="bg-neutral-800 p-2 flex flex-col items-center justify-center w-40 gap-3 rounded-xl">
+                </a>
+                <a href="https://example.com/stargating" onClick={() => handleAddPoints(100000)} target="_blank" rel="noopener noreferrer" className="bg-neutral-800 p-2 flex flex-col items-center justify-center w-40 gap-3 rounded-xl">
                     <Image
                         src={Stargating}
                         width={100}
@@ -95,13 +103,13 @@ export default function Earn() {
                         />
                         <h5 className="text-white text-sm">+100,000</h5>
                     </div>
-                </div>
+                </a>
             </div>
-            
+
             {/* Task tasks */}
             <h4 className="text-white text-base text-left mt-4">Task tasks</h4>
             <div className="flex flex-wrap gap-2 w-full mt-4">
-                <div className="bg-neutral-800 px-2 py-6 flex flex-col items-center justify-center w-40 gap-3 rounded-xl">
+                <a href="https://example.com/telegram" onClick={() => handleAddPoints(100000)} target="_blank" rel="noopener noreferrer" className="bg-neutral-800 px-2 py-6 flex flex-col items-center justify-center w-40 gap-3 rounded-xl">
                     <Image
                         src={TG}
                         width={50}
@@ -118,8 +126,8 @@ export default function Earn() {
                         />
                         <h5 className="text-white text-sm">+100,000</h5>
                     </div>
-                </div>
-                <div className="bg-neutral-800 px-2 py-6 flex flex-col items-center justify-center w-40 gap-3 rounded-xl">
+                </a>
+                <a href="https://example.com/xprofile" onClick={() => handleAddPoints(100000)} target="_blank" rel="noopener noreferrer" className="bg-neutral-800 px-2 py-6 flex flex-col items-center justify-center w-40 gap-3 rounded-xl">
                     <Image
                         src={X}
                         width={50}
@@ -136,7 +144,7 @@ export default function Earn() {
                         />
                         <h5 className="text-white text-sm">+100,000</h5>
                     </div>
-                </div>
+                </a>
             </div>
         </div>
     );

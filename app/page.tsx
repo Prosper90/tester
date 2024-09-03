@@ -268,7 +268,9 @@ export default function Home() {
       {activeTab === 'friends' && <Friends />}
       {activeTab === 'earn' &&
         <div className="mb-20">
-          <Earn />
+          <Earn 
+              userPoints={userPoints}
+              setUserPoints={setUserPoints} />
         </div>}
       {activeTab === 'airdrop' && <Airdrop />}
       <Navbar activeTab={activeTab} setActiveTab={setActiveTab} />
