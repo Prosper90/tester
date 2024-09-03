@@ -2,11 +2,14 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Airdrop1 from "../images/Airdrop.svg";
-import { ethers } from "ethers";
+import { useWeb3Modal } from '@web3modal/wagmi/react';
+import { useAccount } from 'wagmi';
 
 export default function Airdrop() {
   const [account, setAccount] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const { address, isConnected } = useAccount();
+  const { open } = useWeb3Modal();
 
   useEffect(() => {
     // Check if MetaMask is installed
@@ -19,47 +22,14 @@ export default function Airdrop() {
     }
   }, []);
 
-  const connectMetaMask = async () => {
-    if (window.ethereum) {
-      try {
-        // Request account access
-        const accounts = await window.ethereum.request({
-          method: "eth_requestAccounts",
-        });
-
-        if (accounts.length === 0) {
-          throw new Error("No accounts found.");
-        }
-
-        console.log("Accounts:", accounts);
-        setAccount(accounts[0]);
-
-        // Create a Web3Provider with the MetaMask provider
-        const provider = new ethers.JsonRpcProvider(window.ethereum);
-
-        // Ensure the signer is properly initialized
-        const signer = await provider.getSigner();
-        const signerAddress = await signer.getAddress();
-
-        console.log("Signer address:", signerAddress);
-
-        if (signerAddress.toLowerCase() !== accounts[0].toLowerCase()) {
-          throw new Error(
-            "Signer address does not match the connected account."
-          );
-        }
-      } catch (error) {
-        // Type guard to narrow error type
-        if (error instanceof Error) {
-          setErrorMessage(`Failed to connect to MetaMask: ${error.message}`);
-        } else {
-          setErrorMessage("An unknown error occurred.");
-        }
-        console.error("MetaMask connection error:", error);
-      }
-    } else {
-      setErrorMessage("MetaMask is not installed.");
+  useEffect(() => {
+    if (isConnected && address) {
+      setAccount(address);
     }
+  }, [isConnected, address]);
+
+  const handleConnectWallet = () => {
+    open();
   };
 
   return (
@@ -70,18 +40,26 @@ export default function Airdrop() {
         </h3>
         <h4 className="text-white text-base text-center mt-2 px-10">
           Listing is on its way. Tasks will appear below. Complete them to
-          particvipate in the Airdrop
+          participate in the Airdrop
         </h4>
         <Image src={Airdrop1} width={250} height={300} alt="Airdrop1" />
         {account ? (
-          <button>Connected</button>
+          <>
+ <button
+            className="bg-gradient-to-r from-indigo-600 to-purple-500 rounded-xl p-4 w-full">              {account.substring(0, 6) + "..." + account.substring(account.length - 4)}
+            </button>
+            <p className="text-white mt-4">Coming Soon</p>
+          </>
         ) : (
           <button
             className="bg-gradient-to-r from-indigo-600 to-purple-500 rounded-xl p-4 w-full"
-            onClick={connectMetaMask}
+            onClick={handleConnectWallet}
           >
-            Connect your MetaMask Wallet
+            Connect your Wallet
           </button>
+        )}
+        {errorMessage && (
+          <p className="text-red-500 mt-4">{errorMessage}</p>
         )}
       </div>
     </div>

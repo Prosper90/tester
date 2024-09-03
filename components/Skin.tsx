@@ -44,7 +44,7 @@ interface SkinProps {
 const skinsData: { [key in SkinName]: SkinInfo } = {
   Default: {
     image: Default,
-    title: "ASTRO ARMADILLO",
+    title: "Astro Armadillo",
     subtitle: "The Tech-Savvy Adventurer",
     description:
       "Astro Armadillo is your go-to tech guru with a tough shell and a heart full of curiosity. Armed with clever gadgets and a sharp mind, he embarks on epic intergalactic adventures, solving cosmic puzzles and teaching valuable lessons about teamwork and friendship. His friendly, determined nature makes him a fan-favorite hero, showing that even the smallest creatures can make a big impact across the galaxy.",
@@ -52,7 +52,7 @@ const skinsData: { [key in SkinName]: SkinInfo } = {
   },
   AstroGirl_Normal_1: {
     image: AstroGirl_Normal_1,
-    title: "ASTRO GIRL",
+    title: "Astro Girl",
     subtitle: "The Sophisticated Navigator",
     description:
       "Astro Girl is a Celestara lavish planet's savvy and charming local, deeply knowledgeable about its newfound wealth. With her wit and charisma, she guides Astro through this strange new world, becoming an essential ally in unraveling the planet’s crypto mysteries. Astro Girl is more than just a sidekick; she’s a vital part of the adventure.",
@@ -60,7 +60,7 @@ const skinsData: { [key in SkinName]: SkinInfo } = {
   },
   Anne_Normal_1: {
     image: Anne_Normal_1,
-    title: "ANNE",
+    title: "Anne",
     subtitle: "The Loyal Mechanic",
     description:
       "Anne is the dependable and no-nonsense programmer and mechanic on Astro’s team. With a heart of gold and a knack for problem-solving, she keeps the spaceship running smoothly and is always ready with valuable insights when things get tough. Anne’s unwavering loyalty to Astro makes her the backbone of the team, especially in the most challenging situations.",
@@ -68,7 +68,7 @@ const skinsData: { [key in SkinName]: SkinInfo } = {
   },
   Panda_Normal_1: {
     image: Panda_Normal_1,
-    title: "PINK PANDA",
+    title: "Pink Panda",
     subtitle: "The Tough Leader",
     description:
       "Pink Panda is the enigmatic leader of an underground resistance, channeling serious mafia don vibes. Rugged and intimidating in his pink spacesuit, he rules his hidden tech base with a mix of charm and menace. With a smirk and a toothpick, Pink Panda speaks in riddles and offers help—but always at a price. Beneath his tough exterior lies a strategic mind committed to shaping the galaxy’s future with the NextGen Chain.",
@@ -76,7 +76,7 @@ const skinsData: { [key in SkinName]: SkinInfo } = {
   },
   SPF_Normal_1: {
     image: SPF_Normal_1,
-    title: "SCAM PRANKMAN FRIED (SPF)",
+    title: "Scam Prankman Fried (SPF)",
     subtitle: "The Flamboyant Villain",
     description:
       "SPF is the eccentric and flashy CEO behind a new exchange, embodying greed and chaos. This flamboyant pig, with his wild style and insatiable thirst for wealth, is the mastermind of the crypto rug-pull scheme causing havoc on the planet. SPF’s larger-than-life personality and cunning nature make him a memorable and menacing antagonist.",
@@ -84,7 +84,7 @@ const skinsData: { [key in SkinName]: SkinInfo } = {
   },
   Kayopo_Hunter_Normal: {
     image: Kayopo_Hunter_Normal,
-    title: "KAYOPO HUNTER",
+    title: "Kayopo Hunter",
     subtitle: "The Tribal Guardian",
     description:
       "The Kayopo Hunter is a skilled warrior from the Mẽbêngôkre, known as the Kayapó, deeply connected to the Amazon and Cerrado regions. Master hunters and navigators, they protect their land with a deep sense of tradition and honor. Adorned in intricate body paint that reflects their cultural heritage, the Kayopo Hunter stands as a powerful symbol of strength and guardianship in the game.",
@@ -205,7 +205,7 @@ const Skin: React.FC<SkinProps> = ({
                 return (
                   <div
                     key={skinName}
-                    className={`relative bg-zinc-800 py-2 gap-2 flex flex-col items-center justify-center rounded-lg cursor-pointer ${isOwned ? "border-2 border-blue-500" : "border-2 border-zinc-500"
+                    className={`relative bg-zinc-800 py-2 gap-2 flex flex-col items-center justify-center rounded cursor-pointer ${isOwned ? "border-2 border-blue-500" : ""
                       }`}
                     onClick={() => handleSkinSelect(skinName as SkinName)}
                   >

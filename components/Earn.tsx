@@ -6,8 +6,11 @@ import Coin from "../images/Token.svg";
 import Stargating from "../images/Stargating Logo V5.png";
 import Crypto_Space from "../images/Crypto Space Logo.png";
 import Armadillos_Adventures from "../images/Armadillos_Adventures_2.png";
-import TG from "../icons/Telegram.svg";
-import X from "../icons/X.svg";
+import TG from "../images/Socials/telegram_2504941.svg";
+import X from "../images/Socials/twitter_2504947.svg";
+import Linkedin from "../images/Socials/linkedin_2504923.svg"
+import Instagram from "../images/Socials/instagram_2504918.svg"
+import Discord from "../images/Socials/discord_2504896.svg"
 
 interface EarnProps {
   userPoints: number;
@@ -177,7 +180,7 @@ export default function Earn({ userPoints, setUserPoints }: EarnProps) {
           rel="noopener noreferrer"
           className={`bg-neutral-800 px-2 py-6 flex flex-col items-center justify-center w-40 gap-3 rounded-xl ${isTaskCompleted("linkedin") ? "bg-opacity-50" : ""}`}
         >
-          <Image src={TG} width={50} height={50} alt="TG" />
+          <Image src={Linkedin} width={50} height={50} alt="TG" />
           <h4 className="text-white text-center text-sm">Connect us on Linkedin</h4>
           <div className="flex items-center">
             <Image src={Coin} width={20} height={20} alt="Coin" />
@@ -206,7 +209,7 @@ export default function Earn({ userPoints, setUserPoints }: EarnProps) {
           rel="noopener noreferrer"
           className={`bg-neutral-800 px-2 py-6 flex flex-col items-center justify-center w-40 gap-3 rounded-xl ${isTaskCompleted("discord") ? "bg-opacity-50" : ""}`}
         >
-          <Image src={TG} width={50} height={50} alt="TG" />
+          <Image src={Discord} width={50} height={50} alt="TG" />
           <h4 className="text-white text-center text-sm">Join Our Discord Channel</h4>
           <div className="flex items-center">
             <Image src={Coin} width={20} height={20} alt="Coin" />
@@ -221,7 +224,7 @@ export default function Earn({ userPoints, setUserPoints }: EarnProps) {
           rel="noopener noreferrer"
           className={`bg-neutral-800 px-2 py-6 flex flex-col items-center justify-center w-40 gap-3 rounded-xl ${isTaskCompleted("instagram") ? "bg-opacity-50" : ""}`}
         >
-          <Image src={X} width={50} height={50} alt="X" />
+          <Image src={Instagram} width={50} height={50} alt="X" />
           <h4 className="text-white text-center text-sm">Follow us on Instagram</h4>
           <div className="flex items-center">
             <Image src={Coin} width={20} height={20} alt="Coin" />
