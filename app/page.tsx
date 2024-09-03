@@ -36,11 +36,41 @@ interface UserData {
 
 export default function Home() {
   const [userData, setUserData] = useState<UserData | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
-    if (WebApp.initDataUnsafe.user) {
-      setUserData(WebApp.initDataUnsafe.user as UserData)
-    }
-  }, [])
+    const fetchUserData = async () => {
+      if (WebApp.initDataUnsafe.user) {
+        const telegramID = WebApp.initDataUnsafe.user.id; // Use Telegram ID to fetch user data from backend
+        try {
+          const response = await fetch('https://hamsterkombatserver.onrender.com/api/user/login', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ telegramID }),
+          });
+
+          const data = await response.json();
+          if (response.ok) {
+            setUserData(data.data); // Assuming your API returns user data in the 'data' field
+          } else {
+            console.error('Failed to fetch user data:', data.message);
+          }
+        } catch (error) {
+          console.error('Error fetching user data:', error);
+        } finally {
+          setIsLoading(false);
+        }
+      } else {
+        console.error('No user data from Telegram');
+        setIsLoading(false);
+      }
+    };
+
+    fetchUserData();
+  }, []);
+
   const userName = userData?.username || 'Jones';
   const levelNames = [
     "Blockchain Junior Developer", "Senior DeFi Coder", "Web3 Solutions Architect", "Crypto Tech Strategist", "Chief Blockchain Architect"
@@ -67,7 +97,6 @@ export default function Home() {
     </>
   );
 
-  const [isLoading, setIsLoading] = useState(true);
   const [levelIndex, setLevelIndex] = useState(0);
   const [levelIcon, setLevelIcon] = useState<StaticImageData>(levelIcons[0]);
   const [userPoints, setUserPoints] = useState(6000);
