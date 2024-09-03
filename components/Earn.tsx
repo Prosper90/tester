@@ -43,7 +43,7 @@ export default function Earn({ userPoints, setUserPoints }: EarnProps) {
   const isTaskCompleted = (taskName: string) => completedTasks.includes(taskName);
 
   return (
-    <div className="my-4 h-full friends_background p-5">
+    <div className="my-4 h-full p-5">
       <h3 className="text-white text-3xl text-center font-semibold">Earn more coins</h3>
       <h4 className="text-white text-base text-center mt-2">Complete the task and earn more coins!</h4>
 

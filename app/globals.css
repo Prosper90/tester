@@ -16,6 +16,7 @@
   background-image: url(../images/friend_bg.png);
   background-size: cover; 
   background-position: center; 
+  height: 100vh;
   background-repeat: no-repeat;
 }
 .airdrop_background {
