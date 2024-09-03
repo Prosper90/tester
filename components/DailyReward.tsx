@@ -91,7 +91,7 @@ const DailyRewardPopup: React.FC<DailyRewardProps> = ({
           </div>
           <h2 className="text-2xl font-semibold">Daily Reward</h2>
           <p className="text-sm text-center text-gray-400 mt-1">
-            Accrue coins for logging into the game daily without skipping
+            Accure coins for logging into the game daily without skipping
           </p>
         </div>
         <div className="grid grid-cols-4 gap-2 mb-4">

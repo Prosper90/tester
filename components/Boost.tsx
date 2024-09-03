@@ -87,7 +87,7 @@ export default function Boost({
                     <div className="flex flex-col ml-4">
                         <h4 className="text-white text-lg">Multitap</h4>
                         <p className="text-gray-400 flex gap-1 items-center text-sm">
-                            <Image src={CoinIcon} width={15} height={15} alt="Coin" /> {calculatePrice(10, multitapLevel).toLocaleString()} {multitapLevel} lvl
+                            <Image src={CoinIcon} width={15} height={15} alt="Coin" /> {calculatePrice(10, multitapLevel).toLocaleString()} Level {multitapLevel}
                         </p>
                     </div>
                 </div>
@@ -96,7 +96,7 @@ export default function Boost({
                     <div className="flex flex-col ml-4">
                         <h4 className="text-white text-lg">Energy Limit</h4>
                         <p className="text-gray-400 flex gap-1 items-center text-sm">
-                            <Image src={CoinIcon} width={15} height={15} alt="Coin" /> {calculatePrice(10, energyLimitLevel).toLocaleString()} {energyLimitLevel} lvl
+                            <Image src={CoinIcon} width={15} height={15} alt="Coin" /> {calculatePrice(10, energyLimitLevel).toLocaleString()} Level {energyLimitLevel}
                         </p>
                     </div>
                 </div>
