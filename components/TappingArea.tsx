@@ -323,7 +323,7 @@ export default function TappingArea({
             />
             <Image
               src={GalacticGoldRush}
-              width={170}
+              width={200}
               height={100}
               onClick={handleTap}
               onMouseDown={handleMouseDown}
