@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import CoinIcon from "../images/coin.png";
-import Arrow from "../icons/Arrow.png";
+import Arrow from "../icons/Arrow.svg";
 import MultitapIcon from "../icons/Multi Tap.svg";
 import EnergyLimitIcon from "../icons/Battery.svg";
 import FullEnergyIcon from "../icons/Power.svg";
