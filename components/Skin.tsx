@@ -66,14 +66,6 @@ const skinsData: { [key in SkinName]: SkinInfo } = {
       "Anne is the dependable and no-nonsense programmer and mechanic on Astro’s team. With a heart of gold and a knack for problem-solving, she keeps the spaceship running smoothly and is always ready with valuable insights when things get tough. Anne’s unwavering loyalty to Astro makes her the backbone of the team, especially in the most challenging situations.",
     price: 10000,
   },
-  Panda_Normal_1: {
-    image: Panda_Normal_1,
-    title: "Pink Panda",
-    subtitle: "The Tough Leader",
-    description:
-      "Pink Panda is the enigmatic leader of an underground resistance, channeling serious mafia don vibes. Rugged and intimidating in his pink spacesuit, he rules his hidden tech base with a mix of charm and menace. With a smirk and a toothpick, Pink Panda speaks in riddles and offers help—but always at a price. Beneath his tough exterior lies a strategic mind committed to shaping the galaxy’s future with the NextGen Chain.",
-    price: 50000,
-  },
   SPF_Normal_1: {
     image: SPF_Normal_1,
     title: "Scam Prankman Fried (SPF)",
@@ -89,6 +81,14 @@ const skinsData: { [key in SkinName]: SkinInfo } = {
     description:
       "The Kayopo Hunter is a skilled warrior from the Mẽbêngôkre, known as the Kayapó, deeply connected to the Amazon and Cerrado regions. Master hunters and navigators, they protect their land with a deep sense of tradition and honor. Adorned in intricate body paint that reflects their cultural heritage, the Kayopo Hunter stands as a powerful symbol of strength and guardianship in the game.",
     price: 25000,
+  },
+  Panda_Normal_1: {
+    image: Panda_Normal_1,
+    title: "Pink Panda",
+    subtitle: "The Tough Leader",
+    description:
+      "Pink Panda is the enigmatic leader of an underground resistance, channeling serious mafia don vibes. Rugged and intimidating in his pink spacesuit, he rules his hidden tech base with a mix of charm and menace. With a smirk and a toothpick, Pink Panda speaks in riddles and offers help—but always at a price. Beneath his tough exterior lies a strategic mind committed to shaping the galaxy’s future with the NextGen Chain.",
+    price: 50000,
   },
 };
 
