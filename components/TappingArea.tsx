@@ -179,6 +179,7 @@ export default function TappingArea({
       const newSymbol = ".";
       setTapSymbol(newSymbol);
       updateUserInput(newSymbol); // Use function to update input and handle logic
+    
     } else if (!isCipherMode) {
       handleTapClick();
       setShowIncrement(true);
@@ -187,12 +188,11 @@ export default function TappingArea({
   };
 
   const handleMouseDown = (e: React.MouseEvent<HTMLImageElement>) => {
-    e.preventDefault(); // Prevent any default mouse down actions
-    if (e.button === 2) return; // Ignore right-clicks for long press
-
+    
     longPressTimer.current = setTimeout(() => {
       handleLongPress();
-    }, 1000); // Trigger long press after 2 seconds
+    }, 500); // Trigger long press after 2 seconds
+    
   };
 
   const handleMouseUp = () => {
@@ -209,6 +209,9 @@ export default function TappingArea({
       const newSymbol = "-";
       setTapSymbol(newSymbol);
       updateUserInput(newSymbol); // Use function to update input and handle logic
+      
+    // Add console log for debugging
+    console.log("Long press detected!");
     }
   };
 
