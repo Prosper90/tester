@@ -163,7 +163,7 @@ const Skin: React.FC<SkinProps> = ({
           <Image src={Arrow} width={20} height={20} alt="arrow" />
         </button>
         <h3 className="text-white text-2xl text-center flex-1">Skins</h3>
-        
+
       </div>
 
       <div className="flex flex-1">
@@ -171,21 +171,21 @@ const Skin: React.FC<SkinProps> = ({
         <div className="w-1/2 flex flex-col items-start justify-start bg-gray-900 p-2">
           <button className="text-white w-full text-center mb-4">Skin</button>
           {/* Display Selected Skin */}
-          <div className="flex flex-col items-center">
+          <div className="flex flex-col items-center justify-center">
             <Image src={skinsData[selectedSkin].image} width={200} height={200} alt="Selected Skin" />
             <div className="text-center bg-gray-800 p-2 rounded-lg text-white mt-4">
-              <h4 className="text-sm font-bold">{skinsData[selectedSkin].title}</h4>
-              <p className="text-xs text-justify">{skinsData[selectedSkin].subtitle}</p>
+              <h4 className="text-sm text-center font-bold pb-2">{skinsData[selectedSkin].title}</h4>
+              <p className="text-xs font-semibold text-center">{skinsData[selectedSkin].subtitle}</p>
               <p className="text-xs text-justify mt-2">{skinsData[selectedSkin].description}</p>
-              <p className="text-xl font-bold mt-2">
-            <Image src={Coin} width={34} height={34} alt="Coin Icon" className="rounded-full" /> {skinsData[selectedSkin].price.toLocaleString()}
+              <p className="flex items-center justify-center gap-2 text-xl font-bold mt-2">
+                <Image src={Coin} width={24} height={24} alt="Coin Icon" className="rounded-full" /> 
+                {skinsData[selectedSkin].price.toLocaleString()}
               </p>
             </div>
             <button
               onClick={pendingPurchase ? handlePurchase : () => setGalacticGoldRush(skinsData[selectedSkin].image)}
-              className={`mt-4 px-6 py-2 rounded-full text-white ${
-                isActiveSkin ? "bg-gray-500 cursor-not-allowed" : "bg-purple-500"
-              }`}
+              className={`mt-4 px-6 py-2 rounded text-white ${isActiveSkin ? "bg-gray-500 cursor-not-allowed" : "bg-gradient-to-r from-indigo-600 to-purple-500"
+                }`}
               disabled={isActiveSkin}
             >
               {pendingPurchase ? "Buy" : "Choose"}
@@ -204,9 +204,8 @@ const Skin: React.FC<SkinProps> = ({
               return (
                 <div
                   key={skinName}
-                  className={`relative bg-gray-700 py-2 gap-2 flex flex-col items-center justify-center rounded-lg cursor-pointer ${
-                    isOwned ? "border-2 border-blue-500" : "border-2 border-gray-500"
-                  }`}
+                  className={`relative bg-gray-700 py-2 gap-2 flex flex-col items-center justify-center rounded-lg cursor-pointer ${isOwned ? "border-2 border-blue-500" : "border-2 border-gray-500"
+                    }`}
                   onClick={() => handleSkinSelect(skinName as SkinName)}
                 >
                   <Image src={skinsData[skinName as SkinName].image} width={50} height={100} alt={skinName} />
