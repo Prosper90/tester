@@ -5,9 +5,10 @@ import { useState, useEffect } from "react";
 import Coin from "../images/Token.svg";
 import Stargating from "../images/Logos/Stargating.png";
 import Crypto_Space from "../images/Crypto Space Logo.png";
-import Armadillos_Adventures from "../images/Armadillos_Adventures_2.png";
+import Youtube from "../images/Socials/youtube_2504965.svg";
 import Astro_Armadillos from "../images/Logos/Astro Armadillos.png";
 import Web3glossary from "../images/Logos/Web3Glossary.svg";
+import Stake from "../images/Logos/Staking Astros Token.png"
 import Astro_Nfts from "../images/Logos/AstrosNFTs.png"
 import TG from "../images/Socials/telegram_2504941.svg";
 import X from "../images/Socials/twitter_2504947.svg";
@@ -58,7 +59,7 @@ export default function Earn({ userPoints, setUserPoints }: EarnProps) {
           className={`bg-neutral-800 p-2 flex flex-col items-center justify-center gap-3 rounded-xl ${isTaskCompleted("astro1") ? "bg-opacity-50" : ""}`}
         >
           <Image
-            src={Armadillos_Adventures}
+            src={Youtube}
             width={100}
             height={100}
             alt="Armadillos_Adventures"
@@ -77,7 +78,7 @@ export default function Earn({ userPoints, setUserPoints }: EarnProps) {
           className={`bg-neutral-800 p-2 flex flex-col items-center justify-center gap-3 rounded-xl ${isTaskCompleted("astro2") ? "bg-opacity-50" : ""}`}
         >
           <Image
-            src={Armadillos_Adventures}
+            src={Youtube}
             width={100}
             height={100}
             alt="Armadillos_Adventures"
@@ -96,12 +97,31 @@ export default function Earn({ userPoints, setUserPoints }: EarnProps) {
           className={`bg-neutral-800 p-2 flex flex-col items-center justify-center gap-3 rounded-xl ${isTaskCompleted("astro3") ? "bg-opacity-50" : ""}`}
         >
           <Image
-            src={Armadillos_Adventures}
+            src={Youtube}
             width={100}
             height={100}
             alt="Armadillos_Adventures"
           />
           <h4 className="text-white text-center text-sm">Watch! Astro Armadillos Adventures S01E03</h4>
+          <div className="flex items-center">
+            <Image src={Coin} width={20} height={20} alt="Coin" />
+            <h5 className="text-white text-sm">+1,000</h5>
+          </div>
+        </a>
+        <a
+          href="https://stake.astroarmadillos.io/"
+          onClick={() => handleAddPoints("stake", 1000)}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={`bg-neutral-800 p-2 flex flex-col items-center justify-center gap-3 rounded-xl ${isTaskCompleted("stake") ? "bg-opacity-50" : ""}`}
+        >
+          <Image
+            src={Stake}
+            width={100}
+            height={100}
+            alt="Armadillos_Adventures"
+          />
+          <h4 className="text-white text-center text-sm">Stake Your Tokens</h4>
           <div className="flex items-center">
             <Image src={Coin} width={20} height={20} alt="Coin" />
             <h5 className="text-white text-sm">+1,000</h5>
@@ -139,7 +159,7 @@ export default function Earn({ userPoints, setUserPoints }: EarnProps) {
             height={100}
             alt="Armadillos_Adventures"
           />
-          <h4 className="text-white text-center text-sm">Visit Web3glossary</h4>
+          <h4 className="text-white text-center text-sm">Download a glossary</h4>
           <div className="flex items-center">
             <Image src={Coin} width={20} height={20} alt="Coin" />
             <h5 className="text-white text-sm">+1,000</h5>
@@ -158,7 +178,7 @@ export default function Earn({ userPoints, setUserPoints }: EarnProps) {
             height={100}
             alt="Armadillos_Adventures"
           />
-          <h4 className="text-white text-center text-sm">Visit Astro NFT</h4>
+          <h4 className="text-white text-center text-sm">Check Out cool NFTs</h4>
           <div className="flex items-center">
             <Image src={Coin} width={20} height={20} alt="Coin" />
             <h5 className="text-white text-sm">+1,000</h5>
@@ -192,7 +212,7 @@ export default function Earn({ userPoints, setUserPoints }: EarnProps) {
           className={`bg-neutral-800 p-2 flex flex-col items-center justify-center w-40 gap-3 rounded-xl ${isTaskCompleted("stargating") ? "bg-opacity-50" : ""}`}
         >
           <Image src={Stargating} width={100} height={100} alt="Stargating" />
-          <h4 className="text-white text-center text-sm">Play Stargating</h4>
+          <h4 className="text-white text-center text-sm">Play a game</h4>
           <div className="flex items-center">
             <Image src={Coin} width={20} height={20} alt="Coin" />
             <h5 className="text-white text-sm">+1,500</h5>
