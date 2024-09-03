@@ -36,7 +36,7 @@ export default function Redeem({ userPoints, setUserPoints }: RedeemProps) {
   };
 
   return (
-    <div>
+    <div className='w-full flex items-end justify-end mr-10'>
       <button
         className="bg-gradient-to-r from-indigo-600 to-purple-500 p-1 rounded"
         onClick={handleRedeemClick}
@@ -59,7 +59,7 @@ export default function Redeem({ userPoints, setUserPoints }: RedeemProps) {
             {error && <p className="text-red-500">{error}</p>}
             <div className='flex gap-1 items-center justify-center'>
             <button
-              className="bg-indigo-600 text-white p-2 rounded mr-2"
+              className="bg-gradient-to-r from-indigo-600 to-purple-500 text-white p-2 rounded mr-2"
               onClick={handleCodeSubmit}
             >
               Submit
