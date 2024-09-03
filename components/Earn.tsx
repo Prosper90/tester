@@ -37,19 +37,19 @@ export default function Earn({ userPoints, setUserPoints }: EarnProps) {
   const isTaskCompleted = (taskName: string) => completedTasks.includes(taskName);
 
   return (
-    <div className="my-4 h-full friends_background">
+    <div className="my-4 h-full friends_background p-5">
       <h3 className="text-white text-3xl text-center font-semibold">Earn more coins</h3>
       <h4 className="text-white text-base text-center mt-2">Complete the task and earn more coins!</h4>
 
       {/* Astro Armadillos Adventures */}
       <h4 className="text-white text-base text-left mt-4">Astro Armadillos Adventures</h4>
-      <div className="flex flex-wrap gap-2 w-full mt-4">
+      <div className="grid grid-cols-2 gap-2 mt-4">
         <a
           href="https://youtu.be/veuucMnHnWA?si=sXU86fuDxNefXoXA"
           onClick={() => handleAddPoints("astro1", 1000)}
           target="_blank"
           rel="noopener noreferrer"
-          className={`bg-neutral-800 p-2 flex flex-col items-center justify-center w-40 gap-3 rounded-xl ${isTaskCompleted("astro1") ? "bg-opacity-50" : ""}`}
+          className={`bg-neutral-800 p-2 flex flex-col items-center justify-center gap-3 rounded-xl ${isTaskCompleted("astro1") ? "bg-opacity-50" : ""}`}
         >
           <Image
             src={Armadillos_Adventures}
@@ -69,7 +69,7 @@ export default function Earn({ userPoints, setUserPoints }: EarnProps) {
           onClick={() => handleAddPoints("astro2", 1000)}
           target="_blank"
           rel="noopener noreferrer"
-          className={`bg-neutral-800 p-2 flex flex-col items-center justify-center w-40 gap-3 rounded-xl ${isTaskCompleted("astro2") ? "bg-opacity-50" : ""}`}
+          className={`bg-neutral-800 p-2 flex flex-col items-center justify-center gap-3 rounded-xl ${isTaskCompleted("astro2") ? "bg-opacity-50" : ""}`}
         >
           <Image
             src={Armadillos_Adventures}
@@ -88,7 +88,7 @@ export default function Earn({ userPoints, setUserPoints }: EarnProps) {
           onClick={() => handleAddPoints("astro2", 1000)}
           target="_blank"
           rel="noopener noreferrer"
-          className={`bg-neutral-800 p-2 flex flex-col items-center justify-center w-40 gap-3 rounded-xl ${isTaskCompleted("astro2") ? "bg-opacity-50" : ""}`}
+          className={`bg-neutral-800 p-2 flex flex-col items-center justify-center gap-3 rounded-xl ${isTaskCompleted("astro2") ? "bg-opacity-50" : ""}`}
         >
           <Image
             src={Armadillos_Adventures}
@@ -106,7 +106,7 @@ export default function Earn({ userPoints, setUserPoints }: EarnProps) {
 
       {/* Daily tasks */}
       <h4 className="text-white text-base text-left mt-4">Daily tasks</h4>
-      <div className="flex flex-wrap gap-2 w-full mt-4">
+      <div className="grid grid-cols-2 gap-2 w-full mt-4">
         <a
           href="https://astroarmadillos.io/"
           onClick={() => handleAddPoints("crypto", 1500)}
@@ -140,7 +140,7 @@ export default function Earn({ userPoints, setUserPoints }: EarnProps) {
 
       {/* Task List */}
       <h4 className="text-white text-base text-left mt-4">Task list</h4>
-      <div className="flex flex-wrap gap-2 w-full mt-4">
+      <div className="grid grid-cols-2 gap-2 w-full mt-4">
         <a
           href="https://t.me/stargating"
           onClick={() => handleAddPoints("telegram", 500)}
