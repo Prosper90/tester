@@ -16,7 +16,6 @@ import ShardTechnology from "../images/Mining Icons/Performance/Shard Technology
 import ScalabilitySolutions from "../images/Mining Icons/Performance/Scalability Solutions.svg";
 import FaultTolerance from "../images/Mining Icons/Performance/Fault Tolerance.svg";
 import SecurityProtocols from "../images/Mining Icons/Performance/Security Protocols.svg";
-import PrivacyFeatures from "../images/Mining Icons/Performance/Privacy Features.svg";
 import CrossChainInterop from "../images/Mining Icons/Performance/Cross-Chain Interop.svg";
 import EnergyEfficiency from "../images/Mining Icons/Performance/Energy Efficiency.svg";
 import LatencyReduction from "../images/Mining Icons/Performance/Latency Reduction.svg";
@@ -80,7 +79,6 @@ const getImageForCard = (title: string): StaticImageData => {
       case "Scalability Solutions": return ScalabilitySolutions;
       case "Fault Tolerance": return FaultTolerance;
       case "Security Protocols": return SecurityProtocols;
-      case "Privacy Features": return PrivacyFeatures;
       case "Cross-Chain Interop": return CrossChainInterop;
       case "Energy Efficiency": return EnergyEfficiency;
       case "Latency Reduction": return LatencyReduction;

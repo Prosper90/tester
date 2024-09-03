@@ -12,7 +12,7 @@ import Icon6 from "../../images/Mining Icons/Incentives/DeFi Protocols.svg"
 import Icon7 from "../../images/Mining Icons/Incentives/Dynamic Rewards.svg"
 import Icon8 from "../../images/Mining Icons/Incentives/Community Building.svg"
 import Icon9 from "../../images/Mining Icons/Incentives/Active Participation.svg"
-
+import Icon10 from "../../images/Mining Icons/Incentives/Dynamic Rewards.svg"
 interface CardData {
   avtar: StaticImageData;
   title: string;
@@ -29,14 +29,15 @@ interface IncentivesProps {
 
 const cardData: CardData[] = [
   {avtar:Icon1, title: "Token Economy", description: "Digital assets used within the network." },
-  {avtar:Icon2, title: "Governance Models", description: "Systems for community decision-making." },
-  {avtar:Icon3, title: "Incentive Programs", description: "Rewards for contributing to the network." },
-  {avtar:Icon4, title: "Staking Rewards", description: "Locking tokens to support network operations and earn rewards." },
-  {avtar:Icon5, title: "Bonding Mechanisms", description: "Mechanisms to support token liquidity." },
   {avtar:Icon6, title: "DeFi Protocols", description: "Financial services built on blockchain." },
+  {avtar:Icon2, title: "Governance Models", description: "Systems for community decision-making." },
+  {avtar:Icon4, title: "Staking Rewards", description: "Locking tokens to support network operations and earn rewards." },
   {avtar:Icon7, title: "Dynamic Rewards",  description: "Adaptive incentive structures." },
+  {avtar:Icon3, title: "Incentive Programs", description: "Rewards for contributing to the network." },
+  {avtar:Icon5, title: "Bonding Mechanisms", description: "Mechanisms to support token liquidity." },
   {avtar:Icon8, title: "Community Building", description: "Engagement and participation strategies." },
-  {avtar:Icon9, title: "Active Participation", description: "Encouragging active involvement in the network." },
+  {avtar:Icon10, title: "Reward Multiplier", description: "Multiple the rewards in the network." },
+{avtar:Icon9, title: "Active Participation", description: "Encouragging active involvement in the network." },
 ];
 
 
@@ -49,6 +50,7 @@ const costMap: { [key: string]: number } = {
   "DeFi Protocols": 1300,
   "Dynamic Rewards": 1100,
   "Community Building": 1000,
+  "Reward Multiplier": 1100,
   "Active Participation": 900,
 };
 
@@ -61,6 +63,7 @@ const maxLevelMap: { [key: string]: number } = {
   "DeFi Protocols": 4,
   "Dynamic Rewards": 3,
   "Community Building": 3,
+  "Reward Multiplier":3,
   "Active Participation": 3,
 };
 
@@ -73,6 +76,7 @@ const bonusMap: { [key: string]: number[] } = {
   "DeFi Protocols": [90, 180, 270, 360],
   "Dynamic Rewards": [60, 120, 180],
   "Community Building": [50, 100, 150],
+  "Reward Multiplier": [50, 100, 150],
   "Active Participation": [50, 100, 150],
 };
 

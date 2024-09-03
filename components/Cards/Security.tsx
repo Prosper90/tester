@@ -31,16 +31,16 @@ interface SecurityProps {
 
 const cardData: CardData[] = [
   {avtar:Icon1, title: "Threat Detection", description: "Identifying and mitigating potential risks." },
-  {avtar:Icon2, title: "Security Audits", description: "Regular security checks and assessments." },
-  {avtar:Icon3, title: "Incident Response", description: "Plans for addressing security incidents." },
-  {avtar:Icon4, title: "Regulatory Compliance", description: "Adhering to legal and regulatory requirements." },
-  {avtar:Icon5, title: "Insurance Protections", description: "Protection against losses or failures." },
-  {avtar:Icon6, title: "Zero-Trust Security", description: "Strict access control principles." },
   {avtar:Icon7, title: "Decentralized Protection", description: "Distributed security measures." },
-  {avtar:Icon8, title: "Adaptive Authentication", description: "Authentication based on user risk profiles." },
+  {avtar:Icon2, title: "Security Audits", description: "Regular security checks and assessments." },
+  {avtar:Icon6, title: "Zero-Trust Security", description: "Strict access control principles." },
+  {avtar:Icon4, title: "Regulatory Compliance", description: "Adhering to legal and regulatory requirements." },
   {avtar:Icon9, title: "Network Monitoring", description: "Continuous oversight of network activity." },
   {avtar:Icon10, title: "Identity Management", description: "Managing user identities securely." },
   {avtar:Icon11, title: "Data Security", description: "Protecting and managing information." },
+  {avtar:Icon3, title: "Incident Response", description: "Plans for addressing security incidents." },
+  {avtar:Icon8, title: "Adaptive Authentication", description: "Authentication based on user risk profiles." },
+  {avtar:Icon5, title: "Insurance Protections", description: "Protection against losses or failures." },
 ];
 
 

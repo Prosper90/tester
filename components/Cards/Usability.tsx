@@ -29,16 +29,16 @@ interface UsabilityProps {
 }
 
 const cardData: CardData[] = [
-  {avtar:Icon1, title: "User Interface", description: "User interface design for ease of use." },
   {avtar:Icon2, title: "Wallet Solutions", description: "Secure tools for managing digital assets." },
-  {avtar:Icon3, title: "Onboarding Guides", description: "Processes for introducing new users." },
-  {avtar:Icon4, title: "Accessibility Options", description: "Ensuring the platform is usable by everyone." },
+  {avtar:Icon10, title: "Decentralized Apps", description: "Decentralized applications built on blockchain." },
+  {avtar:Icon1, title: "User Interface", description: "User interface design for ease of use." },
   {avtar:Icon5, title: "User Experience", description: "User experience optimization." },
-  {avtar:Icon6, title: "Game Elements", description: "Adding game-like elements to enhance engagement." },
   {avtar:Icon7, title: "Personalized Content", description: "Customizing user experiences." },
+  {avtar:Icon4, title: "Accessibility Options", description: "Ensuring the platform is usable by everyone." },
+  {avtar:Icon6, title: "Game Elements", description: "Adding game-like elements to enhance engagement." },
   {avtar:Icon8, title: "Data Analytics", description: "Tracking and analyzing user behavior." },
   {avtar:Icon9, title: "User Engagement", description: "Keeping users actively involved." },
-  {avtar:Icon10, title: "Decentralized Apps", description: "Decentralized applications built on blockchain." },
+  {avtar:Icon3, title: "Onboarding Guides", description: "Processes for introducing new users." },
 ];
 
 

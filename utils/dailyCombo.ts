@@ -10,7 +10,7 @@ interface CardCombo {
   const cardTitles: Record<CardCategory, string[]> = {
     Performance: [
       "Consensus Algorithms", "Network Design", "Data Structures", "Shard Technology", "Scalability Solutions",
-      "Fault Tolerance", "Security Protocols", "Privacy Features", "Cross-Chain Interop", "Energy Efficiency",
+      "Fault Tolerance", "Security Protocols", "Cross-Chain Interop", "Energy Efficiency",
       "Latency Reduction", "Hybrid Networks", "Performance Optimization", "Node Infrastructure", "Elastic Network"
     ],
     Usability: [
@@ -19,7 +19,7 @@ interface CardCombo {
     ],
     Incentives: [
       "Token Economy", "Governance Models", "Incentive Programs", "Staking Rewards", "Bonding Mechanisms",
-      "DeFi Protocols", "Dynamic Rewards", "Community Building", "Active Participation"
+      "DeFi Protocols", "Dynamic Rewards", "Community Building", "Active Participation", "Reward Multiplier",
     ],
     Security: [
       "Threat Detection", "Security Audits", "Incident Response", "Regulatory Compliance", "Insurance Protections",
