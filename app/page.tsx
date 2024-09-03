@@ -32,6 +32,24 @@ type CardLevels = { [key: string]: number };
 interface UserData {
   id: number;
   username?: string;
+  name?: string;
+  uid?: string;
+  email?: string;
+  phoneNo?: string;
+  image?: string;
+  DOB?: Date;
+  tier?: number;
+  Amount?: number;
+  dailyEnergy?: {
+    energyCount: number;
+    lastUsed: Date | null;
+  };
+  availableTapCount?: number;
+  maxTap?: number;
+  multiTapLevel?: number;
+  referedID?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export default function Home() {
@@ -53,7 +71,7 @@ export default function Home() {
 
           const data = await response.json();
           if (response.ok) {
-            setUserData(data.data); // Assuming your API returns user data in the 'data' field
+            setUserData(data.data); // Assuming your API returns the user data in the 'data' field
           } else {
             console.error('Failed to fetch user data:', data.message);
           }
@@ -71,7 +89,8 @@ export default function Home() {
     fetchUserData();
   }, []);
 
-  const userName = userData?.username || 'Jones';
+  const userName = userData?.username || 'Jones'; // Default to 'Jones' if username is not available
+
   const levelNames = [
     "Blockchain Junior Developer", "Senior DeFi Coder", "Web3 Solutions Architect", "Crypto Tech Strategist", "Chief Blockchain Architect"
   ];
@@ -91,7 +110,17 @@ export default function Home() {
 
   const renderSharedComponents = () => (
     <>
-      <UserInfo GalacticGoldRush={GalacticGoldRush} setGalacticGoldRush={setGalacticGoldRush} levelIndex={levelIndex} levelIcons={levelIcons} userPoints={userPoints} setUserPoints={setUserPoints} userName={userName} levelNames={levelNames} calculateProgress={calculateProgress} />
+      <UserInfo 
+        GalacticGoldRush={GalacticGoldRush} 
+        setGalacticGoldRush={setGalacticGoldRush} 
+        levelIndex={levelIndex} 
+        levelIcons={levelIcons} 
+        userPoints={userPoints} 
+        setUserPoints={setUserPoints} 
+        userName={userName} 
+        levelNames={levelNames} 
+        calculateProgress={calculateProgress} 
+      />
       <Redeem userPoints={userPoints} setUserPoints={setUserPoints} />
       <ProfitPerHour pointsPerHour={pointsPerHour} />
     </>
@@ -110,7 +139,7 @@ export default function Home() {
   const [energyRegenInterval, setEnergyRegenInterval] = useState(5000);
   const [tapCount, setTapCount] = useState(1);
   const [multitapLevel, setMultitapLevel] = useState(0);
-  const [energyLimitLevel, setEnergyLimitLevel] = useState(0)
+  const [energyLimitLevel, setEnergyLimitLevel] = useState(0);
   const [cardLevels, setCardLevels] = useState<CardLevels>({
     "Consensus Algorithms": 0,
     "Network Design": 0,
@@ -172,10 +201,6 @@ export default function Home() {
   const updateProfitPerHour = (amount: number): void => {
     setPointsPerHour((prev) => prev + amount);
   };
-
-  useEffect(() => {
-    setTimeout(() => setIsLoading(false), 1000);
-  }, []);
 
   useEffect(() => {
     const updateLevel = () => {
