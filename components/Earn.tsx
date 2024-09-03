@@ -106,8 +106,8 @@ export default function Earn({ userPoints, setUserPoints }: EarnProps) {
                 </a>
             </div>
 
-            {/* Task tasks */}
-            <h4 className="text-white text-base text-left mt-4">Task tasks</h4>
+            {/* Task List */}
+            <h4 className="text-white text-base text-left mt-4">Task list</h4>
             <div className="flex flex-wrap gap-2 w-full mt-4">
                 <a href="https://example.com/telegram" onClick={() => handleAddPoints(100000)} target="_blank" rel="noopener noreferrer" className="bg-neutral-800 px-2 py-6 flex flex-col items-center justify-center w-40 gap-3 rounded-xl">
                     <Image
