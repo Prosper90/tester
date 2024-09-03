@@ -32,69 +32,18 @@ type CardLevels = { [key: string]: number };
 interface UserData {
   id: number;
   username?: string;
-  name?: string;
-  uid?: string;
-  email?: string;
-  phoneNo?: string;
-  image?: string;
-  DOB?: Date;
-  tier?: number;
-  Amount?: number;
-  dailyEnergy?: {
-    energyCount: number;
-    lastUsed: Date | null;
-  };
-  availableTapCount?: number;
-  maxTap?: number;
-  multiTapLevel?: number;
-  referedID?: string;
-  createdAt?: Date;
-  updatedAt?: Date;
 }
 
 export default function Home() {
   const [userData, setUserData] = useState<UserData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-
   
   useEffect(() => {
-    // Ensure this code only runs on the client side
-    if (typeof window !== "undefined") {
-      const fetchUserData = async () => {
-        if (WebApp.initDataUnsafe.user) {
-          const telegramID = WebApp.initDataUnsafe.user.id; // Use Telegram ID to fetch user data from backend
-          try {
-            const response = await fetch('https://hamsterkombatserver.onrender.com/api/user/login', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({ telegramID }),
-            });
-
-            const data = await response.json();
-            if (response.ok) {
-              setUserData(data.data); // Assuming your API returns the user data in the 'data' field
-            } else {
-              console.error('Failed to fetch user data:', data.message);
-            }
-          } catch (error) {
-            console.error('Error fetching user data:', error);
-          } finally {
-            setIsLoading(false);
-          }
-        } else {
-          console.error('No user data from Telegram');
-          setIsLoading(false);
-        }
-      };
-
-      fetchUserData();
+    if (WebApp.initDataUnsafe.user) {
+      setUserData(WebApp.initDataUnsafe.user as UserData)
     }
-  }, []);
-
-  const userName = userData?.username || 'Jones'; // Default to 'Jones' if username is not available
-
+  }, [])
+  const userName = userData?.username || 'Jones';
   const levelNames = [
     "Blockchain Junior Developer", "Senior DeFi Coder", "Web3 Solutions Architect", "Crypto Tech Strategist", "Chief Blockchain Architect"
   ];
@@ -114,17 +63,7 @@ export default function Home() {
 
   const renderSharedComponents = () => (
     <>
-      <UserInfo 
-        GalacticGoldRush={GalacticGoldRush} 
-        setGalacticGoldRush={setGalacticGoldRush} 
-        levelIndex={levelIndex} 
-        levelIcons={levelIcons} 
-        userPoints={userPoints} 
-        setUserPoints={setUserPoints} 
-        userName={userName} 
-        levelNames={levelNames} 
-        calculateProgress={calculateProgress} 
-      />
+      <UserInfo GalacticGoldRush={GalacticGoldRush} setGalacticGoldRush={setGalacticGoldRush} levelIndex={levelIndex} levelIcons={levelIcons} userPoints={userPoints} setUserPoints={setUserPoints} userName={userName} levelNames={levelNames} calculateProgress={calculateProgress} />
       <Redeem userPoints={userPoints} setUserPoints={setUserPoints} />
       <ProfitPerHour pointsPerHour={pointsPerHour} />
     </>
@@ -143,7 +82,7 @@ export default function Home() {
   const [energyRegenInterval, setEnergyRegenInterval] = useState(5000);
   const [tapCount, setTapCount] = useState(1);
   const [multitapLevel, setMultitapLevel] = useState(0);
-  const [energyLimitLevel, setEnergyLimitLevel] = useState(0);
+  const [energyLimitLevel, setEnergyLimitLevel] = useState(0)
   const [cardLevels, setCardLevels] = useState<CardLevels>({
     "Consensus Algorithms": 0,
     "Network Design": 0,
@@ -205,6 +144,10 @@ export default function Home() {
   const updateProfitPerHour = (amount: number): void => {
     setPointsPerHour((prev) => prev + amount);
   };
+
+  useEffect(() => {
+    setTimeout(() => setIsLoading(false), 1000);
+  }, []);
 
   useEffect(() => {
     const updateLevel = () => {
