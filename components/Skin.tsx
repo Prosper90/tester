@@ -58,14 +58,6 @@ const skinsData: { [key in SkinName]: SkinInfo } = {
       "Astro Girl is a Celestara lavish planet's savvy and charming local, deeply knowledgeable about its newfound wealth. With her wit and charisma, she guides Astro through this strange new world, becoming an essential ally in unraveling the planet’s crypto mysteries. Astro Girl is more than just a sidekick; she’s a vital part of the adventure.",
     price: 8000,
   },
-  Panda_Normal_1: {
-    image: Panda_Normal_1,
-    title: "PINK PANDA",
-    subtitle: "The Tough Leader",
-    description:
-      "Pink Panda is the enigmatic leader of an underground resistance, channeling serious mafia don vibes. Rugged and intimidating in his pink spacesuit, he rules his hidden tech base with a mix of charm and menace. With a smirk and a toothpick, Pink Panda speaks in riddles and offers help—but always at a price. Beneath his tough exterior lies a strategic mind committed to shaping the galaxy’s future with the NextGen Chain.",
-    price: 50000,
-  },
   Anne_Normal_1: {
     image: Anne_Normal_1,
     title: "ANNE",
@@ -73,6 +65,14 @@ const skinsData: { [key in SkinName]: SkinInfo } = {
     description:
       "Anne is the dependable and no-nonsense programmer and mechanic on Astro’s team. With a heart of gold and a knack for problem-solving, she keeps the spaceship running smoothly and is always ready with valuable insights when things get tough. Anne’s unwavering loyalty to Astro makes her the backbone of the team, especially in the most challenging situations.",
     price: 10000,
+  },
+  Panda_Normal_1: {
+    image: Panda_Normal_1,
+    title: "PINK PANDA",
+    subtitle: "The Tough Leader",
+    description:
+      "Pink Panda is the enigmatic leader of an underground resistance, channeling serious mafia don vibes. Rugged and intimidating in his pink spacesuit, he rules his hidden tech base with a mix of charm and menace. With a smirk and a toothpick, Pink Panda speaks in riddles and offers help—but always at a price. Beneath his tough exterior lies a strategic mind committed to shaping the galaxy’s future with the NextGen Chain.",
+    price: 50000,
   },
   SPF_Normal_1: {
     image: SPF_Normal_1,
@@ -166,61 +166,63 @@ const Skin: React.FC<SkinProps> = ({
 
       </div>
 
-      <div className="flex flex-1">
+      <div className="flex flex-1 bg-neutral-800">
         {/* Left Sidebar for Skins Menu */}
-        <div className="w-1/2 flex flex-col items-start justify-start bg-gray-900 p-2">
-          <button className="text-white w-full text-center mb-4">Skin</button>
+        <div className="w-1/2 flex flex-col items-start justify-start gap-0">
+          <button className="text-white bg-black w-full text-center mb-4">Skin</button>
           {/* Display Selected Skin */}
           <div className="flex flex-col items-center justify-center">
             <Image src={skinsData[selectedSkin].image} width={200} height={200} alt="Selected Skin" />
-            <div className="text-center bg-gray-800 p-2 rounded-lg text-white mt-4">
+            <div className="text-center bg-zinc-700 p-2 mx-2 rounded-lg text-white mt-4">
               <h4 className="text-sm text-center font-bold pb-2">{skinsData[selectedSkin].title}</h4>
               <p className="text-xs font-semibold text-center">{skinsData[selectedSkin].subtitle}</p>
               <p className="text-xs text-justify mt-2">{skinsData[selectedSkin].description}</p>
               <p className="flex items-center justify-center gap-2 text-xl font-bold mt-2">
-                <Image src={Coin} width={24} height={24} alt="Coin Icon" className="rounded-full" /> 
+                <Image src={Coin} width={24} height={24} alt="Coin Icon" className="rounded-full" />
                 {skinsData[selectedSkin].price.toLocaleString()}
               </p>
+              <button
+                onClick={pendingPurchase ? handlePurchase : () => setGalacticGoldRush(skinsData[selectedSkin].image)}
+                className={`mt-4 px-6 py-2 rounded text-white ${isActiveSkin ? "bg-gray-500 cursor-not-allowed" : "bg-gradient-to-r from-indigo-600 to-purple-500"
+                  }`}
+                disabled={isActiveSkin}
+              >
+                {pendingPurchase ? "Buy" : "Choose"}
+              </button>
             </div>
-            <button
-              onClick={pendingPurchase ? handlePurchase : () => setGalacticGoldRush(skinsData[selectedSkin].image)}
-              className={`mt-4 px-6 py-2 rounded text-white ${isActiveSkin ? "bg-gray-500 cursor-not-allowed" : "bg-gradient-to-r from-indigo-600 to-purple-500"
-                }`}
-              disabled={isActiveSkin}
-            >
-              {pendingPurchase ? "Buy" : "Choose"}
-            </button>
           </div>
         </div>
 
         {/* Main Content Area */}
-        <div className="w-1/2 flex flex-col items-center justify-start p-2">
-          <button className="text-white">All</button>
+        <div className="w-1/2 flex flex-col items-center justify-start">
+          <button className="text-white bg-black w-full mb-4">All</button>
           {/* List of Skins */}
-          <div className="grid grid-cols-2 gap-2 mt-6">
-            {Object.keys(skinsData).map((skinName) => {
-              const isOwned = ownedSkins.has(skinName as SkinName);
-              const isSkinActive = skinsData[skinName as SkinName].image === GalacticGoldRush;
-              return (
-                <div
-                  key={skinName}
-                  className={`relative bg-gray-700 py-2 gap-2 flex flex-col items-center justify-center rounded-lg cursor-pointer ${isOwned ? "border-2 border-blue-500" : "border-2 border-gray-500"
-                    }`}
-                  onClick={() => handleSkinSelect(skinName as SkinName)}
-                >
-                  <Image src={skinsData[skinName as SkinName].image} width={50} height={100} alt={skinName} />
-                  <h4 className="text-xs text-center">{skinsData[skinName as SkinName].title}</h4>
-                  {!isOwned && (
-                    <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
-                      <Image src={Lock} width={20} height={20} alt="Locked" />
-                    </div>
-                  )}
-                  {isSkinActive && (
-                    <div className="absolute top-0 right-0 bg-blue-500 text-white text-xs rounded-full p-1">✓</div>
-                  )}
-                </div>
-              );
-            })}
+          <div className="h-full pr-2">
+            <div className="grid grid-cols-2 gap-2 mt-6">
+              {Object.keys(skinsData).map((skinName) => {
+                const isOwned = ownedSkins.has(skinName as SkinName);
+                const isSkinActive = skinsData[skinName as SkinName].image === GalacticGoldRush;
+                return (
+                  <div
+                    key={skinName}
+                    className={`relative bg-zinc-800 py-2 gap-2 flex flex-col items-center justify-center rounded-lg cursor-pointer ${isOwned ? "border-2 border-blue-500" : "border-2 border-zinc-500"
+                      }`}
+                    onClick={() => handleSkinSelect(skinName as SkinName)}
+                  >
+                    <Image src={skinsData[skinName as SkinName].image} width={50} height={100} alt={skinName} />
+                    <h4 className="text-xs text-center">{skinsData[skinName as SkinName].title}</h4>
+                    {!isOwned && (
+                      <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                        <Image src={Lock} width={20} height={20} alt="Locked" />
+                      </div>
+                    )}
+                    {isSkinActive && (
+                      <div className="absolute top-0 right-0 bg-blue-500 text-white text-xs rounded-full p-1">✓</div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>
