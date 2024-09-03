@@ -51,7 +51,7 @@ const Setting: React.FC<SettingProps> = ({ onClose, onExchangerChange, selectedE
             {/* Settings Options */}
             <div className="flex flex-col space-y-4 px-4 mt-4">
                 <div className="relative flex bg-zinc-800 px-4 py-3 rounded-lg justify-between items-center">
-                    <span className="text-white text-lg">Select Exchanger</span>
+                    <span className="text-white text-lg">Select Network</span>
                     <div className="relative">
                     <button
                         className="text-gray-400 text-lg flex items-center"
