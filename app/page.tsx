@@ -25,12 +25,23 @@ import IconLevel3 from '../images/Achivment Levels/Web3 Solutions Architect.svg'
 import IconLevel4 from '../images/Achivment Levels/Crypto Tech Strategist.svg'
 import IconLevel5 from '../images/Achivment Levels/Chief Blockchain Architect.svg'
 import Redeem from "@/components/Redeem";
+import WebApp from "@twa-dev/sdk";
 
 type CardLevels = { [key: string]: number };
 
+interface UserData {
+  id: number;
+  username?: string;
+}
 
 export default function Home() {
-  const userName = "Jones";
+  const [userData, setUserData] = useState<UserData | null>(null);
+  useEffect(() => {
+    if (WebApp.initDataUnsafe.user) {
+      setUserData(WebApp.initDataUnsafe.user as UserData)
+    }
+  }, [])
+  const userName = userData?.username || 'Jones';
   const levelNames = [
     "Blockchain Junior Developer", "Senior DeFi Coder", "Web3 Solutions Architect", "Crypto Tech Strategist", "Chief Blockchain Architect"
   ];
@@ -268,9 +279,9 @@ export default function Home() {
       {activeTab === 'friends' && <Friends />}
       {activeTab === 'earn' &&
         <div className="mb-20">
-          <Earn 
-              userPoints={userPoints}
-              setUserPoints={setUserPoints} />
+          <Earn
+            userPoints={userPoints}
+            setUserPoints={setUserPoints} />
         </div>}
       {activeTab === 'airdrop' && <Airdrop />}
       <Navbar activeTab={activeTab} setActiveTab={setActiveTab} />
