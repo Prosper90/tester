@@ -153,7 +153,7 @@ const Skin: React.FC<SkinProps> = ({
     setShowPopup(false);
   };
 
-  const isActiveSkin = selectedSkin === "Default";
+  const isActiveSkin = selectedSkin ;
 
   return (
     <div className="fixed inset-0 bg-black flex flex-col z-50 overflow-auto">
@@ -185,7 +185,6 @@ const Skin: React.FC<SkinProps> = ({
               className={`mt-4 px-6 py-2 rounded-full text-white ${
                 isActiveSkin ? "bg-gray-500 cursor-not-allowed" : "bg-purple-500"
               }`}
-              disabled={isActiveSkin}
             >
               {pendingPurchase ? "Buy" : "Choose"}
             </button>
@@ -214,7 +213,9 @@ const Skin: React.FC<SkinProps> = ({
                       <Image src={Lock} width={20} height={20} alt="Locked" />
                     </div>
                   )}
-                  {selectedSkin === skinName && <div className="absolute top-0 right-0 bg-blue-500 text-white text-xs rounded-full p-1">✓</div>}
+                  {selectedSkin === skinName && (
+                    <div className="absolute top-0 right-0 bg-blue-500 text-white text-xs rounded-full p-1">✓</div>
+                  )}
                 </div>
               );
             })}
