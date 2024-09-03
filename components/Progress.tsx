@@ -90,7 +90,6 @@ const ProgressPage: React.FC<ProgressPageProps> = ({
                                 width={20}
                                 height={15}
                                 alt="User Icon"
-                                className="w-full"
                             />
                             <p className="text-white">+05.3K</p>
                         </div>
