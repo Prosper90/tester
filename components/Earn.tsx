@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import Coin from "../images/Token.svg";
-import Stargating from "../images/Stargating Logo V5.png";
+import Stargating from "../images/Logos/Stargating.png";
 import Crypto_Space from "../images/Crypto Space Logo.png";
 import Armadillos_Adventures from "../images/Armadillos_Adventures_2.png";
 import TG from "../images/Socials/telegram_2504941.svg";
