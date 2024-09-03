@@ -65,9 +65,9 @@ export default function UserInfo({
         <div className="flex items-center w-2/3">
           <div className="w-full">
             <div className="flex gap-1 items-center justify-evenly">
-              <Image src={levelIcons[levelIndex]} width={25} height={25} alt="achievement" />
+              <Image src={levelIcons[levelIndex]} width={35} height={35} alt="achievement" />
               <p
-                className="text-sm text-white cursor-pointer"
+                className="text-xs text-white cursor-pointer"
                 onClick={handleLevelClick}
               >
                 {levelNames[levelIndex]}
