@@ -60,8 +60,8 @@ export default function Earn({ userPoints, setUserPoints }: EarnProps) {
         >
           <Image
             src={Youtube}
-            width={100}
-            height={100}
+            width={50}
+            height={50}
             alt="Armadillos_Adventures"
           />
           <h4 className="text-white text-center text-sm">Watch! Astro Armadillos Adventures S01E01</h4>
@@ -79,8 +79,8 @@ export default function Earn({ userPoints, setUserPoints }: EarnProps) {
         >
           <Image
             src={Youtube}
-            width={100}
-            height={100}
+            width={50}
+            height={50}
             alt="Armadillos_Adventures"
           />
           <h4 className="text-white text-center text-sm">Watch! Astro Armadillos Adventures S01E02</h4>
@@ -98,8 +98,8 @@ export default function Earn({ userPoints, setUserPoints }: EarnProps) {
         >
           <Image
             src={Youtube}
-            width={100}
-            height={100}
+            width={50}
+            height={50}
             alt="Armadillos_Adventures"
           />
           <h4 className="text-white text-center text-sm">Watch! Astro Armadillos Adventures S01E03</h4>
