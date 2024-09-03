@@ -192,7 +192,7 @@ export default function TappingArea({
 
     longPressTimer.current = setTimeout(() => {
       handleLongPress();
-    }, 2000); // Trigger long press after 2 seconds
+    }, 1000); // Trigger long press after 2 seconds
   };
 
   const handleMouseUp = () => {
