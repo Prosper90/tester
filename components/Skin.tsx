@@ -162,7 +162,7 @@ const Skin: React.FC<SkinProps> = ({
           <Image src={Arrow} width={20} height={20} alt="arrow" />
         </button>
         <h3 className="text-white text-2xl text-center flex-1">Skins</h3>
-        <button className="p-2 text-white">All</button>
+        
       </div>
 
       <div className="flex flex-1">
