@@ -143,7 +143,7 @@ const Skin: React.FC<SkinProps> = ({
     if (pendingPurchase && userPoints >= skinsData[pendingPurchase].price) {
       setUserPoints((prev) => prev - skinsData[pendingPurchase].price);
       setOwnedSkins((prev) => new Set([...Array.from(prev), pendingPurchase])); // Add to owned skins
-      setGalacticGoldRush(skinsData[pendingPurchase].image);
+      setGalacticGoldRush(skinsData[pendingPurchase].image); // Set the new global skin
       setPendingPurchase(null);
       setShowPopup(false);
     }
@@ -153,7 +153,8 @@ const Skin: React.FC<SkinProps> = ({
     setShowPopup(false);
   };
 
-  const isActiveSkin = selectedSkin ;
+  // Determine if the currently selected skin is the active/global skin
+  const isActiveSkin = skinsData[selectedSkin].image === GalacticGoldRush;
 
   return (
     <div className="fixed inset-0 bg-black flex flex-col z-50 overflow-auto">
@@ -168,13 +169,13 @@ const Skin: React.FC<SkinProps> = ({
       <div className="flex flex-1">
         {/* Left Sidebar for Skins Menu */}
         <div className="w-1/2 flex flex-col items-start justify-start bg-gray-900 p-2">
-          <button className="text-white text-center mb-4">Skin</button>
+          <button className="text-white w-full text-center mb-4">Skin</button>
           {/* Display Selected Skin */}
           <div className="flex flex-col items-center">
             <Image src={skinsData[selectedSkin].image} width={200} height={200} alt="Selected Skin" />
             <div className="text-center bg-gray-800 p-2 rounded-lg text-white mt-4">
               <h4 className="text-sm font-bold">{skinsData[selectedSkin].title}</h4>
-              <p className="text-xs text-center">{skinsData[selectedSkin].subtitle}</p>
+              <p className="text-xs text-justify">{skinsData[selectedSkin].subtitle}</p>
               <p className="text-xs text-justify mt-2">{skinsData[selectedSkin].description}</p>
               <p className="text-xl font-bold mt-2">
                 <span role="img" aria-label="coin">🪙</span> {skinsData[selectedSkin].price.toLocaleString()}
@@ -185,6 +186,7 @@ const Skin: React.FC<SkinProps> = ({
               className={`mt-4 px-6 py-2 rounded-full text-white ${
                 isActiveSkin ? "bg-gray-500 cursor-not-allowed" : "bg-purple-500"
               }`}
+              disabled={isActiveSkin}
             >
               {pendingPurchase ? "Buy" : "Choose"}
             </button>
@@ -198,6 +200,7 @@ const Skin: React.FC<SkinProps> = ({
           <div className="grid grid-cols-2 gap-2 mt-6">
             {Object.keys(skinsData).map((skinName) => {
               const isOwned = ownedSkins.has(skinName as SkinName);
+              const isSkinActive = skinsData[skinName as SkinName].image === GalacticGoldRush;
               return (
                 <div
                   key={skinName}
@@ -213,7 +216,7 @@ const Skin: React.FC<SkinProps> = ({
                       <Image src={Lock} width={20} height={20} alt="Locked" />
                     </div>
                   )}
-                  {selectedSkin === skinName && (
+                  {isSkinActive && (
                     <div className="absolute top-0 right-0 bg-blue-500 text-white text-xs rounded-full p-1">✓</div>
                   )}
                 </div>
