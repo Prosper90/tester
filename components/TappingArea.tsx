@@ -195,7 +195,22 @@ export default function TappingArea({
     
   };
 
+  const handleTouchStart = (e: React.TouchEvent<HTMLImageElement>) => {
+    
+    longPressTimer.current = setTimeout(() => {
+      handleLongPress();
+    }, 500); // Trigger long press after 2 seconds
+    
+  };
+
   const handleMouseUp = () => {
+    if (longPressTimer.current) {
+      clearTimeout(longPressTimer.current);
+      longPressTimer.current = null;
+    }
+  };
+
+  const handleTouchEnd = () => {
     if (longPressTimer.current) {
       clearTimeout(longPressTimer.current);
       longPressTimer.current = null;
@@ -299,6 +314,8 @@ export default function TappingArea({
               onClick={handleTap}
               onMouseDown={handleMouseDown}
               onMouseUp={handleMouseUp}
+              onTouchStart={handleTouchStart}
+              onTouchEnd={handleTouchEnd}
               onMouseLeave={handleMouseUp} // Clear the timer if the mouse leaves the element
               onContextMenu={(e) => e.preventDefault()}
               alt="Central Tap"
