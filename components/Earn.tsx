@@ -15,6 +15,7 @@ import X from "../images/Socials/twitter_2504947.svg";
 import Linkedin from "../images/Socials/linkedin_2504923.svg"
 import Instagram from "../images/Socials/instagram_2504918.svg"
 import Discord from "../images/Socials/discord_2504896.svg"
+import Spotify from "../images/Socials/spotify.png"
 
 interface EarnProps {
   userPoints: number;
@@ -274,7 +275,7 @@ export default function Earn({ userPoints, setUserPoints }: EarnProps) {
           rel="noopener noreferrer"
           className={`bg-neutral-800 px-2 py-6 flex flex-col items-center justify-center w-40 gap-3 rounded-xl ${isTaskCompleted("spotify") ? "bg-opacity-50" : ""}`}
         >
-          <Image src={X} width={50} height={50} alt="X" />
+          <Image src={Spotify} width={50} height={50} alt="X" />
           <h4 className="text-white text-center text-sm">Follow Our Spotify Profile</h4>
           <div className="flex items-center">
             <Image src={Coin} width={20} height={20} alt="Coin" />
