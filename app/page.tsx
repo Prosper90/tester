@@ -56,37 +56,41 @@ export default function Home() {
   const [userData, setUserData] = useState<UserData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
+  
   useEffect(() => {
-    const fetchUserData = async () => {
-      if (WebApp.initDataUnsafe.user) {
-        const telegramID = WebApp.initDataUnsafe.user.id; // Use Telegram ID to fetch user data from backend
-        try {
-          const response = await fetch('https://hamsterkombatserver.onrender.com/api/user/login', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ telegramID }),
-          });
+    // Ensure this code only runs on the client side
+    if (typeof window !== "undefined") {
+      const fetchUserData = async () => {
+        if (WebApp.initDataUnsafe.user) {
+          const telegramID = WebApp.initDataUnsafe.user.id; // Use Telegram ID to fetch user data from backend
+          try {
+            const response = await fetch('https://hamsterkombatserver.onrender.com/api/user/login', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ telegramID }),
+            });
 
-          const data = await response.json();
-          if (response.ok) {
-            setUserData(data.data); // Assuming your API returns the user data in the 'data' field
-          } else {
-            console.error('Failed to fetch user data:', data.message);
+            const data = await response.json();
+            if (response.ok) {
+              setUserData(data.data); // Assuming your API returns the user data in the 'data' field
+            } else {
+              console.error('Failed to fetch user data:', data.message);
+            }
+          } catch (error) {
+            console.error('Error fetching user data:', error);
+          } finally {
+            setIsLoading(false);
           }
-        } catch (error) {
-          console.error('Error fetching user data:', error);
-        } finally {
+        } else {
+          console.error('No user data from Telegram');
           setIsLoading(false);
         }
-      } else {
-        console.error('No user data from Telegram');
-        setIsLoading(false);
-      }
-    };
+      };
 
-    fetchUserData();
+      fetchUserData();
+    }
   }, []);
 
   const userName = userData?.username || 'Jones'; // Default to 'Jones' if username is not available
