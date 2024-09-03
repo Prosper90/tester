@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import Coin from "../images/coin.png";
+import Coin from "../images/Token.svg";
 import OrbCipher from "../images/Allien Planets/Allien Planet 5.svg";
 import Armadillo from "../images/Armadillo_2.svg";
 

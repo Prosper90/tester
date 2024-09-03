@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Image, {StaticImageData} from "next/image";
-import Coin from "../../images/coin.png";
+import Coin from "../../images/Token.svg";
 import Icon1 from "../../images/Mining Icons/Security/Threat Detection.svg"
 import Icon2 from "../../images/Mining Icons/Security/Security Audits.svg"
 import Icon3 from "../../images/Mining Icons/Security/Incident Response.svg"

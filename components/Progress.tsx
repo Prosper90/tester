@@ -1,6 +1,6 @@
 import React from "react";
 import Image, { StaticImageData } from "next/image";
-import Coin from "../images/coin.png"
+import Coin from "../images/Token.svg"
 import Arrow from "../icons/Arrow.svg";
 import Icon from "../icons/usericon.png";
 import Astro from "../images/Astro1.png";

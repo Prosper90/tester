@@ -4,7 +4,7 @@ import Orb from "../images/Allien Planets/Allien Planet 3.svg";
 import OrbCipher from "../images/Allien Planets/Allien Planet 5.svg";
 import Fire from "../icons/Power.svg";
 import Boost1 from "../icons/Rocket.svg";
-import Coin from "../images/coin.png";
+import Coin from "../images/Token.svg";
 import Star from "../icons/Star 1.svg";
 import Diamond from "../icons/Star 2.svg";
 import Clock from "../icons/Satr3.svg";

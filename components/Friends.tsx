@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Invite1 from "../images/Orange Chest.svg";
 import Invite2 from "../images/Red Chest.svg";
-import Coin from "../images/coin.png";
+import Coin from "../images/Token.svg";
 import Icon from "../icons/icon.png";
 
 export default function Friends() {

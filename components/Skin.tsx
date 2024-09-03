@@ -8,7 +8,7 @@ import Anne_Normal_1 from "../images/Skins/Anne_SVG/Normal/Anne_Normal_1.svg";
 import SPF_Normal_1 from "../images/Skins/SPF_SVG/Normal/SPF_Normal_4.svg";
 import Kayopo_Hunter_Normal from "../images/Skins/Red_Hunter_SVG/Normal/Red_Hunter_Normal_4.svg";
 import Lock from "../icons/Lock.svg";
-import Coin from "../images/coin.png";
+import Coin from "../images/Token.svg";
 
 // Define a type for skin information
 type SkinName =

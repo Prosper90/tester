@@ -1,7 +1,7 @@
 "use client";
 
 import Image, { StaticImageData } from "next/image";
-import Coin from "../images/coin.png";
+import Coin from "../images/Token.svg";
 import ChestBox1 from "../images/ChestBox.png";
 import ChestBox2 from "../images/ChestBox2.png";
 import { useState, useEffect } from "react";

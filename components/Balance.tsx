@@ -1,7 +1,7 @@
 "use client";
 
 import Image, { StaticImageData } from "next/image";
-import Coin from "../images/coin.png";
+import Coin from "../images/Token.svg";
 
 // Define the prop types for Balance
 interface BalanceProps {

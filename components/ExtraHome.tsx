@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 import Icon from "../icons/icon.png";
 import AstroIcon from "../icons/astro_icon.png";
-import Coin from "../images/coin.png";
+import Coin from "../images/Token.svg";
 import Setting from "../icons/setting.png";
 import Central_tap from "../images/central_tap.png"
 import Fire from "../icons/fire.png"
