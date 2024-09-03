@@ -92,7 +92,7 @@ const Setting: React.FC<SettingProps> = ({ onClose, onExchangerChange, selectedE
           <span className="text-white text-lg">Delete Account</span>
           <button
             onClick={() => setIsDeleteModalOpen(true)}
-            className="text-gray-400 bg-red-600 px-2 py-1 rounded-md text-lg"
+            className="text-gray-200 bg-gradient-to-r from-indigo-600 to-purple-500 px-2 py-1 rounded-md text-lg"
           >
             Delete
           </button>
@@ -101,26 +101,26 @@ const Setting: React.FC<SettingProps> = ({ onClose, onExchangerChange, selectedE
 
       {/* Delete Confirmation Modal */}
       {isDeleteModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-zinc-800 rounded-lg px-6 py-4 w-96 text-center">
-            <h3 className="text-white text-xl font-semibold mb-4">Are you sure?</h3>
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center top-glow justify-center z-50">
+          <div className="bg-neutral-800 rounded-t-[46px] border-t-2 border-amber-600 top-glow p-6 w-96 relative text-center">
+            <h3 className="text-white text-xl font-semibold mb-4">Are you sure you want to delete your account?</h3>
             <p className="text-gray-400 mb-6">
-              Are you sure you want to delete your account? All your data, including game progress, achievements, and purchases, will be permanently deleted.
+              All your data, including game progress, achievements, and purchases, will be permanently deleted.
             </p>
-            <div className="flex justify-center space-x-4">
+            <div className="flex flex-col gap-2 w-full justify-center">
               <button
                 onClick={() => {
                   // Logic for deleting account
                   setIsDeleteModalOpen(false);
                   onClose(); // Close settings after deletion
                 }}
-                className="bg-red-600 text-white px-4 py-2 rounded-md"
+                className="bg-gradient-to-r from-indigo-600 to-purple-500 text-white py-2 rounded-md"
               >
                 Delete Account
               </button>
               <button
                 onClick={() => setIsDeleteModalOpen(false)}
-                className="bg-gray-600 text-white px-4 py-2 rounded-md"
+                className="bg-gray-600 text-white py-2 rounded-md"
               >
                 Cancel
               </button>

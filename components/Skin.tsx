@@ -237,13 +237,13 @@ const Skin: React.FC<SkinProps> = ({
             <div className="flex gap-2 justify-center">
               <button
                 onClick={handleConfirmPurchase}
-                className="bg-gradient-to-r from-indigo-600 to-purple-500 text-white px-4 py-2 rounded-full"
+                className="bg-gradient-to-r from-indigo-600 to-purple-500 text-white px-4 py-2 rounded"
               >
                 Yes
               </button>
               <button
                 onClick={handleCancelPurchase}
-                className="bg-gray-600 px-4 py-2 rounded-full text-white"
+                className="bg-gray-600 px-4 py-2 rounded text-white"
               >
                 No
               </button>
