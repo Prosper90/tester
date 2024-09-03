@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Image, { StaticImageData } from "next/image";
-import Arrow from "../icons/Arrow.png";
+import Arrow from "../icons/Arrow.svg";
 
 // Import your icons
 import AvalancheIcon from "../images/Blockchains/Avalanche.svg";

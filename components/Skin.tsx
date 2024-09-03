@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Arrow from "../icons/Arrow.png";
+import Arrow from "../icons/Arrow.svg";
 import Image, { StaticImageData } from "next/image";
 import Default from "../images/Skins/Astro_SVG/Normal/Armadillo_1.svg";
 import AstroGirl_Normal_1 from "../images/Skins/AstroGirl_SVG/Normal/AstroGirl_Normal_2.svg";
