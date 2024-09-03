@@ -51,14 +51,14 @@ export default function Home() {
   const renderSharedComponents = () => (
     <>
       <UserInfo GalacticGoldRush={GalacticGoldRush} setGalacticGoldRush={setGalacticGoldRush} levelIndex={levelIndex} levelIcons={levelIcons} userPoints={userPoints} setUserPoints={setUserPoints} userName={userName} levelNames={levelNames} calculateProgress={calculateProgress} />
-      <Redeem userPoints={userPoints} setUserPoints={setUserPoints}/>
+      <Redeem userPoints={userPoints} setUserPoints={setUserPoints} />
       <ProfitPerHour pointsPerHour={pointsPerHour} />
     </>
   );
 
   const [isLoading, setIsLoading] = useState(true);
   const [levelIndex, setLevelIndex] = useState(0);
-  const [levelIcon, setLevelIcon]= useState<StaticImageData>(levelIcons[0]); 
+  const [levelIcon, setLevelIcon] = useState<StaticImageData>(levelIcons[0]);
   const [userPoints, setUserPoints] = useState(6000);
   const [GalacticGoldRush, setGalacticGoldRush] = useState<StaticImageData>(BronzeSkim1);
   const [pointsPerHour, setPointsPerHour] = useState(0);
@@ -212,7 +212,12 @@ export default function Home() {
       {activeTab === 'mine' && (
         <div className="flex flex-col gap-4 items-center justify-start h-full pt-2 w-full mb-24">
           {renderSharedComponents()}
-          <DailyCombo />
+          <DailyCombo
+            userPoints={userPoints}
+            setUserPoints={setUserPoints}
+            cardLevels={cardLevels}
+            setCardLevels={setCardLevels}
+          />
           <CardTabs cardTab={cardTab} setCardTab={setCardTab} />
           {cardTab === 'Performance' && (
             <Performance

@@ -159,6 +159,10 @@ export default function Performance({ userPoints, setUserPoints, cardLevels, set
     }
     setSelectedCard(null); // Close the modal after purchase
   };
+  
+  const checkIfPurchased = (cardTitle: string) => {
+    return (cardLevels[cardTitle] || 0) > 0;
+  };
 
   return (
     <div className="flex flex-wrap gap-2 w-full p-4 items-center justify-between">
@@ -168,6 +172,7 @@ export default function Performance({ userPoints, setUserPoints, cardLevels, set
         const cost = calculateCost(card.title, currentLevel);
         const bonus = calculateBonus(card.title, currentLevel);
         const atMaxLevel = currentLevel >= maxLevel;
+        const isPurchased = checkIfPurchased(card.title);
 
         return (
           <div
