@@ -8,7 +8,7 @@ import Anne_Normal_1 from "../images/Skins/Anne_SVG/Normal/Anne_Normal_1.svg";
 import SPF_Normal_1 from "../images/Skins/SPF_SVG/Normal/SPF_Normal_4.svg";
 import Kayopo_Hunter_Normal from "../images/Skins/Red_Hunter_SVG/Normal/Red_Hunter_Normal_4.svg";
 import Lock from "../icons/Lock.svg";
-import UserInfo from "./UserInfo";
+import Coin from "../images/coin.png";
 
 // Define a type for skin information
 type SkinName =
@@ -56,7 +56,7 @@ const skinsData: { [key in SkinName]: SkinInfo } = {
     subtitle: "The Sophisticated Navigator",
     description:
       "Astro Girl is a Celestara lavish planet's savvy and charming local, deeply knowledgeable about its newfound wealth. With her wit and charisma, she guides Astro through this strange new world, becoming an essential ally in unraveling the planet’s crypto mysteries. Astro Girl is more than just a sidekick; she’s a vital part of the adventure.",
-    price: 800,
+    price: 8000,
   },
   Panda_Normal_1: {
     image: Panda_Normal_1,
@@ -178,7 +178,7 @@ const Skin: React.FC<SkinProps> = ({
               <p className="text-xs text-justify">{skinsData[selectedSkin].subtitle}</p>
               <p className="text-xs text-justify mt-2">{skinsData[selectedSkin].description}</p>
               <p className="text-xl font-bold mt-2">
-                <span role="img" aria-label="coin">🪙</span> {skinsData[selectedSkin].price.toLocaleString()}
+            <Image src={Coin} width={34} height={34} alt="Coin Icon" className="rounded-full" /> {skinsData[selectedSkin].price.toLocaleString()}
               </p>
             </div>
             <button
