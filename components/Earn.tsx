@@ -187,9 +187,9 @@ export default function Earn({ userPoints, setUserPoints }: EarnProps) {
       </div>
 
       {/* Daily tasks */}
-      {/* <h4 className="text-white text-base text-left mt-4">Daily tasks</h4>
+      <h4 className="text-white text-base text-left mt-4">Daily tasks</h4>
       <div className="grid grid-cols-2 gap-2 w-full mt-4">
-        <a
+        {/* <a
           href="https://astroarmadillos.io/"
           onClick={() => handleAddPoints("crypto", 1500)}
           target="_blank"
@@ -202,10 +202,10 @@ export default function Earn({ userPoints, setUserPoints }: EarnProps) {
             <Image src={Coin} width={20} height={20} alt="Coin" />
             <h5 className="text-white text-sm">+1,500</h5>
           </div>
-        </a>
+        </a> */}
 
         <a
-          href="https://example.com/stargating"
+          href="https://stargating.io/"
           onClick={() => handleAddPoints("stargating", 1500)}
           target="_blank"
           rel="noopener noreferrer"
@@ -218,7 +218,7 @@ export default function Earn({ userPoints, setUserPoints }: EarnProps) {
             <h5 className="text-white text-sm">+1,500</h5>
           </div>
         </a>
-      </div> */}
+      </div>
 
       {/* Task List */}
       <h4 className="text-white text-base text-left mt-4">Task list</h4>
