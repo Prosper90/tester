@@ -136,6 +136,13 @@ export default function TappingArea({
       setLastCompletionTime(parseInt(storedTime));
       checkCipherAvailability(parseInt(storedTime));
     }
+
+    // Cleanup on component unmount
+    return () => {
+      if (longPressTimer.current) {
+        clearTimeout(longPressTimer.current);
+      }
+    };
   }, []);
 
   const checkCipherAvailability = (storedTime: number) => {
@@ -180,6 +187,7 @@ export default function TappingArea({
   };
 
   const handleMouseDown = (e: React.MouseEvent<HTMLImageElement>) => {
+    e.preventDefault(); // Prevent any default mouse down actions
     if (e.button === 2) return; // Ignore right-clicks for long press
 
     longPressTimer.current = setTimeout(() => {
