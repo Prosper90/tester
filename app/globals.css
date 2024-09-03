@@ -18,6 +18,13 @@
   background-position: center; 
   background-repeat: no-repeat;
 }
+.airdrop_background {
+  background-image: url(../images/friend_bg.png);
+  background-size: cover; 
+  background-position: center; 
+  background-repeat: no-repeat;
+  height: 100vh;
+}
 
 .central-glow {
   box-shadow: 0px -5px 14px 10px  #3aa6fe7e;

@@ -33,7 +33,7 @@ export default function Airdrop() {
   };
 
   return (
-    <div className="friends_background">
+    <div className="airdrop_background">
       <div className="m-4 flex flex-col items-center justify-center gap-4">
         <h3 className="text-white text-3xl text-center font-semibold">
           Airdrop Tasks
