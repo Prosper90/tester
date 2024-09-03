@@ -187,7 +187,7 @@ export default function Earn({ userPoints, setUserPoints }: EarnProps) {
       </div>
 
       {/* Daily tasks */}
-      <h4 className="text-white text-base text-left mt-4">Daily tasks</h4>
+      {/* <h4 className="text-white text-base text-left mt-4">Daily tasks</h4>
       <div className="grid grid-cols-2 gap-2 w-full mt-4">
         <a
           href="https://astroarmadillos.io/"
@@ -218,7 +218,7 @@ export default function Earn({ userPoints, setUserPoints }: EarnProps) {
             <h5 className="text-white text-sm">+1,500</h5>
           </div>
         </a>
-      </div>
+      </div> */}
 
       {/* Task List */}
       <h4 className="text-white text-base text-left mt-4">Task list</h4>
