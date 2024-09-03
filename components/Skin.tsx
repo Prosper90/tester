@@ -165,11 +165,17 @@ const Skin: React.FC<SkinProps> = ({
         <h3 className="text-white text-2xl text-center flex-1">Skins</h3>
 
       </div>
-
-      <div className="flex flex-1 bg-neutral-800">
+      <div className="flex">
+      <div className="w-1/2 flex flex-col items-start justify-start gap-0">
+        <button className="text-white bg-black w-full text-center mb-4">Skin</button>
+      </div>
+      <div className="w-1/2 flex flex-col items-start justify-start gap-0">
+        <button className="text-white bg-black w-full text-center mb-4">All</button>
+      </div>
+      </div>
+      <div className="flex flex-1 bg-neutral-800 rounded-t-[46px]">
         {/* Left Sidebar for Skins Menu */}
         <div className="w-1/2 flex flex-col items-start justify-start gap-0">
-          <button className="text-white bg-black w-full text-center mb-4">Skin</button>
           {/* Display Selected Skin */}
           <div className="flex flex-col items-center justify-center">
             <Image src={skinsData[selectedSkin].image} width={200} height={200} alt="Selected Skin" />
@@ -195,7 +201,6 @@ const Skin: React.FC<SkinProps> = ({
 
         {/* Main Content Area */}
         <div className="w-1/2 flex flex-col items-center justify-start">
-          <button className="text-white bg-black w-full mb-4">All</button>
           {/* List of Skins */}
           <div className="h-full pr-2">
             <div className="grid grid-cols-2 gap-2 mt-6">
@@ -205,14 +210,14 @@ const Skin: React.FC<SkinProps> = ({
                 return (
                   <div
                     key={skinName}
-                    className={`relative bg-zinc-800 py-2 gap-2 flex flex-col items-center justify-center rounded cursor-pointer ${isOwned ? "border-2 border-blue-500" : ""
+                    className={`relative bg-zinc-700 py-2 gap-2 flex flex-col items-center justify-center rounded-xl cursor-pointer ${isOwned ? "border-2 border-blue-500" : ""
                       }`}
                     onClick={() => handleSkinSelect(skinName as SkinName)}
                   >
-                    <Image src={skinsData[skinName as SkinName].image} width={100} height={100} alt={skinName}/>
+                    <Image src={skinsData[skinName as SkinName].image} width={100} height={100} alt={skinName} />
                     <h4 className="text-xs text-center">{skinsData[skinName as SkinName].title}</h4>
                     {!isOwned && (
-                      <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                      <div className="absolute inset-0 flex items-center justify-center rounded-xl bg-black bg-opacity-50">
                         <Image src={Lock} width={20} height={20} alt="Locked" />
                       </div>
                     )}

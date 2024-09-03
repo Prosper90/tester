@@ -6,6 +6,9 @@ import Coin from "../images/Token.svg";
 import Stargating from "../images/Logos/Stargating.png";
 import Crypto_Space from "../images/Crypto Space Logo.png";
 import Armadillos_Adventures from "../images/Armadillos_Adventures_2.png";
+import Astro_Armadillos from "../images/Logos/Astro Armadillos.png";
+import Web3glossary from "../images/Logos/Web3Glossary.svg";
+import Astro_Nfts from "../images/Logos/AstrosNFTs.png"
 import TG from "../images/Socials/telegram_2504941.svg";
 import X from "../images/Socials/twitter_2504947.svg";
 import Linkedin from "../images/Socials/linkedin_2504923.svg"
@@ -66,7 +69,6 @@ export default function Earn({ userPoints, setUserPoints }: EarnProps) {
             <h5 className="text-white text-sm">+1,000</h5>
           </div>
         </a>
-
         <a
           href="https://youtu.be/eKLNdgL8Ynk?si=LVGoXF5Mk0mJM_Ol"
           onClick={() => handleAddPoints("astro2", 1000)}
@@ -88,13 +90,70 @@ export default function Earn({ userPoints, setUserPoints }: EarnProps) {
         </a>
         <a
           href="https://youtu.be/q8N5IqAi4hU?si=EJx5BR-3sHe9V_mW"
-          onClick={() => handleAddPoints("astro2", 1000)}
+          onClick={() => handleAddPoints("astro3", 1000)}
           target="_blank"
           rel="noopener noreferrer"
-          className={`bg-neutral-800 p-2 flex flex-col items-center justify-center gap-3 rounded-xl ${isTaskCompleted("astro2") ? "bg-opacity-50" : ""}`}
+          className={`bg-neutral-800 p-2 flex flex-col items-center justify-center gap-3 rounded-xl ${isTaskCompleted("astro3") ? "bg-opacity-50" : ""}`}
         >
           <Image
             src={Armadillos_Adventures}
+            width={100}
+            height={100}
+            alt="Armadillos_Adventures"
+          />
+          <h4 className="text-white text-center text-sm">Watch! Astro Armadillos Adventures S01E03</h4>
+          <div className="flex items-center">
+            <Image src={Coin} width={20} height={20} alt="Coin" />
+            <h5 className="text-white text-sm">+1,000</h5>
+          </div>
+        </a>
+        <a
+          href="https://astroarmadillos.io/"
+          onClick={() => handleAddPoints("astroarmadillos", 1000)}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={`bg-neutral-800 p-2 flex flex-col items-center justify-center gap-3 rounded-xl ${isTaskCompleted("astroarmadillos") ? "bg-opacity-50" : ""}`}
+        >
+          <Image
+            src={Astro_Armadillos}
+            width={100}
+            height={100}
+            alt="Armadillos_Adventures"
+          />
+          <h4 className="text-white text-center text-sm">Watch! Astro Armadillos Adventures S01E01</h4>
+          <div className="flex items-center">
+            <Image src={Coin} width={20} height={20} alt="Coin" />
+            <h5 className="text-white text-sm">+1,000</h5>
+          </div>
+        </a>
+        <a
+          href=" https://web3glossary.io/"
+          onClick={() => handleAddPoints("web3glossary", 1000)}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={`bg-neutral-800 p-2 flex flex-col items-center justify-center gap-3 rounded-xl ${isTaskCompleted("web3glossary") ? "bg-opacity-50" : ""}`}
+        >
+          <Image
+            src={Web3glossary}
+            width={100}
+            height={100}
+            alt="Armadillos_Adventures"
+          />
+          <h4 className="text-white text-center text-sm">Watch! Astro Armadillos Adventures S01E02</h4>
+          <div className="flex items-center">
+            <Image src={Coin} width={20} height={20} alt="Coin" />
+            <h5 className="text-white text-sm">+1,000</h5>
+          </div>
+        </a>
+        <a
+          href="https://astrosnfts.io/"
+          onClick={() => handleAddPoints("astrosnfts", 1000)}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={`bg-neutral-800 p-2 flex flex-col items-center justify-center gap-3 rounded-xl ${isTaskCompleted("astrosnfts") ? "bg-opacity-50" : ""}`}
+        >
+          <Image
+            src={Astro_Nfts}
             width={100}
             height={100}
             alt="Armadillos_Adventures"

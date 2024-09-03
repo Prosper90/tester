@@ -287,8 +287,8 @@ export default function TappingArea({
       {!showBoost ? (
         <div className="flex flex-col items-center justify-start h-full p-2 gap-4">
           <div className="flex items-center justify-center gap-2">
-            <Image src={Coin} width={34} height={34} alt="Coin Icon" className="rounded-full" />
-            <h5 className="text-white text-2xl">{userPoints}</h5>
+            <Image src={Coin} width={45} height={45} alt="Coin Icon" className="rounded-full" />
+            <h5 className="text-white text-5xl">{userPoints}</h5>
           </div>
           {isCipherMode && (
             <div className="morse-code-input w-full flex items-center justify-between bg-gray-800 p-2 rounded-md text-white">
