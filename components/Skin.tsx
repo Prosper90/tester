@@ -209,7 +209,7 @@ const Skin: React.FC<SkinProps> = ({
                       }`}
                     onClick={() => handleSkinSelect(skinName as SkinName)}
                   >
-                    <Image src={skinsData[skinName as SkinName].image} width={50} height={100} alt={skinName} />
+                    <Image src={skinsData[skinName as SkinName].image} width={100} height={100} alt={skinName}/>
                     <h4 className="text-xs text-center">{skinsData[skinName as SkinName].title}</h4>
                     {!isOwned && (
                       <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
