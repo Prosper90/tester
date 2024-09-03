@@ -27,9 +27,37 @@ interface TappingAreaProps {
   setActiveTab: (tabName: string) => void;
 }
 
-const TRANSLATION = "VALIDATOR";
 const BONUS_POINTS = 2000;
 const ONE_DAY_IN_MS = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
+// List of cipher codes for each day
+const cipherCodes = [
+  "VALIDATOR",
+  "CONSENSUS",
+  "BLOCKCHAIN",
+  "PROOFOFWORK",
+  "HASH",
+  "ALGORITHM",
+  "CORDIAL",
+  "COIN",
+  "UP",
+  "CHAIN",
+  "STACK",
+  "HAVE",
+  "HASHL",
+  "BLOCK",
+  "PROOF",
+  "CRYPTO",
+  "SCALE",
+  "UNITS"
+];
+
+// Determine the current day's cipher code
+const getCurrentTranslation = () => {
+  const currentDate = new Date();
+  const startOfEpoch = new Date(currentDate.getFullYear(), 0, 0); // Start of the year
+  const dayOfYear = Math.floor((currentDate.getTime() - startOfEpoch.getTime()) / (1000 * 60 * 60 * 24));
+  return cipherCodes[dayOfYear % cipherCodes.length];
+};
 
 // Morse code map for letters and digits
 const morseCodeMap: { [key: string]: string } = {
@@ -96,7 +124,9 @@ export default function TappingArea({
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [lastCompletionTime, setLastCompletionTime] = useState<number | null>(null);
   const [canUseCipher, setCanUseCipher] = useState<boolean>(true); // State to control cipher mode usage
-  
+  // Calculate the current cipher translation
+  const [currentTranslation, setCurrentTranslation] = useState<string>(getCurrentTranslation());
+
   useEffect(() => {
     // Retrieve the last completion time from local storage on component mount
     const storedTime = localStorage.getItem("lastCompletionTime");
@@ -165,7 +195,7 @@ export default function TappingArea({
     setShowIncrement(true);
     setTimeout(() => setShowIncrement(false), 500);
 
-    const currentLetter = TRANSLATION[currentIndex]; // Get the current letter to match
+    const currentLetter = currentTranslation[currentIndex]; // Get the current letter to match
     const currentLetterMorse = morseCodeMap[currentLetter]; // Get Morse code for the current letter
 
     if (updatedInput === currentLetterMorse) {
@@ -175,7 +205,7 @@ export default function TappingArea({
       setUserInput(""); // Reset user input for the next letter
 
       // If all letters are matched, award bonus points
-      if (currentIndex + 1 === TRANSLATION.length) {
+      if (currentIndex + 1 === currentTranslation.length) {
         setUserPoints((prevPoints) => prevPoints + BONUS_POINTS); // Add bonus points
         const completionTime = Date.now();
         localStorage.setItem("lastCompletionTime", completionTime.toString());
