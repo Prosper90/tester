@@ -120,7 +120,7 @@ export default function Earn({ userPoints, setUserPoints }: EarnProps) {
             height={100}
             alt="Armadillos_Adventures"
           />
-          <h4 className="text-white text-center text-sm">Watch! Astro Armadillos Adventures S01E01</h4>
+          <h4 className="text-white text-center text-sm">Astro Armadillos</h4>
           <div className="flex items-center">
             <Image src={Coin} width={20} height={20} alt="Coin" />
             <h5 className="text-white text-sm">+1,000</h5>
@@ -139,7 +139,7 @@ export default function Earn({ userPoints, setUserPoints }: EarnProps) {
             height={100}
             alt="Armadillos_Adventures"
           />
-          <h4 className="text-white text-center text-sm">Watch! Astro Armadillos Adventures S01E02</h4>
+          <h4 className="text-white text-center text-sm">Web3glossary</h4>
           <div className="flex items-center">
             <Image src={Coin} width={20} height={20} alt="Coin" />
             <h5 className="text-white text-sm">+1,000</h5>
@@ -158,7 +158,7 @@ export default function Earn({ userPoints, setUserPoints }: EarnProps) {
             height={100}
             alt="Armadillos_Adventures"
           />
-          <h4 className="text-white text-center text-sm">Watch! Astro Armadillos Adventures S01E03</h4>
+          <h4 className="text-white text-center text-sm">Astro NFT</h4>
           <div className="flex items-center">
             <Image src={Coin} width={20} height={20} alt="Coin" />
             <h5 className="text-white text-sm">+1,000</h5>
