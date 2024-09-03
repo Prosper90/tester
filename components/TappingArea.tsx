@@ -358,7 +358,7 @@ export default function TappingArea({
               <h4 className="text-white text-lg">Boost</h4>
             </div>
           </div>
-          <div className="flex gap-2 text-sm items-center justify-between w-full h-20">
+          <div className="flex gap-2 text-sm items-center justify-evenly w-full h-20">
             <RewardCard icon={Star} label="Daily Reward" onClick={handleDailyRewardClick} /> {/* Show Daily Reward Popup on click */}
             <RewardCard icon={Diamond} label="Daily Cipher" onClick={handleDailyCipherClick} /> {/* Attach click handler */}
             <RewardCard icon={Clock} label="Daily Combo" onClick={handleDailyComboClick} />
