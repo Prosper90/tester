@@ -17,7 +17,7 @@ import CommonTapArea from "@/components/CommonTapArea";
 import Friends from "@/components/Friends";
 import Earn from "@/components/Earn";
 import Airdrop from "@/components/Airdrop";
-import BronzeSkim1 from "../images/Armadillo_2.svg"
+import BronzeSkim1 from "../images/Skins/Armadillo_1.svg"
 import { StaticImageData } from "next/image"
 import IconLevel1 from "../images/Achivment Levels/Blockchain Junior Developer.svg"
 import IconLevel2 from "../images/Achivment Levels/Senior DeFi Coder.svg"

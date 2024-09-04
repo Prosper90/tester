@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 import Coin from "../images/Token.svg";
 import Stargating from "../images/Logos/Stargating.png";
-import PinkPanda from "../images/Logos/Pink Panda Logo.svg";
+import PinkPanda from "../images/Logos/Pink Panda network NEW.svg";
 import Youtube from "../images/Socials/youtube_2504965.svg";
 import Astro_Armadillos from "../images/Logos/Astro Armadillos.png";
 import Web3glossary from "../images/Logos/Web3Glossary.svg";
@@ -150,7 +150,7 @@ export default function Earn({ userPoints, setUserPoints }: EarnProps) {
           </div>
         </a>
         <a
-          href=" https://web3glossary.io"
+          href="https://web3glossary.io"
           onClick={() => handleAddPoints("web3glossary", 1000)}
           target="_blank"
           rel="noopener noreferrer"
