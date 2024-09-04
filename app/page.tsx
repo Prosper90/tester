@@ -32,17 +32,65 @@ type CardLevels = { [key: string]: number };
 interface UserData {
   id: number;
   username?: string;
+  name?: string;
+  uid?: string;
+  email?: string;
+  phoneNo?: string;
+  image?: string;
+  DOB?: Date;
+  tier?: number;
+  Amount?: number;
+  dailyEnergy?: {
+    energyCount: number;
+    lastUsed: Date | null;
+  };
+  availableTapCount?: number;
+  maxTap?: number;
+  multiTapLevel?: number;
+  referedID?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
+
 
 export default function Home() {
   const [userData, setUserData] = useState<UserData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   
   useEffect(() => {
-    if (WebApp.initDataUnsafe.user) {
-      setUserData(WebApp.initDataUnsafe.user as UserData)
+    if (typeof window !== "undefined") {
+      const fetchUserData = async () => {
+        if (WebApp.initDataUnsafe.user) {
+          const telegramID = WebApp.initDataUnsafe.user.id; 
+          try {
+            const response = await fetch('https://ggr-backend-production.up.railway.app/api/user/login', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ telegramID }),
+            });
+
+            const data = await response.json();
+            if (response.ok) {
+              setUserData(data.data); 
+            } else {
+              console.error('Failed to fetch user data:', data.message);
+            }
+          } catch (error) {
+            console.error('Error fetching user data:', error);
+          } finally {
+            setIsLoading(false);
+          }
+        } else {
+          console.error('No user data from Telegram');
+          setIsLoading(false);
+        }
+      };
+
+      fetchUserData();
     }
-  }, [])
+  }, []);
   const userName = userData?.username || 'Jones';
   const levelNames = [
     "Blockchain Junior Developer", "Senior DeFi Coder", "Web3 Solutions Architect", "Crypto Tech Strategist", "Chief Blockchain Architect"
