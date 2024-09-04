@@ -44,7 +44,6 @@ export default function ExtraHome() {
     }
   }, [])
   const userName = userData?.username || 'Jones';
-  const userid = userData?.id || 123456789;
   const levelNames = [
     "Blockchain Junior Developer", "Senior DeFi Coder", "Web3 Solutions Architect", "Crypto Tech Strategist", "Chief Blockchain Architect"
   ];
@@ -64,7 +63,7 @@ export default function ExtraHome() {
 
   const renderSharedComponents = () => (
     <>
-      <UserInfo GalacticGoldRush={GalacticGoldRush} setGalacticGoldRush={setGalacticGoldRush} levelIndex={levelIndex} levelIcons={levelIcons} userPoints={userPoints} userid={userid} setUserPoints={setUserPoints} userName={userName} levelNames={levelNames} calculateProgress={calculateProgress} />
+      <UserInfo GalacticGoldRush={GalacticGoldRush} setGalacticGoldRush={setGalacticGoldRush} levelIndex={levelIndex} levelIcons={levelIcons} userPoints={userPoints} setUserPoints={setUserPoints} userName={userName} levelNames={levelNames} calculateProgress={calculateProgress} />
       <Redeem userPoints={userPoints} setUserPoints={setUserPoints} />
       <ProfitPerHour pointsPerHour={pointsPerHour} />
     </>
