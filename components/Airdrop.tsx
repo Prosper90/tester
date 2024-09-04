@@ -4,15 +4,16 @@ import Image from "next/image";
 import Airdrop1 from "../images/Airdrop.svg";
 import { useWeb3Modal } from '@web3modal/wagmi/react';
 import { useAccount } from 'wagmi';
+import { TonConnectUIProvider,TonConnectButton } from '@tonconnect/ui-react';
 
 export default function Airdrop() {
   const [account, setAccount] = useState<string | null>(null);
+  const [tonAccount, setTonAccount] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const { address, isConnected } = useAccount();
   const { open } = useWeb3Modal();
 
   useEffect(() => {
-    // Check if MetaMask is installed
     if (typeof window.ethereum !== "undefined") {
       console.log("MetaMask is installed!");
     } else {
@@ -32,8 +33,10 @@ export default function Airdrop() {
     open();
   };
 
+
   return (
-    <div className="airdrop_background">
+    <TonConnectUIProvider manifestUrl="https://firebasestorage.googleapis.com/v0/b/astrobiatechblock.appspot.com/o/tonconnect-manifest.json?alt=media&token=e16694e5-89c0-4df1-b8b6-82c5476aa7ea">
+    <div className="friends_background">
       <div className="m-4 flex flex-col items-center justify-center gap-4">
         <h3 className="text-white text-3xl text-center font-semibold">
           Airdrop Tasks
@@ -43,25 +46,13 @@ export default function Airdrop() {
           participate in the Airdrop
         </h4>
         <Image src={Airdrop1} width={250} height={300} alt="Airdrop1" />
-        {account ? (
-          <>
- <button
-            className="bg-gradient-to-r from-indigo-600 to-purple-500 rounded-xl p-4 w-full">              {account.substring(0, 6) + "..." + account.substring(account.length - 4)}
-            </button>
-            <p className="text-white mt-4">Coming Soon</p>
-          </>
-        ) : (
-          <button
-            className="bg-gradient-to-r from-indigo-600 to-purple-500 rounded-xl p-4 w-full"
-            onClick={handleConnectWallet}
-          >
-            Connect your Wallet
-          </button>
-        )}
+      
+       <TonConnectButton />
         {errorMessage && (
           <p className="text-red-500 mt-4">{errorMessage}</p>
         )}
       </div>
     </div>
+  </TonConnectUIProvider>
   );
 }

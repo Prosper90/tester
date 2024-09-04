@@ -5,7 +5,7 @@ import Coin from "../images/Token.svg";
 import SettingIcon from "../icons/Gear.svg";
 import { useState } from "react";
 import Setting from "./Setting";
-import AvalancheIcon from "../images/Blockchains/Avalanche.svg"; // Default icon or one of your choice
+import NextGenIcon from "../images/Blockchains/NextGen Chain.svg"; // Default icon or one of your choice
 
 // Define the prop types
 interface ProfitPerHourProps {
@@ -14,8 +14,8 @@ interface ProfitPerHourProps {
 
 export default function ProfitPerHour({ pointsPerHour }: ProfitPerHourProps) {
   const [showSettingPage, setShowSettingPage] = useState(false);
-  const [selectedExchanger, setSelectedExchanger] = useState<string>("Avalanche");
-  const [selectedExchangerIcon, setSelectedExchangerIcon] = useState<string | StaticImageData>(AvalancheIcon);
+  const [selectedExchanger, setSelectedExchanger] = useState<string>("NextGen");
+  const [selectedExchangerIcon, setSelectedExchangerIcon] = useState<string | StaticImageData>(NextGenIcon);
 
   const handleSettingClick = () => {
     setShowSettingPage(true);

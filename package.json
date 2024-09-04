@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@tanstack/react-query": "^5.53.3",
+    "@tonconnect/ui-react": "^2.0.9",
     "@twa-dev/sdk": "^7.8.0",
     "@walletconnect/web3-provider": "^1.8.0",
     "@web3modal/core": "^5.1.5",

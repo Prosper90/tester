@@ -16,6 +16,8 @@ import Linkedin from "../images/Socials/linkedin_2504923.svg"
 import Instagram from "../images/Socials/instagram_2504918.svg"
 import Discord from "../images/Socials/discord_2504896.svg"
 import Spotify from "../images/Socials/spotify.png"
+import Tiktok from "../images/Socials/tiktok_2504942.svg"
+import CryptoSpace from "../images/Logos/Crypto Space.png"
 
 interface EarnProps {
   userPoints: number;
@@ -50,7 +52,7 @@ export default function Earn({ userPoints, setUserPoints }: EarnProps) {
       <h4 className="text-white text-base text-center mt-2">Complete the task and earn more coins!</h4>
 
       {/* Astro Armadillos Adventures */}
-      <h4 className="text-white text-base text-left mt-4">Astro Armadillos Adventures</h4>
+      <h4 className="text-white text-base text-left mt-4">Astro Armadillos Universe</h4>
       <div className="grid grid-cols-2 gap-2 mt-4">
         <a
           href="https://youtu.be/veuucMnHnWA?si=sXU86fuDxNefXoXA"
@@ -204,7 +206,20 @@ export default function Earn({ userPoints, setUserPoints }: EarnProps) {
             <h5 className="text-white text-sm">+1,500</h5>
           </div>
         </a> */}
-
+ <a
+          href="http://cryptospace.game"
+          onClick={() => handleAddPoints("cryptospace", 1500)}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={`bg-neutral-800 p-2 flex flex-col items-center justify-center w-40 gap-3 rounded-xl ${isTaskCompleted("cryptospace") ? "bg-opacity-50" : ""}`}
+        >
+          <Image src={CryptoSpace} width={100} height={100} alt="cryptospace" />
+          <h4 className="text-white text-center text-sm">Play Crypto Space game</h4>
+          <div className="flex items-center">
+            <Image src={Coin} width={20} height={20} alt="Coin" />
+            <h5 className="text-white text-sm">+1,500</h5>
+          </div>
+        </a>
         <a
           href="https://stargating.io/"
           onClick={() => handleAddPoints("stargating", 1500)}
@@ -261,7 +276,7 @@ export default function Earn({ userPoints, setUserPoints }: EarnProps) {
           className={`bg-neutral-800 px-2 py-6 flex flex-col items-center justify-center w-40 gap-3 rounded-xl ${isTaskCompleted("linkedin") ? "bg-opacity-50" : ""}`}
         >
           <Image src={Linkedin} width={50} height={50} alt="TG" />
-          <h4 className="text-white text-center text-sm">Connect us on Linkedin</h4>
+          <h4 className="text-white text-center text-sm">Follow us on Linkedin</h4>
           <div className="flex items-center">
             <Image src={Coin} width={20} height={20} alt="Coin" />
             <h5 className="text-white text-sm">+500</h5>
@@ -296,9 +311,22 @@ export default function Earn({ userPoints, setUserPoints }: EarnProps) {
             <h5 className="text-white text-sm">+500</h5>
           </div>
         </a>
-
         <a
           href=" https://www.instagram.com/astroarmadillos/"
+          onClick={() => handleAddPoints("tiktok", 500)}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={`bg-neutral-800 px-2 py-6 flex flex-col items-center justify-center w-40 gap-3 rounded-xl ${isTaskCompleted("tiktok") ? "bg-opacity-50" : ""}`}
+        >
+          <Image src={Tiktok} width={50} height={50} alt="X" />
+          <h4 className="text-white text-center text-sm">Follow us on Tiktok</h4>
+          <div className="flex items-center">
+            <Image src={Coin} width={20} height={20} alt="Coin" />
+            <h5 className="text-white text-sm">+500</h5>
+          </div>
+        </a>
+        <a
+          href=" https://www.tiktok.com/@astroarmadillos?_t=8pQu78XQBj0&_r=1"
           onClick={() => handleAddPoints("instagram", 500)}
           target="_blank"
           rel="noopener noreferrer"

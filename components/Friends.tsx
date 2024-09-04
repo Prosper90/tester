@@ -4,7 +4,7 @@ import Image from "next/image";
 import Invite1 from "../images/Orange Chest.svg";
 import Invite2 from "../images/Red Chest.svg";
 import Coin from "../images/Token.svg";
-import Icon from "../icons/icon.png";
+import Icon from "../icons/usericon.png";
 
 export default function Friends() {
     // Placeholder data for friends
@@ -89,27 +89,33 @@ export default function Friends() {
             <h4 className="text-white text-base text-left mt-2">List of your friends</h4>
             <div className="mt-4 flex flex-col gap-4">
                 {friends.map((friend, index) => (
-                    <div key={index} className="flex bg-neutral-800 rounded-xl p-4 items-center gap-3">
-                        <Image
-                            src={Icon}
-                            width={34}
-                            height={34}
-                            alt="User Icon"
-                            className="rounded-lg"
-                        />
-                        <div className="flex w-full items-center justify-between">
-                            <span className="text-white text-base">{friend.name}</span>
-                            <div className="flex items-center">
-                                <Image
-                                    src={Coin}
-                                    width={20}
-                                    height={20}
-                                    alt="Coin"
-                                />
-                                <h5 className="text-white text-sm"> +5,000 </h5>
-                            </div>
+                    <div
+                    key={index}
+                    className="flex items-center justify-between bg-gray-800 rounded-lg p-4 mb-2"
+                >
+                    <div className="flex items-center">
+                        <div className="h-12 w-12 rounded-full bg-gray-600 flex items-center justify-center">
+                            <Image
+                                src={Icon}
+                                width={30}
+                                height={30}
+                                alt="User Icon"
+                            />
+                        </div>
+                        <div className="ml-4">
+                            <h4 className="text-white">{friend.name}</h4>
                         </div>
                     </div>
+                    <div className="flex gap-1">
+                        <Image
+                            src={Coin}
+                            width={20}
+                            height={15}
+                            alt="User Icon"
+                        />
+                        <p className="text-white">+05.3K</p>
+                    </div>
+                </div>
                 ))}
             </div>
         </div>

@@ -3,10 +3,9 @@ import Image, { StaticImageData } from "next/image";
 import Coin from "../images/Token.svg"
 import Arrow from "../icons/Arrow.svg";
 import Icon from "../icons/usericon.png";
-import Astro from "../images/Astro1.png";
 
 interface ProgressPageProps {
-    
+
     levelIndex: number;
     levelNames: string[];
     calculateProgress: () => number;
@@ -48,7 +47,10 @@ const ProgressPage: React.FC<ProgressPageProps> = ({
                     />
                 </div>
                 <h4 className="text-white text-center text-3xl mt-2">{levelNames[levelIndex]}</h4>
-                <p className="text-gray-400 text-lg mt-1">{userPoints}</p>
+                <div className="flex items-center justify-center gap-2 mt-2">
+                    <Image src={Coin} width={35} height={35} alt="Coin Icon" className="rounded-full" />
+                    <h5 className="text-white text-3xl">{userPoints}</h5>
+                </div>
 
                 {/* Progress Bar */}
                 <div className="w-full mt-4 px-8">
@@ -61,7 +63,7 @@ const ProgressPage: React.FC<ProgressPageProps> = ({
                 </div>
             </div>
             <div className="mt-10">
-            <h3 className="text-white text-2xl text-center text-bold flex-1">Leaderboard</h3>
+                <h3 className="text-white text-2xl text-center text-bold flex-1">Leaderboard</h3>
             </div>
             {/* User Ranking List */}
             <div className="w-full mt-8 px-4">
