@@ -59,38 +59,40 @@ export default function Home() {
   
   useEffect(() => {
     if (typeof window !== "undefined") {
-      const fetchUserData = async () => {
-        if (WebApp.initDataUnsafe.user) {
-          const telegramID = WebApp.initDataUnsafe.user.id; 
-          try {
-            const response = await fetch('https://ggr-backend-production.up.railway.app/api/user/login', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({ telegramID }),
-            });
+        const fetchUserData = async () => {
+            if (WebApp.initDataUnsafe.user) {
+                const telegramID = WebApp.initDataUnsafe.user.id; 
 
-            const data = await response.json();
-            if (response.ok) {
-              setUserData(data.data); 
+                try {
+                    const response = await fetch('https://ggr-backend-production.up.railway.app/api/user/login', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ telegramID }),
+                    });
+
+                    const data = await response.json();
+                    if (response.ok) {
+                        setUserData(data.data); // Set the user data in state
+                    } else {
+                        console.error('Failed to fetch user data:', data.message);
+                    }
+                } catch (error) {
+                    console.error('Error fetching user data:', error);
+                } finally {
+                    setIsLoading(false);
+                }
             } else {
-              console.error('Failed to fetch user data:', data.message);
+                console.error('No user data from Telegram');
+                setIsLoading(false);
             }
-          } catch (error) {
-            console.error('Error fetching user data:', error);
-          } finally {
-            setIsLoading(false);
-          }
-        } else {
-          console.error('No user data from Telegram');
-          setIsLoading(false);
-        }
-      };
+        };
 
-      fetchUserData();
+        fetchUserData();
     }
-  }, []);
+}, []);
+
   const userName = userData?.username || 'Jones';
   const levelNames = [
     "Blockchain Junior Developer", "Senior DeFi Coder", "Web3 Solutions Architect", "Crypto Tech Strategist", "Chief Blockchain Architect"
