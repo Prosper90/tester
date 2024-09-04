@@ -112,7 +112,7 @@ export default function Earn({ userPoints, setUserPoints }: EarnProps) {
           </div>
         </a>
         <a
-          href="https://stake.astroarmadillos.io/"
+          href="https://stake.astroarmadillos.io"
           onClick={() => handleAddPoints("stake", 1000)}
           target="_blank"
           rel="noopener noreferrer"
@@ -131,7 +131,7 @@ export default function Earn({ userPoints, setUserPoints }: EarnProps) {
           </div>
         </a>
         <a
-          href="https://astroarmadillos.io/"
+          href="https://astroarmadillos.io"
           onClick={() => handleAddPoints("astroarmadillos", 1000)}
           target="_blank"
           rel="noopener noreferrer"
@@ -150,7 +150,7 @@ export default function Earn({ userPoints, setUserPoints }: EarnProps) {
           </div>
         </a>
         <a
-          href=" https://web3glossary.io/"
+          href=" https://web3glossary.io"
           onClick={() => handleAddPoints("web3glossary", 1000)}
           target="_blank"
           rel="noopener noreferrer"
@@ -188,7 +188,7 @@ export default function Earn({ userPoints, setUserPoints }: EarnProps) {
           </div>
         </a>
         <a
-          href="https://pinkpanda.network/"
+          href="https://pinkpanda.network"
           onClick={() => handleAddPoints("pinkpanda", 1000)}
           target="_blank"
           rel="noopener noreferrer"
