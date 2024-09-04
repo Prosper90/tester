@@ -13,12 +13,12 @@ export default function Balance({ userPoints }: BalanceProps) {
         <div className="flex mt-4 items-center justify-center gap-2">
             <Image
                 src={Coin}
-                width={34}
-                height={34}
+                width={40}
+                height={40}
                 alt="Coin Icon"
                 className="rounded-full"
             />
-            <h5 className="text-white text-2xl">{userPoints}</h5>
+            <h5 className="text-white text-4xl">{userPoints}</h5>
         </div>
     );
 }

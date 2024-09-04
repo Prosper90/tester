@@ -29,7 +29,7 @@ export default function CommonTapArea({ GalacticGoldRush, tapCount, energy, maxE
   };
 
   return (
-    <div className="mt-10 w-full h-full">
+    <div className="w-full h-full">
       <svg style={{ display: "none" }}>
         <filter id="glow">
           <feGaussianBlur stdDeviation="15" operator="out" result="coloredBlur" />

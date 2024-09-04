@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import Arrow from "../icons/Arrow.svg";
 import Image, { StaticImageData } from "next/image";
-import Default from "../images/Skins/Astro_SVG/Normal/Armadillo_1.svg";
-import AstroGirl_Normal_1 from "../images/Skins/AstroGirl_SVG/Normal/AstroGirl_Normal_2.svg";
-import Panda_Normal_1 from "../images/Skins/Panda_SVG/Normal/Panda_Normal_3.svg";
-import Anne_Normal_1 from "../images/Skins/Anne_SVG/Normal/Anne_Normal_1.svg";
-import SPF_Normal_1 from "../images/Skins/SPF_SVG/Normal/SPF_Normal_4.svg";
-import Kayopo_Hunter_Normal from "../images/Skins/Red_Hunter_SVG/Normal/Red_Hunter_Normal_4.svg";
+import Default from "../images/Skins/Armadillo_1.svg";
+import AstroGirl_Normal_1 from "../images/Skins/AstroGirl_Normal_2.svg";
+import Panda_Normal_1 from "../images/Skins/Panda_Normal_4.svg";
+import Anne_Normal_1 from "../images/Skins/Anne_Normal_1.svg";
+import SPF_Normal_1 from "../images/Skins/SPF_Normal_4.svg";
+import Kayopo_Hunter_Normal from "../images/Skins/Red_Hunter_Normal_3.svg";
 import Lock from "../icons/Lock.svg";
 import Coin from "../images/Token.svg";
 
@@ -175,7 +175,7 @@ const Skin: React.FC<SkinProps> = ({
         <div className="w-1/2 flex flex-col items-start justify-start gap-0">
           {/* Display Selected Skin */}
           <div className="flex flex-col items-center justify-center">
-            <Image src={skinsData[selectedSkin].image} width={200} height={200} alt="Selected Skin" />
+            <Image src={skinsData[selectedSkin].image} width={200} height={200} alt="Selected Skin" className="p-2"/>
             <div className="bg-zinc-700 text-center p-2 mx-2 rounded-lg text-white mt-4">
               <h4 className="text-sm text-center font-bold pb-2">{skinsData[selectedSkin].title}</h4>
               <p className="text-xs font-semibold text-center">{skinsData[selectedSkin].subtitle}</p>

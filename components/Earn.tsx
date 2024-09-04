@@ -169,7 +169,7 @@ export default function Earn({ userPoints, setUserPoints }: EarnProps) {
           </div>
         </a>
         <a
-          href="https://astrosnfts.io/"
+          href="https://opensea.io/collection/astro-armadillos-stargating"
           onClick={() => handleAddPoints("astrosnfts", 1000)}
           target="_blank"
           rel="noopener noreferrer"
@@ -182,6 +182,25 @@ export default function Earn({ userPoints, setUserPoints }: EarnProps) {
             alt="Armadillos_Adventures"
           />
           <h4 className="text-white text-center text-sm">Check Out cool NFTs</h4>
+          <div className="flex items-center">
+            <Image src={Coin} width={20} height={20} alt="Coin" />
+            <h5 className="text-white text-sm">+1,000</h5>
+          </div>
+        </a>
+        <a
+          href="https://pinkpanda.network/"
+          onClick={() => handleAddPoints("pinkpanda", 1000)}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={`bg-neutral-800 p-2 flex flex-col items-center justify-center gap-3 rounded-xl ${isTaskCompleted("pinkpanda") ? "bg-opacity-50" : ""}`}
+        >
+          <Image
+            src={Astro_Nfts}
+            width={100}
+            height={100}
+            alt="Pink panda"
+          />
+          <h4 className="text-white text-center text-sm">Learn about NextGen Chain</h4>
           <div className="flex items-center">
             <Image src={Coin} width={20} height={20} alt="Coin" />
             <h5 className="text-white text-sm">+1,000</h5>
@@ -312,7 +331,7 @@ export default function Earn({ userPoints, setUserPoints }: EarnProps) {
           </div>
         </a>
         <a
-          href=" https://www.instagram.com/astroarmadillos/"
+          href="https://www.tiktok.com/@astroarmadillos?_t=8pQu78XQBj0&_r=1"
           onClick={() => handleAddPoints("tiktok", 500)}
           target="_blank"
           rel="noopener noreferrer"
@@ -326,7 +345,7 @@ export default function Earn({ userPoints, setUserPoints }: EarnProps) {
           </div>
         </a>
         <a
-          href=" https://www.tiktok.com/@astroarmadillos?_t=8pQu78XQBj0&_r=1"
+          href="https://www.instagram.com/astroarmadillos/"
           onClick={() => handleAddPoints("instagram", 500)}
           target="_blank"
           rel="noopener noreferrer"
@@ -334,6 +353,20 @@ export default function Earn({ userPoints, setUserPoints }: EarnProps) {
         >
           <Image src={Instagram} width={50} height={50} alt="X" />
           <h4 className="text-white text-center text-sm">Follow us on Instagram</h4>
+          <div className="flex items-center">
+            <Image src={Coin} width={20} height={20} alt="Coin" />
+            <h5 className="text-white text-sm">+500</h5>
+          </div>
+        </a>
+        <a
+          href=" https://youtube.com/@astroarmadillos?si=H48VTV1_-NnbXV3q"
+          onClick={() => handleAddPoints("youtube", 500)}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={`bg-neutral-800 px-2 py-6 flex flex-col items-center justify-center w-40 gap-3 rounded-xl ${isTaskCompleted("youtube") ? "bg-opacity-50" : ""}`}
+        >
+          <Image src={Youtube} width={50} height={50} alt="X" />
+          <h4 className="text-white text-center text-sm">Subscribe our channel</h4>
           <div className="flex items-center">
             <Image src={Coin} width={20} height={20} alt="Coin" />
             <h5 className="text-white text-sm">+500</h5>
