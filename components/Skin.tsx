@@ -158,13 +158,10 @@ const Skin: React.FC<SkinProps> = ({
 
   return (
     <div className="fixed inset-0 bg-black flex flex-col z-50 overflow-auto">
-      <div className="flex flex-row items-center justify-between w-full px-4 py-4">
-        <button onClick={onClose} className="p-2">
-          <Image src={Arrow} width={20} height={20} alt="arrow" />
+      <button onClick={onClose} className="mt-2 relative">
+          <Image src={Arrow} width={20} height={20} alt="arrow" className="absolute ml-2 mt-2" />
+          <h3 className="text-white text-2xl text-center flex-1">Skins</h3>
         </button>
-        <h3 className="text-white text-2xl text-center flex-1">Skins</h3>
-
-      </div>
       <div className="flex">
       <div className="w-1/2 flex flex-col items-start justify-start gap-0">
         <button className="text-white bg-black w-full text-center mb-4">Skin</button>

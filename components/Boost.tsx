@@ -59,11 +59,10 @@ export default function Boost({
         <div className="flex flex-col items-center justify-start h-full p-4 bg-gray-950 rounded-t-[46px] border-t-2 border-indigo-600 top-glow">
             <div className="flex items-center justify-between w-full">
                 <button
-                    className="bg-neutral-600 text-white px-2 py-2 rounded-full"
                     onClick={handleBackClick}
                     aria-label="Go back"
                 >
-                    <Image src={Arrow} width={10} height={10} alt="Back" />
+                    <Image src={Arrow} width={20} height={20} alt="Back" />
                 </button>
                 <div className="flex items-center justify-center gap-2">
                     <Image src={CoinIcon} width={24} height={24} alt="Coin" />
