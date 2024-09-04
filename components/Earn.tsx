@@ -15,7 +15,7 @@ import X from "../images/Socials/twitter_2504947.svg";
 import Linkedin from "../images/Socials/linkedin_2504923.svg"
 import Instagram from "../images/Socials/instagram_2504918.svg"
 import Discord from "../images/Socials/discord_2504896.svg"
-import Spotify from "../images/Socials/spotify.png"
+import Spotify from "../images/Socials/spotify_2504940.svg"
 import Tiktok from "../images/Socials/tiktok_2504942.svg"
 import CryptoSpace from "../images/Logos/Crypto Space.png"
 
