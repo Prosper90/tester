@@ -14,6 +14,7 @@ interface UserInfoProps {
   setUserPoints: (newPoints: number | ((prevPoints: number) => number)) => void;
   userName: string;
   levelIndex: number;
+  userid: number;
   levelNames: string[];
   levelIcons: StaticImageData[];
   calculateProgress: () => number;
@@ -26,6 +27,7 @@ export default function UserInfo({
   setUserPoints,
   levelIcons,
   userName,
+  userid,
   levelIndex,
   levelNames,
   calculateProgress,
@@ -60,6 +62,7 @@ export default function UserInfo({
           />
           <div className="flex flex-col items-left justify-center">
             <h3 className="text-white text-sm">{userName}</h3>
+            <h3 className="text-white text-sm">{userid}</h3>
           </div>
         </div>
         <div className="flex items-center w-2/3">
