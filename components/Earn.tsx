@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 import Coin from "../images/Token.svg";
 import Stargating from "../images/Logos/Stargating.png";
-import Crypto_Space from "../images/Crypto Space Logo.png";
+import PinkPanda from "../images/Logos/Pink Panda Logo.svg";
 import Youtube from "../images/Socials/youtube_2504965.svg";
 import Astro_Armadillos from "../images/Logos/Astro Armadillos.png";
 import Web3glossary from "../images/Logos/Web3Glossary.svg";
@@ -195,7 +195,7 @@ export default function Earn({ userPoints, setUserPoints }: EarnProps) {
           className={`bg-neutral-800 p-2 flex flex-col items-center justify-center gap-3 rounded-xl ${isTaskCompleted("pinkpanda") ? "bg-opacity-50" : ""}`}
         >
           <Image
-            src={Astro_Nfts}
+            src={PinkPanda}
             width={100}
             height={100}
             alt="Pink panda"
@@ -366,7 +366,7 @@ export default function Earn({ userPoints, setUserPoints }: EarnProps) {
           className={`bg-neutral-800 px-2 py-6 flex flex-col items-center justify-center w-40 gap-3 rounded-xl ${isTaskCompleted("youtube") ? "bg-opacity-50" : ""}`}
         >
           <Image src={Youtube} width={50} height={50} alt="X" />
-          <h4 className="text-white text-center text-sm">Subscribe our channel</h4>
+          <h4 className="text-white text-center text-sm">Subscribe to our channel</h4>
           <div className="flex items-center">
             <Image src={Coin} width={20} height={20} alt="Coin" />
             <h5 className="text-white text-sm">+500</h5>
