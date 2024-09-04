@@ -40,7 +40,7 @@ export default function CommonTapArea({ GalacticGoldRush, tapCount, energy, maxE
         </filter>
       </svg>
 
-      <div className="flex flex-col items-center justify-start h-full p-2 gap-4">
+      <div className="flex flex-col items-center justify-start h-full gap-4">
         <div className="relative">
           <Image
             src={Orb}
@@ -52,14 +52,14 @@ export default function CommonTapArea({ GalacticGoldRush, tapCount, energy, maxE
           />
           <Image
             src={GalacticGoldRush}
-            width={200}
+            width={120}
             height={100}
             onClick={handleTap}
             alt="Armadillo"
             style={{
               filter: showIncrement ? "url(#glow)" : "none",
             }}
-            className="h-full absolute top-1/2 transform -translate-y-1/2 transition duration-200 ease-in-out"
+            className="h-full absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition duration-200 ease-in-out"
           />
           {showIncrement && <PointIncrement tapCount={tapCount} tapPosition={tapPosition} />}
         </div>
