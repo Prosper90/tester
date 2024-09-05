@@ -31,7 +31,6 @@ type CardLevels = { [key: string]: number };
 
 interface UserData {
   id: number;
-  username?: string;
   name?: string;
   uid?: string;
   email?: string;
@@ -109,7 +108,7 @@ export default function Home() {
     }
   }, []);
 
-  const userName = userData?.username || 'Jones';
+  const userName = userData?.name || 'Jones';
   const levelNames = [
     "Blockchain Junior Developer", "Senior DeFi Coder", "Web3 Solutions Architect", "Crypto Tech Strategist", "Chief Blockchain Architect"
   ];
