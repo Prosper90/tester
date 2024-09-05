@@ -88,6 +88,9 @@ export default function Home() {
                 ...data.data, // Spread the rest of user data
                 Token: data.Token // Ensure the Token is set properly
               });
+              
+              // Set the points from the fetched data
+              setUserPoints(data.data.Amount || 0); 
             } else {
               console.error('Failed to fetch user data:', data.message);
             }
@@ -110,7 +113,6 @@ export default function Home() {
       fetchUserData();
     }
   }, []);
-
 
   const userName = userData?.name || 'Jones';
   const levelNames = [
@@ -139,7 +141,7 @@ export default function Home() {
 
   const [levelIndex, setLevelIndex] = useState(0);
   const [levelIcon, setLevelIcon] = useState<StaticImageData>(levelIcons[0]);
-  const [userPoints, setUserPoints] = useState(6000);
+  const [userPoints, setUserPoints] = useState<number>(0);
   const [GalacticGoldRush, setGalacticGoldRush] = useState<StaticImageData>(BronzeSkim1);
   const [pointsPerHour, setPointsPerHour] = useState(0);
   const [energy, setEnergy] = useState(1000);
@@ -293,7 +295,6 @@ export default function Home() {
       setEnergy((prevEnergy) => prevEnergy - 1); // Decrease energy locally
     }
   };
-
 
   if (isLoading) return <Loading />;
 
