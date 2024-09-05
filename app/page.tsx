@@ -17,15 +17,16 @@ import CommonTapArea from "@/components/CommonTapArea";
 import Friends from "@/components/Friends";
 import Earn from "@/components/Earn";
 import Airdrop from "@/components/Airdrop";
-import BronzeSkim1 from "../images/Skins/Armadillo_1.svg"
-import { StaticImageData } from "next/image"
-import IconLevel1 from "../images/Achivment Levels/Blockchain Junior Developer.svg"
-import IconLevel2 from "../images/Achivment Levels/Senior DeFi Coder.svg"
-import IconLevel3 from '../images/Achivment Levels/Web3 Solutions Architect.svg'
-import IconLevel4 from '../images/Achivment Levels/Crypto Tech Strategist.svg'
-import IconLevel5 from '../images/Achivment Levels/Chief Blockchain Architect.svg'
+import BronzeSkim1 from "../images/Skins/Armadillo_1.svg";
+import { StaticImageData } from "next/image";
+import IconLevel1 from "../images/Achivment Levels/Blockchain Junior Developer.svg";
+import IconLevel2 from "../images/Achivment Levels/Senior DeFi Coder.svg";
+import IconLevel3 from "../images/Achivment Levels/Web3 Solutions Architect.svg";
+import IconLevel4 from "../images/Achivment Levels/Crypto Tech Strategist.svg";
+import IconLevel5 from "../images/Achivment Levels/Chief Blockchain Architect.svg";
 import Redeem from "@/components/Redeem";
 import WebApp from "@twa-dev/sdk";
+import { useSearchParams } from "next/navigation";
 
 type CardLevels = { [key: string]: number };
 
@@ -52,46 +53,44 @@ interface UserData {
   updatedAt?: Date;
 }
 
-
 export default function Home() {
   const [userData, setUserData] = useState<UserData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  
+  const searchParams = useSearchParams(); // Use useSearchParams to get query params
+
   useEffect(() => {
-    if (typeof window !== "undefined") {
-        const fetchUserData = async () => {
-            if (WebApp.initDataUnsafe.user) {
-                const telegramID = WebApp.initDataUnsafe.user.id; 
+    const fetchUserData = async () => {
+      const telegramID = searchParams.get("id"); // Get the Telegram ID from the URL query
 
-                try {
-                    const response = await fetch('https://ggr-backend-production.up.railway.app/api/user/login', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({ telegramID }),
-                    });
+      if (telegramID) { // If Telegram ID is found in the query
+        try {
+          const response = await fetch('https://ggr-backend-production.up.railway.app/api/user/login', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ telegramID }),
+          });
 
-                    const data = await response.json();
-                    if (response.ok) {
-                        setUserData(data.data); // Set the user data in state
-                    } else {
-                        console.error('Failed to fetch user data:', data.message);
-                    }
-                } catch (error) {
-                    console.error('Error fetching user data:', error);
-                } finally {
-                    setIsLoading(false);
-                }
-            } else {
-                console.error('No user data from Telegram');
-                setIsLoading(false);
-            }
-        };
+          const data = await response.json();
+          if (response.ok) {
+            setUserData(data.data); // Set the user data in state
+          } else {
+            console.error('Failed to fetch user data:', data.message);
+          }
+        } catch (error) {
+          console.error('Error fetching user data:', error);
+        } finally {
+          setIsLoading(false);
+        }
+      } else {
+        console.error('Telegram ID not found in URL');
+        setIsLoading(false);
+      }
+    };
 
-        fetchUserData();
-    }
-}, []);
+    fetchUserData();
+  }, [searchParams]); // Add searchParams to dependency array
 
   const userName = userData?.username || 'Jones';
   const levelNames = [
@@ -102,7 +101,6 @@ export default function Home() {
     0, 60000, 120000, 420000, 780000
   ];
 
-  // Ensure the levelIcons array is typed as StaticImageData[]
   const levelIcons: StaticImageData[] = [
     IconLevel1,
     IconLevel2,
@@ -262,7 +260,6 @@ export default function Home() {
             tapCount={tapCount}
             energy={energy}
             maxEnergy={maxEnergy}
-            // setMaxEnergy={setMaxEnergy}
             multitapLevel={multitapLevel}
             energyLimitLevel={energyLimitLevel}
             increaseTapCount={increaseTapCount}

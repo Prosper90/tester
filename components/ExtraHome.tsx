@@ -17,32 +17,83 @@ import CommonTapArea from "@/components/CommonTapArea";
 import Friends from "@/components/Friends";
 import Earn from "@/components/Earn";
 import Airdrop from "@/components/Airdrop";
-import BronzeSkim1 from "../images/Armadillo_2.svg"
-import { StaticImageData } from "next/image"
-import IconLevel1 from "../images/Achivment Levels/Blockchain Junior Developer.svg"
-import IconLevel2 from "../images/Achivment Levels/Senior DeFi Coder.svg"
-import IconLevel3 from '../images/Achivment Levels/Web3 Solutions Architect.svg'
-import IconLevel4 from '../images/Achivment Levels/Crypto Tech Strategist.svg'
-import IconLevel5 from '../images/Achivment Levels/Chief Blockchain Architect.svg'
+import BronzeSkim1 from "../images/Skins/Armadillo_1.svg";
+import { StaticImageData } from "next/image";
+import IconLevel1 from "../images/Achivment Levels/Blockchain Junior Developer.svg";
+import IconLevel2 from "../images/Achivment Levels/Senior DeFi Coder.svg";
+import IconLevel3 from '../images/Achivment Levels/Web3 Solutions Architect.svg';
+import IconLevel4 from '../images/Achivment Levels/Crypto Tech Strategist.svg';
+import IconLevel5 from '../images/Achivment Levels/Chief Blockchain Architect.svg';
 import Redeem from "@/components/Redeem";
 import WebApp from "@twa-dev/sdk";
+import { useRouter } from "next/router";
 
 type CardLevels = { [key: string]: number };
 
 interface UserData {
   id: number;
   username?: string;
+  name?: string;
+  uid?: string;
+  email?: string;
+  phoneNo?: string;
+  image?: string;
+  DOB?: Date;
+  tier?: number;
+  Amount?: number;
+  dailyEnergy?: {
+    energyCount: number;
+    lastUsed: Date | null;
+  };
+  availableTapCount?: number;
+  maxTap?: number;
+  multiTapLevel?: number;
+  referedID?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export default function ExtraHome() {
   const [userData, setUserData] = useState<UserData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  
+  const router = useRouter(); // Initialize useRouter from Next.js
+
   useEffect(() => {
-    if (WebApp.initDataUnsafe.user) {
-      setUserData(WebApp.initDataUnsafe.user as UserData)
+    if (router.isReady) {  // Ensure router is ready
+        const fetchUserData = async () => {
+            const telegramID = router.query.id; // Get the Telegram ID from the URL query
+
+            if (telegramID) { // If Telegram ID is found in the query
+                try {
+                    const response = await fetch('https://ggr-backend-production.up.railway.app/api/user/login', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ telegramID }),
+                    });
+
+                    const data = await response.json();
+                    if (response.ok) {
+                        setUserData(data.data); // Set the user data in state
+                    } else {
+                        console.error('Failed to fetch user data:', data.message);
+                    }
+                } catch (error) {
+                    console.error('Error fetching user data:', error);
+                } finally {
+                    setIsLoading(false);
+                }
+            } else {
+                console.error('Telegram ID not found in URL');
+                setIsLoading(false);
+            }
+        };
+
+        fetchUserData();
     }
-  }, [])
+}, [router.isReady, router.query]);
+
   const userName = userData?.username || 'Jones';
   const levelNames = [
     "Blockchain Junior Developer", "Senior DeFi Coder", "Web3 Solutions Architect", "Crypto Tech Strategist", "Chief Blockchain Architect"
@@ -91,7 +142,6 @@ export default function ExtraHome() {
     "Scalability Solutions": 0,
     "Fault Tolerance": 0,
     "Security Protocols": 0,
-    "Privacy Features": 0,
     "Cross-Chain Interop": 0,
     "Energy Efficiency": 0,
     "Latency Reduction": 0,
@@ -129,6 +179,8 @@ export default function ExtraHome() {
     "Network Monitoring": 0,
     "Identity Management": 0,
     "Data Security": 0,
+    "Blockchain Forensics":0,
+    "Reward Multiplier": 0,
   });
 
   const increaseTapCount = () => {
@@ -211,7 +263,6 @@ export default function ExtraHome() {
             tapCount={tapCount}
             energy={energy}
             maxEnergy={maxEnergy}
-            // setMaxEnergy={setMaxEnergy}
             multitapLevel={multitapLevel}
             energyLimitLevel={energyLimitLevel}
             increaseTapCount={increaseTapCount}
