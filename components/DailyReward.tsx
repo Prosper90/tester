@@ -22,6 +22,20 @@ const DailyRewardPopup: React.FC<DailyRewardProps> = ({
   const [dailyRewards, setDailyRewards] = useState<{ day: number; amount: number }[]>([]);
 
   useEffect(() => {
+    // Initialize rewards for all days
+    const initialRewards = [
+      { day: 1, amount: 500 },
+      { day: 2, amount: 1000 },
+      { day: 3, amount: 2500 },
+      { day: 4, amount: 5000 },
+      { day: 5, amount: 15000 },
+      { day: 6, amount: 25000 },
+      { day: 7, amount: 100000 },
+      { day: 8, amount: 500000 },
+      { day: 9, amount: 1000000 },
+      { day: 10, amount: 5000000 },
+    ];
+
     const fetchDailyReward = async () => {
       try {
         const response = await fetch('https://ggr-backend-production.up.railway.app/api/user/getTodaysDailyReward', {
@@ -39,22 +53,26 @@ const DailyRewardPopup: React.FC<DailyRewardProps> = ({
           setClaimedToday(data.data.claimedToday);
           setDay(data.data.currentDay);
 
-          // Check if rewards exist and log them
+          // Update daily rewards with fetched data
           if (data.data.rewards && Array.isArray(data.data.rewards)) {
-            const mappedRewards = data.data.rewards.map((reward: any) => ({
-              day: reward.rewardDay,
-              amount: reward.amount,
-            }));
-            setDailyRewards(mappedRewards);
-            console.log('Mapped rewards:', mappedRewards); // Debugging line
+            const fetchedRewards = data.data.rewards.reduce((acc: any, reward: any) => {
+              acc[reward.rewardDay - 1] = { day: reward.rewardDay, amount: reward.amount };
+              return acc;
+            }, [...initialRewards]);
+
+            setDailyRewards(fetchedRewards);
+            console.log('Mapped rewards:', fetchedRewards); // Debugging line
           } else {
             console.error('Rewards data is not in the expected format:', data.data.rewards);
+            setDailyRewards(initialRewards); // Fallback to initial rewards
           }
         } else {
           console.error('Failed to fetch daily rewards:', data.message);
+          setDailyRewards(initialRewards); // Fallback to initial rewards
         }
       } catch (error) {
         console.error('Error fetching daily rewards:', error);
+        setDailyRewards(initialRewards); // Fallback to initial rewards
       }
     };
 
@@ -78,7 +96,10 @@ const DailyRewardPopup: React.FC<DailyRewardProps> = ({
 
       if (response.ok) {
         // Update user points with the current day's reward amount
-        setUserPoints((prevPoints) => prevPoints + rewardAmount);
+        const rewardForToday = dailyRewards.find(reward => reward.day === day);
+        if (rewardForToday) {
+          setUserPoints((prevPoints) => prevPoints + rewardForToday.amount);
+        }
         setClaimedToday(true); // Mark as claimed for today
         setDay(data.data.nextDay); // Update to next reward day
       } else {
@@ -99,7 +120,7 @@ const DailyRewardPopup: React.FC<DailyRewardProps> = ({
           </div>
           <h2 className="text-2xl font-semibold">Daily Reward</h2>
           <p className="text-sm text-center text-gray-400 mt-1">
-            Accure coins for logging into the game daily without skipping
+            Accrue coins for logging into the game daily without skipping
           </p>
         </div>
         <div className="grid grid-cols-4 gap-2 mb-4">
