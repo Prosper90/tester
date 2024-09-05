@@ -26,7 +26,6 @@ import IconLevel4 from "../images/Achivment Levels/Crypto Tech Strategist.svg";
 import IconLevel5 from "../images/Achivment Levels/Chief Blockchain Architect.svg";
 import Redeem from "@/components/Redeem";
 import WebApp from "@twa-dev/sdk";
-import { useSearchParams } from "next/navigation";
 
 type CardLevels = { [key: string]: number };
 
@@ -56,49 +55,60 @@ interface UserData {
 export default function Home() {
   const [userData, setUserData] = useState<UserData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const searchParams = useSearchParams(); // Use useSearchParams to get query params
-
+  
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      console.log("Current URL:", window.location.href); // Log the full URL
-    }
-  
     const fetchUserData = async () => {
-      const telegramID = searchParams.get("id");
-  
-      console.log("searchParams: ", searchParams.toString());
-      console.log("telegramID: ", telegramID);
-  
-      if (telegramID) {
-        try {
-          const response = await fetch('https://ggr-backend-production.up.railway.app/api/user/login', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ telegramID }),
-          });
-  
-          const data = await response.json();
-          if (response.ok) {
-            setUserData(data.data);
-          } else {
-            console.error('Failed to fetch user data:', data.message);
+      // Use window.location.hash to get the fragment part of the URL
+      const hash = window.location.hash;
+      const params = new URLSearchParams(hash.slice(1)); // Remove the '#' character
+
+      const tgWebAppData = params.get("tgWebAppData");
+
+      // Decode the tgWebAppData to extract user information
+      if (tgWebAppData) {
+        const decodedData = decodeURIComponent(tgWebAppData);
+        const userDataString = decodedData.split('user=')[1].split('&')[0];
+        const userData = JSON.parse(decodeURIComponent(userDataString));
+
+        const telegramID = userData.id;
+        console.log("Decoded telegramID: ", telegramID);
+
+        if (telegramID) {
+          try {
+            const response = await fetch('https://ggr-backend-production.up.railway.app/api/user/login', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ telegramID }),
+            });
+
+            const data = await response.json();
+            if (response.ok) {
+              setUserData(data.data); 
+            } else {
+              console.error('Failed to fetch user data:', data.message);
+            }
+          } catch (error) {
+            console.error('Error fetching user data:', error);
+          } finally {
+            setIsLoading(false);
           }
-        } catch (error) {
-          console.error('Error fetching user data:', error);
-        } finally {
+        } else {
+          console.error('Telegram ID not found in URL fragment');
           setIsLoading(false);
         }
       } else {
-        console.error('Telegram ID not found in URL');
+        console.error('tgWebAppData not found in URL fragment');
         setIsLoading(false);
       }
     };
-  
-    fetchUserData();
-  }, [searchParams]);
-  
+
+    if (typeof window !== "undefined") {
+      fetchUserData();
+    }
+  }, []);
+
   const userName = userData?.username || 'Jones';
   const levelNames = [
     "Blockchain Junior Developer", "Senior DeFi Coder", "Web3 Solutions Architect", "Crypto Tech Strategist", "Chief Blockchain Architect"
