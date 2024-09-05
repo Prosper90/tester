@@ -25,6 +25,7 @@ interface TappingAreaProps {
   increaseMaxEnergy: () => void;
   handleTapClick: () => void;
   setActiveTab: (tabName: string) => void;
+  userToken: string;
 }
 
 const BONUS_POINTS = 2000;
@@ -112,6 +113,7 @@ export default function TappingArea({
   increaseMaxEnergy,
   handleTapClick,
   setActiveTab,
+  userToken,
 }: TappingAreaProps) {
   const [showBoost, setShowBoost] = useState(false);
   const [showIncrement, setShowIncrement] = useState(false);
@@ -373,6 +375,7 @@ export default function TappingArea({
           increaseTapCount={increaseTapCount}
           increaseMaxEnergy={increaseMaxEnergy}
           setShowBoost={setShowBoost}
+          userToken={userToken} 
         />
       )}
 

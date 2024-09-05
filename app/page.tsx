@@ -90,11 +90,13 @@ export default function Home() {
                 ...data.data, // Spread the rest of user data
                 Token: data.Token // Ensure the Token is set properly
               });
-
+              setUserToken(data.Token);
               // Set the points from the fetched data
               setUserPoints(data.data.Amount || 0);
               setEnergy(data.data.energy);
               setMaxEnergy(data.data.maxEnergy);
+              setMultitapLevel(data.data.multiTapLevel); 
+        setEnergyLimitLevel(data.data.energyLimitLevel); 
             } else {
               console.error('Failed to fetch user data:', data.message);
             }
@@ -142,7 +144,7 @@ export default function Home() {
       <ProfitPerHour pointsPerHour={pointsPerHour} />
     </>
   );
-
+  const [userToken, setUserToken] = useState("");
   const [levelIndex, setLevelIndex] = useState(0);
   const [levelIcon, setLevelIcon] = useState<StaticImageData>(levelIcons[0]);
   const [userPoints, setUserPoints] = useState<number>(0);
@@ -352,6 +354,7 @@ export default function Home() {
             increaseMaxEnergy={increaseMaxEnergy}
             handleTapClick={handleTapClick}
             setActiveTab={setActiveTab}
+            userToken={userToken} 
           />
         </div>
       )}

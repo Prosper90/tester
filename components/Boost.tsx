@@ -16,6 +16,7 @@ interface BoostProps {
     increaseTapCount: () => void;
     increaseMaxEnergy: () => void;
     setShowBoost: (show: boolean) => void;
+    userToken: string; // Added to pass the user's JWT token
 }
 
 export default function Boost({
@@ -26,28 +27,55 @@ export default function Boost({
     increaseTapCount,
     increaseMaxEnergy,
     setShowBoost,
+    userToken, // Destructure userToken from props
 }: BoostProps) {
     const calculatePrice = (basePrice: number, level: number) => {
         return Math.floor(basePrice * Math.pow(3.1, level));
     };
 
-    const handleBuyMultitap = () => {
-        const price = calculatePrice(10, multitapLevel);
-        if (userBalance >= price) {
-            setUserBalance(userBalance - price);
-            increaseTapCount();
-        } else {
-            alert("Insufficient balance!");
+    const handleBuyMultitap = async () => {
+        try {
+            const response = await fetch('https://ggr-backend-production.up.railway.app/api/user/buyMultitapBoost', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${userToken}` // Use userToken passed as prop
+                }
+            });
+
+            const data = await response.json();
+            if (response.ok) {
+                setUserBalance(data.data.Amount); // Update balance from the backend response
+                increaseTapCount(); // Update tap count or multitap level
+            } else {
+                alert(data.message || 'Failed to purchase boost');
+            }
+        } catch (error) {
+            console.error('Error purchasing multitap boost:', error);
+            alert('An error occurred while purchasing multitap boost.');
         }
     };
 
-    const handleBuyEnergyLimit = () => {
-        const price = calculatePrice(10, energyLimitLevel);
-        if (userBalance >= price) {
-            setUserBalance(userBalance - price);
-            increaseMaxEnergy();
-        } else {
-            alert("Insufficient balance!");
+    const handleBuyEnergyLimit = async () => {
+        try {
+            const response = await fetch('https://ggr-backend-production.up.railway.app/api/user/buyEnergyLimitBoost', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${userToken}` // Use userToken passed as prop
+                }
+            });
+
+            const data = await response.json();
+            if (response.ok) {
+                setUserBalance(data.data.Amount); // Update balance from the backend response
+                increaseMaxEnergy(); // Update max energy or energy limit level
+            } else {
+                alert(data.message || 'Failed to purchase boost');
+            }
+        } catch (error) {
+            console.error('Error purchasing energy limit boost:', error);
+            alert('An error occurred while purchasing energy limit boost.');
         }
     };
 
