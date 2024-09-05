@@ -17,7 +17,7 @@ export default function Airdrop() {
     if (typeof window.ethereum !== "undefined") {
       console.log("MetaMask is installed!");
     } else {
-      setErrorMessage(
+      console.log(
         "MetaMask is not installed. Please install it to use this app."
       );
     }
