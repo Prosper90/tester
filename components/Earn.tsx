@@ -124,7 +124,7 @@ export default function Earn({ userPoints, setUserPoints }: EarnProps) {
             height={100}
             alt="Armadillos_Adventures"
           />
-          <h4 className="text-white text-center text-sm">Stake Your Tokens</h4>
+          <h4 className="text-white text-center text-sm">Stake with us</h4>
           <div className="flex items-center">
             <Image src={Coin} width={20} height={20} alt="Coin" />
             <h5 className="text-white text-sm">+1,000</h5>
@@ -200,7 +200,7 @@ export default function Earn({ userPoints, setUserPoints }: EarnProps) {
             height={100}
             alt="Pink panda"
           />
-          <h4 className="text-white text-center text-sm">Learn about NextGen Chain</h4>
+          <h4 className="text-white text-center text-sm">Learn about<br/>NextGen Chain</h4>
           <div className="flex items-center">
             <Image src={Coin} width={20} height={20} alt="Coin" />
             <h5 className="text-white text-sm">+1,000</h5>
