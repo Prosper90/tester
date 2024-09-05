@@ -59,11 +59,17 @@ export default function Home() {
   const searchParams = useSearchParams(); // Use useSearchParams to get query params
 
   useEffect(() => {
+    if (typeof window !== "undefined") {
+      console.log("Current URL:", window.location.href); // Log the full URL
+    }
+  
     const fetchUserData = async () => {
-      const telegramID = searchParams.get("id"); // Get the Telegram ID from the URL query
-      console.log("searchParams: ", searchParams.toString()); // Log to check if searchParams is fetched correctly
+      const telegramID = searchParams.get("id");
+  
+      console.log("searchParams: ", searchParams.toString());
       console.log("telegramID: ", telegramID);
-      if (telegramID) { // If Telegram ID is found in the query
+  
+      if (telegramID) {
         try {
           const response = await fetch('https://ggr-backend-production.up.railway.app/api/user/login', {
             method: 'POST',
@@ -72,10 +78,10 @@ export default function Home() {
             },
             body: JSON.stringify({ telegramID }),
           });
-
+  
           const data = await response.json();
           if (response.ok) {
-            setUserData(data.data); // Set the user data in state
+            setUserData(data.data);
           } else {
             console.error('Failed to fetch user data:', data.message);
           }
@@ -89,10 +95,10 @@ export default function Home() {
         setIsLoading(false);
       }
     };
-
+  
     fetchUserData();
-  }, [searchParams]); // Add searchParams to dependency array
-
+  }, [searchParams]);
+  
   const userName = userData?.username || 'Jones';
   const levelNames = [
     "Blockchain Junior Developer", "Senior DeFi Coder", "Web3 Solutions Architect", "Crypto Tech Strategist", "Chief Blockchain Architect"
