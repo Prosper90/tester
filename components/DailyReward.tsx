@@ -19,7 +19,7 @@ const DailyRewardPopup: React.FC<DailyRewardProps> = ({
   const [day, setDay] = useState(1);
   const [claimedToday, setClaimedToday] = useState(false);
   const [rewardAmount, setRewardAmount] = useState(0);
-  const [dailyRewards, setDailyRewards] = useState<{ day: number; amount: number }[]>([]); // Declare state for daily rewards
+  const [dailyRewards, setDailyRewards] = useState<{ day: number; amount: number }[]>([]);
 
   useEffect(() => {
     const fetchDailyReward = async () => {
@@ -33,14 +33,23 @@ const DailyRewardPopup: React.FC<DailyRewardProps> = ({
         });
 
         const data = await response.json();
+        console.log('Fetched daily reward data:', data); // Debugging line
 
         if (response.ok) {
           setClaimedToday(data.data.claimedToday);
           setDay(data.data.currentDay);
-          setDailyRewards(data.data.rewards.map((reward: any) => ({
-            day: reward.rewardDay,
-            amount: reward.amount,
-          })));
+
+          // Check if rewards exist and log them
+          if (data.data.rewards && Array.isArray(data.data.rewards)) {
+            const mappedRewards = data.data.rewards.map((reward: any) => ({
+              day: reward.rewardDay,
+              amount: reward.amount,
+            }));
+            setDailyRewards(mappedRewards);
+            console.log('Mapped rewards:', mappedRewards); // Debugging line
+          } else {
+            console.error('Rewards data is not in the expected format:', data.data.rewards);
+          }
         } else {
           console.error('Failed to fetch daily rewards:', data.message);
         }
@@ -65,6 +74,7 @@ const DailyRewardPopup: React.FC<DailyRewardProps> = ({
       });
 
       const data = await response.json();
+      console.log('Claim reward response:', data); // Debugging line
 
       if (response.ok) {
         // Update user points with the current day's reward amount
