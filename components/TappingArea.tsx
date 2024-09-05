@@ -181,7 +181,7 @@ export default function TappingArea({
       const newSymbol = ".";
       setTapSymbol(newSymbol);
       updateUserInput(newSymbol); // Use function to update input and handle logic
-    
+
     } else if (!isCipherMode) {
       handleTapClick();
       setShowIncrement(true);
@@ -190,19 +190,19 @@ export default function TappingArea({
   };
 
   const handleMouseDown = (e: React.MouseEvent<HTMLImageElement>) => {
-    
+
     longPressTimer.current = setTimeout(() => {
       handleLongPress();
     }, 500); // Trigger long press after 2 seconds
-    
+
   };
 
   const handleTouchStart = (e: React.TouchEvent<HTMLImageElement>) => {
-    
+
     longPressTimer.current = setTimeout(() => {
       handleLongPress();
     }, 500); // Trigger long press after 2 seconds
-    
+
   };
 
   const handleMouseUp = () => {
@@ -226,9 +226,9 @@ export default function TappingArea({
       const newSymbol = "-";
       setTapSymbol(newSymbol);
       updateUserInput(newSymbol); // Use function to update input and handle logic
-      
-    // Add console log for debugging
-    console.log("Long press detected!");
+
+      // Add console log for debugging
+      console.log("Long press detected!");
     }
   };
 
@@ -375,12 +375,17 @@ export default function TappingArea({
           increaseTapCount={increaseTapCount}
           increaseMaxEnergy={increaseMaxEnergy}
           setShowBoost={setShowBoost}
-          userToken={userToken} 
+          userToken={userToken}
         />
       )}
 
       {/* Show the Daily Reward Popup if showDailyReward is true */}
-      {showDailyReward && <DailyRewardPopup userPoints={userPoints} userToken="userToken" setUserPoints={setUserPoints} onClose={closeDailyRewardPopup} />}
+      {showDailyReward &&
+        <DailyRewardPopup
+          userPoints={userPoints}
+          userToken={userToken}
+          setUserPoints={setUserPoints}
+          onClose={closeDailyRewardPopup} />}
     </div>
   );
 }
