@@ -84,7 +84,7 @@ const bonusMap: { [key: string]: number[] } = {
 function Notification({ message, type, onClose }: { message: string; type: 'success' | 'error'; onClose: () => void }) {
   return (
     <div
-      className={`fixed top-4 right-4 max-w-sm p-4 rounded-xl shadow-lg z-50 transition-all duration-300 transform ${
+      className={`fixed top-4 right-0 w-full max-w-sm p-4 rounded-xl shadow-lg z-50 transition-all duration-300 transform ${
         type === 'success' ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
       } ${
         type === 'success'
