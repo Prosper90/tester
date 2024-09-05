@@ -20,6 +20,7 @@ const DailyRewardPopup: React.FC<DailyRewardProps> = ({
   const [claimedToday, setClaimedToday] = useState(false);
   const [rewardAmount, setRewardAmount] = useState(0);
   const [dailyRewards, setDailyRewards] = useState<{ day: number; amount: number }[]>([]);
+  const [claimedDays, setClaimedDays] = useState<number[]>([]); // Track claimed days
 
   useEffect(() => {
     // Initialize rewards for all days
@@ -66,6 +67,12 @@ const DailyRewardPopup: React.FC<DailyRewardProps> = ({
             console.error('Rewards data is not in the expected format:', data.data.rewards);
             setDailyRewards(initialRewards); // Fallback to initial rewards
           }
+
+          // If the user has claimed today, mark the day as claimed
+          if (data.data.claimedToday) {
+            setClaimedDays((prev) => [...prev, data.data.currentDay]);
+          }
+
         } else {
           console.error('Failed to fetch daily rewards:', data.message);
           setDailyRewards(initialRewards); // Fallback to initial rewards
@@ -101,6 +108,7 @@ const DailyRewardPopup: React.FC<DailyRewardProps> = ({
           setUserPoints((prevPoints) => prevPoints + rewardForToday.amount);
         }
         setClaimedToday(true); // Mark as claimed for today
+        setClaimedDays((prev) => [...prev, day]); // Add to claimed days
         setDay(data.data.nextDay); // Update to next reward day
       } else {
         console.error('Failed to claim daily reward:', data.message);
@@ -128,7 +136,7 @@ const DailyRewardPopup: React.FC<DailyRewardProps> = ({
             <div
               key={index}
               className={`flex flex-col items-center justify-center p-2 rounded-lg text-sm gap-2 ${
-                day === reward.day ? 'bg-green-600 text-white' : 'bg-gray-800 text-gray-400'
+                claimedDays.includes(reward.day) ? 'bg-green-600 text-white' : 'bg-gray-800 text-gray-400'
               }`}
             >
               <p className="text-center">Day {reward.day}</p>
