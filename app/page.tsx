@@ -269,7 +269,7 @@ export default function Home() {
     if (energy > 0) {
       const newPoints = userPoints + tapCount; // Calculate new points
       setUserPoints(newPoints); // Update local state optimistically
-      const newEnergy = energy + 1;
+      const newEnergy = energy - 1;
       setEnergy(newEnergy);
       try {
         const response = await fetch('https://ggr-backend-production.up.railway.app/api/user/updateUser', {
