@@ -19,6 +19,7 @@ const DailyRewardPopup: React.FC<DailyRewardProps> = ({
   const [day, setDay] = useState(1);
   const [claimedToday, setClaimedToday] = useState(false);
   const [rewardAmount, setRewardAmount] = useState(0);
+  const [dailyRewards, setDailyRewards] = useState<{ day: number; amount: number }[]>([]); // Declare state for daily rewards
 
   useEffect(() => {
     const fetchDailyReward = async () => {
@@ -30,16 +31,16 @@ const DailyRewardPopup: React.FC<DailyRewardProps> = ({
             'Authorization': `Bearer ${userToken}`,
           },
         });
-  
+
         const data = await response.json();
-  
+
         if (response.ok) {
           setClaimedToday(data.data.claimedToday);
           setDay(data.data.currentDay);
-          if (!data.data.claimedToday) {
-            const rewardForToday = data.data.rewards.find((reward: any) => reward.rewardDay === data.data.currentDay);
-            setRewardAmount(rewardForToday ? rewardForToday.amount : 0);
-          }
+          setDailyRewards(data.data.rewards.map((reward: any) => ({
+            day: reward.rewardDay,
+            amount: reward.amount,
+          })));
         } else {
           console.error('Failed to fetch daily rewards:', data.message);
         }
@@ -47,14 +48,13 @@ const DailyRewardPopup: React.FC<DailyRewardProps> = ({
         console.error('Error fetching daily rewards:', error);
       }
     };
-  
+
     fetchDailyReward();
   }, [userToken]);
-  
 
   const handleRewardClick = async () => {
     if (claimedToday) return; // If already claimed today, do nothing
-  
+
     try {
       const response = await fetch('https://ggr-backend-production.up.railway.app/api/user/claimDailyReward', {
         method: 'POST',
@@ -63,9 +63,9 @@ const DailyRewardPopup: React.FC<DailyRewardProps> = ({
           'Authorization': `Bearer ${userToken}`,
         },
       });
-  
+
       const data = await response.json();
-  
+
       if (response.ok) {
         // Update user points with the current day's reward amount
         setUserPoints((prevPoints) => prevPoints + rewardAmount);
@@ -78,7 +78,6 @@ const DailyRewardPopup: React.FC<DailyRewardProps> = ({
       console.error('Error claiming daily reward:', error);
     }
   };
-  
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
@@ -94,16 +93,16 @@ const DailyRewardPopup: React.FC<DailyRewardProps> = ({
           </p>
         </div>
         <div className="grid grid-cols-4 gap-2 mb-4">
-          {[...Array(10)].map((_, index) => (
+          {dailyRewards.map((reward, index) => (
             <div
               key={index}
               className={`flex flex-col items-center justify-center p-2 rounded-lg text-sm gap-2 ${
-                day === index + 1 ? 'bg-green-600 text-white' : 'bg-gray-800 text-gray-400'
+                day === reward.day ? 'bg-green-600 text-white' : 'bg-gray-800 text-gray-400'
               }`}
             >
-              <p className="text-center">Day {index + 1}</p>
+              <p className="text-center">Day {reward.day}</p>
               <Image src={Coin} width={16} height={16} alt="Coin" />
-              <span>{rewardAmount}</span>
+              <span>{reward.amount}</span>
             </div>
           ))}
         </div>
