@@ -61,7 +61,8 @@ export default function Home() {
   useEffect(() => {
     const fetchUserData = async () => {
       const telegramID = searchParams.get("id"); // Get the Telegram ID from the URL query
-
+      console.log("searchParams: ", searchParams.toString()); // Log to check if searchParams is fetched correctly
+      console.log("telegramID: ", telegramID);
       if (telegramID) { // If Telegram ID is found in the query
         try {
           const response = await fetch('https://ggr-backend-production.up.railway.app/api/user/login', {
