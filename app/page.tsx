@@ -30,7 +30,8 @@ import WebApp from "@twa-dev/sdk";
 type CardLevels = { [key: string]: number };
 
 interface UserData {
-  id: number;
+  id?: string; // Match MongoDB ObjectId type if you use it; otherwise, use `string`
+  telegramID?: string; // Include telegramID for completeness
   name?: string;
   uid?: string;
   email?: string;
@@ -46,10 +47,11 @@ interface UserData {
   availableTapCount?: number;
   maxTap?: number;
   multiTapLevel?: number;
-  referedID?: string;
+  referedID?: string; // MongoDB ObjectId is `string` in the JSON response
   createdAt?: Date;
   updatedAt?: Date;
 }
+
 
 export default function Home() {
   const [userData, setUserData] = useState<UserData | null>(null);
