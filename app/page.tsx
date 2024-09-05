@@ -50,6 +50,7 @@ interface UserData {
   referedID?: string; // MongoDB ObjectId is `string` in the JSON response
   createdAt?: Date;
   updatedAt?: Date;
+  Token?: string;
 }
 
 
@@ -59,21 +60,18 @@ export default function Home() {
   
   useEffect(() => {
     const fetchUserData = async () => {
-      // Use window.location.hash to get the fragment part of the URL
       const hash = window.location.hash;
-      const params = new URLSearchParams(hash.slice(1)); // Remove the '#' character
-
+      const params = new URLSearchParams(hash.slice(1));
+ 
       const tgWebAppData = params.get("tgWebAppData");
-
-      // Decode the tgWebAppData to extract user information
+ 
       if (tgWebAppData) {
         const decodedData = decodeURIComponent(tgWebAppData);
         const userDataString = decodedData.split('user=')[1].split('&')[0];
         const userData = JSON.parse(decodeURIComponent(userDataString));
-
+ 
         const telegramID = userData.id;
-        console.log("Decoded telegramID: ", telegramID);
-
+ 
         if (telegramID) {
           try {
             const response = await fetch('https://ggr-backend-production.up.railway.app/api/user/login', {
@@ -83,11 +81,13 @@ export default function Home() {
               },
               body: JSON.stringify({ telegramID }),
             });
-
+ 
             const data = await response.json();
             if (response.ok) {
-              setUserData(data.data); 
-              setUserPoints(data.data.Amount || 0);  
+              setUserData({
+                ...data.data, // Spread the rest of user data
+                Token: data.Token // Ensure the Token is set properly
+              }); 
             } else {
               console.error('Failed to fetch user data:', data.message);
             }
@@ -105,11 +105,12 @@ export default function Home() {
         setIsLoading(false);
       }
     };
-
+ 
     if (typeof window !== "undefined") {
       fetchUserData();
     }
-  }, []);
+ }, []);
+ 
 
   const userName = userData?.name || 'Jones';
   const levelNames = [
@@ -260,32 +261,33 @@ export default function Home() {
 
   const handleTapClick = async () => {
     if (energy > 0) {
-      const newPoints = userPoints + tapCount; // Calculate new points
-      setUserPoints(newPoints); // Update local state
-  
-      // Update the backend with the new points
-      try {
-        const response = await fetch('https://ggr-backend-production.up.railway.app/api/user/updateUser', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            telegramID: userData?.telegramID, // Use telegramID or appropriate user identifier
-            Amount: newPoints // Update Amount in the backend
-          }),
-        });
-  
-        if (!response.ok) {
-          console.error('Failed to update user points:', await response.json());
+        const newPoints = userPoints + tapCount; // Calculate new points
+        setUserPoints(newPoints); // Update local state
+
+        // Update the backend with the new points using updateUser
+        try {
+            const response = await fetch('https://ggr-backend-production.up.railway.app/api/user/updateUser', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${userData?.Token}` // Assuming you use JWT tokens for auth
+                },
+                body: JSON.stringify({
+                    Amount: newPoints // Send new points to update
+                }),
+            });
+
+            if (!response.ok) {
+                console.error('Failed to update user points:', await response.json());
+            }
+        } catch (error) {
+            console.error('Error updating user points:', error);
         }
-      } catch (error) {
-        console.error('Error updating user points:', error);
-      }
-  
-      setEnergy((prevEnergy) => prevEnergy - 1); // Decrease energy locally
+
+        setEnergy((prevEnergy) => prevEnergy - 1); // Decrease energy locally
     }
-  };
+};
+
   
 
   if (isLoading) return <Loading />;
