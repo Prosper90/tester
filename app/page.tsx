@@ -45,6 +45,8 @@ interface UserData {
     lastUsed: Date | null;
   };
   availableTapCount?: number;
+  energy: number;
+  maxEnergy: number;
   maxTap?: number;
   multiTapLevel?: number;
   referedID?: string; // MongoDB ObjectId is `string` in the JSON response
@@ -91,6 +93,8 @@ export default function Home() {
               
               // Set the points from the fetched data
               setUserPoints(data.data.Amount || 0); 
+              setEnergy(data.data.energy);
+              setMaxEnergy(data.data.maxEnergy);
             } else {
               console.error('Failed to fetch user data:', data.message);
             }
@@ -144,8 +148,8 @@ export default function Home() {
   const [userPoints, setUserPoints] = useState<number>(0);
   const [GalacticGoldRush, setGalacticGoldRush] = useState<StaticImageData>(BronzeSkim1);
   const [pointsPerHour, setPointsPerHour] = useState(0);
-  const [energy, setEnergy] = useState(1000);
-  const [maxEnergy, setMaxEnergy] = useState(1000);
+  const [energy, setEnergy] = useState<number>(1000);
+  const [maxEnergy, setMaxEnergy] = useState<number>(1000);
   const [activeTab, setActiveTab] = useState("protocol lab");
   const [cardTab, setCardTab] = useState("Performance");
   const [energyRegenRate, setEnergyRegenRate] = useState(3);
@@ -265,7 +269,8 @@ export default function Home() {
     if (energy > 0) {
       const newPoints = userPoints + tapCount; // Calculate new points
       setUserPoints(newPoints); // Update local state optimistically
-
+      const newEnergy = energy + 1;
+      setEnergy(newEnergy);
       try {
         const response = await fetch('https://ggr-backend-production.up.railway.app/api/user/updateUser', {
           method: 'POST', // Use POST or PUT for updates
@@ -274,25 +279,26 @@ export default function Home() {
             'Authorization': `Bearer ${userData?.Token}` // Pass the token for authorization
           },
           body: JSON.stringify({
-            Amount: newPoints // Send new points to update
+            Amount: newPoints, // Send new points to update
+            energy: newEnergy
           }),
         });
 
         if (!response.ok) {
           const errorData = await response.json();
-          console.error('Failed to update user points:', errorData.message);
+          console.error('Failed to update user points and energy:', errorData.message);
 
           // Optionally, revert points on error
           setUserPoints(prevPoints => prevPoints - tapCount);
+          setEnergy((prevEnergy) => prevEnergy + 1);
         }
       } catch (error) {
-        console.error('Error updating user points:', error);
+        console.error('Error updating user points and energy:', error);
 
         // Optionally, revert points on error
         setUserPoints(prevPoints => prevPoints - tapCount);
+        setEnergy((prevEnergy) => prevEnergy + 1);
       }
-
-      setEnergy((prevEnergy) => prevEnergy - 1); // Decrease energy locally
     }
   };
 
