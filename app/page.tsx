@@ -87,6 +87,7 @@ export default function Home() {
             const data = await response.json();
             if (response.ok) {
               setUserData(data.data); 
+              setUserPoints(data.data.Amount || 0);  
             } else {
               console.error('Failed to fetch user data:', data.message);
             }
@@ -257,12 +258,35 @@ export default function Home() {
     return Math.min(Math.max(progress, 0), 100);
   }, [userPoints, levelIndex, levelMinPoints, levelNames.length]);
 
-  const handleTapClick = () => {
+  const handleTapClick = async () => {
     if (energy > 0) {
-      setUserPoints((prevPoints) => prevPoints + tapCount); // Increase points by the tapCount value
-      setEnergy((prevEnergy) => prevEnergy - 1);
+      const newPoints = userPoints + tapCount; // Calculate new points
+      setUserPoints(newPoints); // Update local state
+  
+      // Update the backend with the new points
+      try {
+        const response = await fetch('https://ggr-backend-production.up.railway.app/api/user/updateUser', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            telegramID: userData?.telegramID, // Use telegramID or appropriate user identifier
+            Amount: newPoints // Update Amount in the backend
+          }),
+        });
+  
+        if (!response.ok) {
+          console.error('Failed to update user points:', await response.json());
+        }
+      } catch (error) {
+        console.error('Error updating user points:', error);
+      }
+  
+      setEnergy((prevEnergy) => prevEnergy - 1); // Decrease energy locally
     }
   };
+  
 
   if (isLoading) return <Loading />;
 
