@@ -49,6 +49,7 @@ interface UserData {
   maxEnergy: number;
   maxTap?: number;
   multiTapLevel?: number;
+  tapCount?: number;
   referedID?: string; // MongoDB ObjectId is `string` in the JSON response
   createdAt?: Date;
   updatedAt?: Date;
@@ -95,8 +96,9 @@ export default function Home() {
               setUserPoints(data.data.Amount || 0);
               setEnergy(data.data.energy);
               setMaxEnergy(data.data.maxEnergy);
-              setMultitapLevel(data.data.multiTapLevel); 
-        setEnergyLimitLevel(data.data.energyLimitLevel); 
+              setMultitapLevel(data.data.multiTapLevel);
+              setTapCount(data.data.tapCount);
+              setEnergyLimitLevel(data.data.energyLimitLevel);
             } else {
               console.error('Failed to fetch user data:', data.message);
             }
@@ -156,7 +158,7 @@ export default function Home() {
   const [cardTab, setCardTab] = useState("Performance");
   const [energyRegenRate, setEnergyRegenRate] = useState(3);
   const [energyRegenInterval, setEnergyRegenInterval] = useState(5000);
-  const [tapCount, setTapCount] = useState(1);
+  const [tapCount, setTapCount] = useState<number>(1);
   const [multitapLevel, setMultitapLevel] = useState(0);
   const [energyLimitLevel, setEnergyLimitLevel] = useState(0)
   const [cardLevels, setCardLevels] = useState<CardLevels>({
@@ -354,7 +356,7 @@ export default function Home() {
             increaseMaxEnergy={increaseMaxEnergy}
             handleTapClick={handleTapClick}
             setActiveTab={setActiveTab}
-            userToken={userToken} 
+            userToken={userToken}
           />
         </div>
       )}
