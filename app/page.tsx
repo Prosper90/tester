@@ -90,9 +90,9 @@ export default function Home() {
                 ...data.data, // Spread the rest of user data
                 Token: data.Token // Ensure the Token is set properly
               });
-              
+
               // Set the points from the fetched data
-              setUserPoints(data.data.Amount || 0); 
+              setUserPoints(data.data.Amount || 0);
               setEnergy(data.data.energy);
               setMaxEnergy(data.data.maxEnergy);
             } else {
@@ -240,6 +240,35 @@ export default function Home() {
   }, [energyRegenRate, energyRegenInterval, maxEnergy]);
 
   useEffect(() => {
+    const syncEnergyToBackend = async () => {
+      if (userData) {
+        try {
+          const response = await fetch('https://ggr-backend-production.up.railway.app/api/user/updateUser', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${userData?.Token}`
+            },
+            body: JSON.stringify({
+              energy: energy
+            }),
+          });
+
+          if (!response.ok) {
+            console.error('Failed to sync energy to backend:', await response.json());
+          }
+        } catch (error) {
+          console.error('Error syncing energy to backend:', error);
+        }
+      }
+    };
+
+    const syncInterval = setInterval(syncEnergyToBackend, energyRegenInterval);
+
+    return () => clearInterval(syncInterval);
+  }, [energy, userData, energyRegenInterval]);
+
+  useEffect(() => {
     const interval = setInterval(() => {
       setUserPoints((prevPoints) => prevPoints + pointsPerHour);
     }, 3600000); // 3600000 milliseconds = 1 hour
@@ -271,6 +300,7 @@ export default function Home() {
       setUserPoints(newPoints); // Update local state optimistically
       const newEnergy = energy - 1;
       setEnergy(newEnergy);
+
       try {
         const response = await fetch('https://ggr-backend-production.up.railway.app/api/user/updateUser', {
           method: 'POST', // Use POST or PUT for updates
