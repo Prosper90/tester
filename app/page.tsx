@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { useRouter } from 'next/router'; // Import useRouter from Next.js
 import Navbar from "@/components/Navbar";
 import UserInfo from "@/components/UserInfo";
 import ProfitPerHour from "@/components/ProfitPerHour";
@@ -18,13 +17,13 @@ import CommonTapArea from "@/components/CommonTapArea";
 import Friends from "@/components/Friends";
 import Earn from "@/components/Earn";
 import Airdrop from "@/components/Airdrop";
-import BronzeSkim1 from "../images/Skins/Armadillo_1.svg";
-import { StaticImageData } from "next/image";
-import IconLevel1 from "../images/Achivment Levels/Blockchain Junior Developer.svg";
-import IconLevel2 from "../images/Achivment Levels/Senior DeFi Coder.svg";
-import IconLevel3 from '../images/Achivment Levels/Web3 Solutions Architect.svg';
-import IconLevel4 from '../images/Achivment Levels/Crypto Tech Strategist.svg';
-import IconLevel5 from '../images/Achivment Levels/Chief Blockchain Architect.svg';
+import BronzeSkim1 from "../images/Skins/Armadillo_1.svg"
+import { StaticImageData } from "next/image"
+import IconLevel1 from "../images/Achivment Levels/Blockchain Junior Developer.svg"
+import IconLevel2 from "../images/Achivment Levels/Senior DeFi Coder.svg"
+import IconLevel3 from '../images/Achivment Levels/Web3 Solutions Architect.svg'
+import IconLevel4 from '../images/Achivment Levels/Crypto Tech Strategist.svg'
+import IconLevel5 from '../images/Achivment Levels/Chief Blockchain Architect.svg'
 import Redeem from "@/components/Redeem";
 import WebApp from "@twa-dev/sdk";
 
@@ -53,17 +52,17 @@ interface UserData {
   updatedAt?: Date;
 }
 
+
 export default function Home() {
   const [userData, setUserData] = useState<UserData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const router = useRouter(); // Initialize useRouter from Next.js
-
+  
   useEffect(() => {
     if (typeof window !== "undefined") {
         const fetchUserData = async () => {
-            const { id: telegramID } = router.query; // Get the Telegram ID from the URL query
+            if (WebApp.initDataUnsafe.user) {
+                const telegramID = WebApp.initDataUnsafe.user.id; 
 
-            if (telegramID) { // If Telegram ID is found in the query
                 try {
                     const response = await fetch('https://ggr-backend-production.up.railway.app/api/user/login', {
                         method: 'POST',
@@ -85,14 +84,14 @@ export default function Home() {
                     setIsLoading(false);
                 }
             } else {
-                console.error('Telegram ID not found in URL');
+                console.error('No user data from Telegram');
                 setIsLoading(false);
             }
         };
 
         fetchUserData();
     }
-}, [router.query]); // Add router.query to dependency array
+}, []);
 
   const userName = userData?.username || 'Jones';
   const levelNames = [
@@ -263,6 +262,7 @@ export default function Home() {
             tapCount={tapCount}
             energy={energy}
             maxEnergy={maxEnergy}
+            // setMaxEnergy={setMaxEnergy}
             multitapLevel={multitapLevel}
             energyLimitLevel={energyLimitLevel}
             increaseTapCount={increaseTapCount}
