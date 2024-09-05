@@ -7,77 +7,69 @@ interface DailyRewardProps {
   userPoints: number;
   setUserPoints: (newPoints: number | ((prevPoints: number) => number)) => void;
   onClose: () => void;
+  userToken: string; // Assuming you have a user token for authentication
 }
 
 const DailyRewardPopup: React.FC<DailyRewardProps> = ({
   onClose,
   userPoints,
   setUserPoints,
+  userToken,
 }) => {
   const [day, setDay] = useState(1);
   const [claimedToday, setClaimedToday] = useState(false);
+  const [rewards, setRewards] = useState<{ day: number; amount: number }[]>([]);
 
   useEffect(() => {
-    const storedDay = localStorage.getItem('currentDay');
-    const lastCollectedDate = localStorage.getItem('lastCollectedDate');
-    const today = new Date().toDateString();
+    const fetchRewardsData = async () => {
+      try {
+        const response = await fetch('https://ggr-backend-production.up.railway.app/api/user/getTodaysDailyReward', {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${userToken}`,
+            'Content-Type': 'application/json',
+          },
+        });
 
-    if (lastCollectedDate === today) {
-      // User has already claimed today's reward
-      setClaimedToday(true);
-    }
-
-    if (storedDay && lastCollectedDate) {
-      const lastDate = new Date(lastCollectedDate);
-      const currentDate = new Date(today);
-      const dayDifference = Math.floor(
-        (currentDate.getTime() - lastDate.getTime()) / (1000 * 60 * 60 * 24)
-      );
-
-      if (dayDifference === 1) {
-        // User checked in yesterday; continue to the next day
-        setDay(parseInt(storedDay, 10));
-      } else if (dayDifference > 1) {
-        // User missed a day; reset to day 1
-        setDay(1);
-        localStorage.setItem('currentDay', '1');
+        const data = await response.json();
+        if (response.ok) {
+          // Update component state with data from the backend
+          setRewards(data.data.rewards);
+          setDay(data.data.currentDay);
+          setClaimedToday(data.data.claimedToday);
+        } else {
+          console.error('Failed to fetch daily rewards:', data.message);
+        }
+      } catch (error) {
+        console.error('Error fetching daily rewards:', error);
       }
-    } else {
-      // No stored data, initialize day 1
-      setDay(1);
-      localStorage.setItem('currentDay', '1');
-    }
-  }, []);
+    };
 
-  const rewards = [
-    { day: 1, amount: 500 },
-    { day: 2, amount: 1000 },
-    { day: 3, amount: 2500 },
-    { day: 4, amount: 5000 },
-    { day: 5, amount: 15000 },
-    { day: 6, amount: 25000 },
-    { day: 7, amount: 100000 },
-    { day: 8, amount: 500000 },
-    { day: 9, amount: 1000000 },
-    { day: 10, amount: 5000000 },
-  ];
+    fetchRewardsData();
+  }, [userToken]);
 
-  const handleRewardClick = () => {
+  const handleRewardClick = async () => {
     if (claimedToday) return; // If already claimed today, do nothing
 
-    const currentReward = rewards.find((reward) => reward.day === day);
-    if (currentReward) {
-      // Update user points with the current day's reward amount
-      setUserPoints((prevPoints) => prevPoints + currentReward.amount);
+    try {
+      const response = await fetch('https://ggr-backend-production.up.railway.app/api/user/claimDailyReward', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${userToken}`,
+          'Content-Type': 'application/json',
+        },
+      });
 
-      // Mark as claimed for today
-      setClaimedToday(true);
-      localStorage.setItem('lastCollectedDate', new Date().toDateString());
-
-      // Increment the day and save it to local storage
-      const nextDay = day + 1 > rewards.length ? 1 : day + 1; // Reset to day 1 after day 10
-      setDay(nextDay);
-      localStorage.setItem('currentDay', nextDay.toString());
+      const data = await response.json();
+      if (response.ok) {
+        setUserPoints((prevPoints) => prevPoints + data.rewardAmount);
+        setClaimedToday(true);
+        setDay(data.nextDay); // Update to next day as per server response
+      } else {
+        console.error('Failed to claim daily reward:', data.message);
+      }
+    } catch (error) {
+      console.error('Error claiming daily reward:', error);
     }
   };
 
@@ -104,7 +96,7 @@ const DailyRewardPopup: React.FC<DailyRewardProps> = ({
             >
               <p className="text-center">Day {reward.day}</p>
               <Image src={Coin} width={16} height={16} alt="Coin" />
-            <span>{reward.amount}</span>
+              <span>{reward.amount}</span>
             </div>
           ))}
         </div>

@@ -380,7 +380,7 @@ export default function TappingArea({
       )}
 
       {/* Show the Daily Reward Popup if showDailyReward is true */}
-      {showDailyReward && <DailyRewardPopup userPoints={userPoints} setUserPoints={setUserPoints} onClose={closeDailyRewardPopup} />}
+      {showDailyReward && <DailyRewardPopup userPoints={userPoints} userToken="userToken" setUserPoints={setUserPoints} onClose={closeDailyRewardPopup} />}
     </div>
   );
 }
