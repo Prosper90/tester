@@ -7,7 +7,7 @@ interface DailyRewardProps {
   userPoints: number;
   setUserPoints: (newPoints: number | ((prevPoints: number) => number)) => void;
   onClose: () => void;
-  userToken: string; // Assuming you have a user token for authentication
+  userToken: string; // Pass user token to authenticate API requests
 }
 
 const DailyRewardPopup: React.FC<DailyRewardProps> = ({
@@ -18,25 +18,29 @@ const DailyRewardPopup: React.FC<DailyRewardProps> = ({
 }) => {
   const [day, setDay] = useState(1);
   const [claimedToday, setClaimedToday] = useState(false);
-  const [rewards, setRewards] = useState<{ day: number; amount: number }[]>([]);
+  const [rewardAmount, setRewardAmount] = useState(0);
 
   useEffect(() => {
-    const fetchRewardsData = async () => {
+    // Fetch today's reward status and amount from the backend
+    const fetchDailyReward = async () => {
       try {
         const response = await fetch('https://ggr-backend-production.up.railway.app/api/user/getTodaysDailyReward', {
           method: 'GET',
           headers: {
-            'Authorization': `Bearer ${userToken}`,
             'Content-Type': 'application/json',
+            'Authorization': `Bearer ${userToken}`,
           },
         });
 
         const data = await response.json();
+
         if (response.ok) {
-          // Update component state with data from the backend
-          setRewards(data.data.rewards);
-          setDay(data.data.currentDay);
           setClaimedToday(data.data.claimedToday);
+          setDay(data.data.currentDay);
+          if (!data.data.claimedToday) {
+            const rewardForToday = data.data.rewards.find((reward: any) => reward.rewardDay === data.data.currentDay);
+            setRewardAmount(rewardForToday ? rewardForToday.amount : 0);
+          }
         } else {
           console.error('Failed to fetch daily rewards:', data.message);
         }
@@ -45,7 +49,7 @@ const DailyRewardPopup: React.FC<DailyRewardProps> = ({
       }
     };
 
-    fetchRewardsData();
+    fetchDailyReward();
   }, [userToken]);
 
   const handleRewardClick = async () => {
@@ -55,16 +59,18 @@ const DailyRewardPopup: React.FC<DailyRewardProps> = ({
       const response = await fetch('https://ggr-backend-production.up.railway.app/api/user/claimDailyReward', {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${userToken}`,
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${userToken}`,
         },
       });
 
       const data = await response.json();
+
       if (response.ok) {
-        setUserPoints((prevPoints) => prevPoints + data.rewardAmount);
-        setClaimedToday(true);
-        setDay(data.nextDay); // Update to next day as per server response
+        // Update user points with the current day's reward amount
+        setUserPoints((prevPoints) => prevPoints + rewardAmount);
+        setClaimedToday(true); // Mark as claimed for today
+        setDay(data.data.nextDay); // Update to next reward day
       } else {
         console.error('Failed to claim daily reward:', data.message);
       }
@@ -87,16 +93,16 @@ const DailyRewardPopup: React.FC<DailyRewardProps> = ({
           </p>
         </div>
         <div className="grid grid-cols-4 gap-2 mb-4">
-          {rewards.map((reward, index) => (
+          {[...Array(10)].map((_, index) => (
             <div
               key={index}
               className={`flex flex-col items-center justify-center p-2 rounded-lg text-sm gap-2 ${
-                day === reward.day ? 'bg-green-600 text-white' : 'bg-gray-800 text-gray-400'
+                day === index + 1 ? 'bg-green-600 text-white' : 'bg-gray-800 text-gray-400'
               }`}
             >
-              <p className="text-center">Day {reward.day}</p>
+              <p className="text-center">Day {index + 1}</p>
               <Image src={Coin} width={16} height={16} alt="Coin" />
-              <span>{reward.amount}</span>
+              <span>{rewardAmount}</span>
             </div>
           ))}
         </div>
