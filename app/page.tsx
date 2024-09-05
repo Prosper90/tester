@@ -40,16 +40,13 @@ interface UserData {
   DOB?: Date;
   tier?: number;
   Amount?: number;
-  dailyEnergy?: {
-    energyCount: number;
-    lastUsed: Date | null;
-  };
-  availableTapCount?: number;
   energy: number;
   maxEnergy: number;
-  maxTap?: number;
-  multiTapLevel?: number;
+  energyLimitLevel: number;
   tapCount?: number;
+  multiTapLevel?: number;
+  lastClaimedRewardDate?: Date;
+  currentRewardDay: number;
   referedID?: string; // MongoDB ObjectId is `string` in the JSON response
   createdAt?: Date;
   updatedAt?: Date;
