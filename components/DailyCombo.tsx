@@ -130,6 +130,49 @@ const getImageForCard = (title: string): StaticImageData => {
     }
   };
 
+  function Notification({ message, type, onClose }: { message: string; type: 'success' | 'error'; onClose: () => void }) {
+    return (
+      <div
+        className={`fixed top-4 right-4 max-w-sm p-4 rounded-xl shadow-lg z-50 transition-all duration-300 transform ${
+          type === 'success' ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
+        } ${
+          type === 'success'
+            ? 'hover:bg-green-600 hover:shadow-2xl hover:scale-105'
+            : 'hover:bg-red-600 hover:shadow-2xl hover:scale-105'
+        }`}
+      >
+        <div className="flex items-center justify-between">
+          <div className="flex items-center">
+            <div className="ml-3">
+              <p className="text-sm font-medium">{message}</p>
+            </div>
+          </div>
+          <button
+            className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${
+              type === 'success' ? 'bg-green-700' : 'bg-red-700'
+            }`}
+            onClick={onClose}
+          >
+            <svg
+              className="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M6 18L18 6M6 6l12 12"
+              ></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    );
+  }
+
 export default function DailyCombo({ userPoints, setUserPoints, cardLevels, setCardLevels }: DailyComboProps) {
   const [dailyCombos, setDailyCombos] = useState<CardCombo[][]>([]);
   const [currentCombo, setCurrentCombo] = useState<CardCombo[]>([]);
@@ -249,13 +292,11 @@ export default function DailyCombo({ userPoints, setUserPoints, cardLevels, setC
 
       {/* Notification */}
       {notification && (
-        <div
-          className={`fixed bottom-4 left-1/2 transform -translate-x-1/2 p-4 rounded-lg shadow-lg z-50 transition-transform duration-500 ${notification.type === 'success' ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
-            }`}
-        >
-          {notification.message}
-          <button className="ml-4 text-white" onClick={() => setNotification(null)}>X</button>
-        </div>
+        <Notification
+          message={notification.message}
+          type={notification.type}
+          onClose={() => setNotification(null)}
+        />
       )}
     </div>
   );
