@@ -21,7 +21,6 @@ const DailyRewardPopup: React.FC<DailyRewardProps> = ({
   const [rewardAmount, setRewardAmount] = useState(0);
 
   useEffect(() => {
-    // Fetch today's reward status and amount from the backend
     const fetchDailyReward = async () => {
       try {
         const response = await fetch('https://ggr-backend-production.up.railway.app/api/user/getTodaysDailyReward', {
@@ -31,9 +30,9 @@ const DailyRewardPopup: React.FC<DailyRewardProps> = ({
             'Authorization': `Bearer ${userToken}`,
           },
         });
-
+  
         const data = await response.json();
-
+  
         if (response.ok) {
           setClaimedToday(data.data.claimedToday);
           setDay(data.data.currentDay);
@@ -48,13 +47,14 @@ const DailyRewardPopup: React.FC<DailyRewardProps> = ({
         console.error('Error fetching daily rewards:', error);
       }
     };
-
+  
     fetchDailyReward();
   }, [userToken]);
+  
 
   const handleRewardClick = async () => {
     if (claimedToday) return; // If already claimed today, do nothing
-
+  
     try {
       const response = await fetch('https://ggr-backend-production.up.railway.app/api/user/claimDailyReward', {
         method: 'POST',
@@ -63,9 +63,9 @@ const DailyRewardPopup: React.FC<DailyRewardProps> = ({
           'Authorization': `Bearer ${userToken}`,
         },
       });
-
+  
       const data = await response.json();
-
+  
       if (response.ok) {
         // Update user points with the current day's reward amount
         setUserPoints((prevPoints) => prevPoints + rewardAmount);
@@ -78,6 +78,7 @@ const DailyRewardPopup: React.FC<DailyRewardProps> = ({
       console.error('Error claiming daily reward:', error);
     }
   };
+  
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
