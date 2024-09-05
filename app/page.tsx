@@ -57,21 +57,21 @@ interface UserData {
 export default function Home() {
   const [userData, setUserData] = useState<UserData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  
+
   useEffect(() => {
     const fetchUserData = async () => {
       const hash = window.location.hash;
       const params = new URLSearchParams(hash.slice(1));
- 
+
       const tgWebAppData = params.get("tgWebAppData");
- 
+
       if (tgWebAppData) {
         const decodedData = decodeURIComponent(tgWebAppData);
         const userDataString = decodedData.split('user=')[1].split('&')[0];
         const userData = JSON.parse(decodeURIComponent(userDataString));
- 
+
         const telegramID = userData.id;
- 
+
         if (telegramID) {
           try {
             const response = await fetch('https://ggr-backend-production.up.railway.app/api/user/login', {
@@ -81,13 +81,13 @@ export default function Home() {
               },
               body: JSON.stringify({ telegramID }),
             });
- 
+
             const data = await response.json();
             if (response.ok) {
               setUserData({
                 ...data.data, // Spread the rest of user data
                 Token: data.Token // Ensure the Token is set properly
-              }); 
+              });
             } else {
               console.error('Failed to fetch user data:', data.message);
             }
@@ -105,12 +105,12 @@ export default function Home() {
         setIsLoading(false);
       }
     };
- 
+
     if (typeof window !== "undefined") {
       fetchUserData();
     }
- }, []);
- 
+  }, []);
+
 
   const userName = userData?.name || 'Jones';
   const levelNames = [
@@ -196,7 +196,7 @@ export default function Home() {
     "Network Monitoring": 0,
     "Identity Management": 0,
     "Data Security": 0,
-    "Blockchain Forensics":0,
+    "Blockchain Forensics": 0,
     "Reward Multiplier": 0,
   });
 
@@ -261,34 +261,39 @@ export default function Home() {
 
   const handleTapClick = async () => {
     if (energy > 0) {
-        const newPoints = userPoints + tapCount; // Calculate new points
-        setUserPoints(newPoints); // Update local state
+      const newPoints = userPoints + tapCount; // Calculate new points
+      setUserPoints(newPoints); // Update local state optimistically
 
-        // Update the backend with the new points using updateUser
-        try {
-            const response = await fetch('https://ggr-backend-production.up.railway.app/api/user/updateUser', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${userData?.Token}` // Assuming you use JWT tokens for auth
-                },
-                body: JSON.stringify({
-                    Amount: newPoints // Send new points to update
-                }),
-            });
+      try {
+        const response = await fetch('https://ggr-backend-production.up.railway.app/api/user/updateUser', {
+          method: 'POST', // Use POST or PUT for updates
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${userData?.Token}` // Pass the token for authorization
+          },
+          body: JSON.stringify({
+            Amount: newPoints // Send new points to update
+          }),
+        });
 
-            if (!response.ok) {
-                console.error('Failed to update user points:', await response.json());
-            }
-        } catch (error) {
-            console.error('Error updating user points:', error);
+        if (!response.ok) {
+          const errorData = await response.json();
+          console.error('Failed to update user points:', errorData.message);
+
+          // Optionally, revert points on error
+          setUserPoints(prevPoints => prevPoints - tapCount);
         }
+      } catch (error) {
+        console.error('Error updating user points:', error);
 
-        setEnergy((prevEnergy) => prevEnergy - 1); // Decrease energy locally
+        // Optionally, revert points on error
+        setUserPoints(prevPoints => prevPoints - tapCount);
+      }
+
+      setEnergy((prevEnergy) => prevEnergy - 1); // Decrease energy locally
     }
-};
+  };
 
-  
 
   if (isLoading) return <Loading />;
 
