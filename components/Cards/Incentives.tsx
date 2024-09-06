@@ -226,9 +226,9 @@ export default function Incentive({ userPoints, setUserPoints, cardLevels, setCa
               <Image src={selectedCard.avtar} width={100} height={100} alt="Astro" />
               <h3 className="text-white font-semibold text-lg">{selectedCard.title}</h3>
               <p className="text-gray-400 text-sm text-center">{selectedCard.description}</p>
-              <div className="flex items-center gap-2">
-                <span className="text-gray-400 text-xs">Bonus per Day:</span>
-                <span className="text-green-400 text-lg">+{calculateBonus(selectedCard.title, (cardLevels[selectedCard.title] || 0))}</span>
+              <div className="flex bg-neutral-600 items-center gap-2 border rounded-full p-2">
+                <span className="text-white text-xs">Profit per hour:</span>
+                <span className="text-green-400 text-xs">+{calculateBonus(selectedCard.title, (cardLevels[selectedCard.title] || 0))}</span>
               </div>
               <div className="flex items-center gap-2">
                 <span className="text-gray-400 text-xs">{cardLevels[selectedCard.title] === 0 ? 'Purchase' : 'Upgrade'} Cost:</span>
