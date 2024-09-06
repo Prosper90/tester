@@ -120,7 +120,7 @@ const Skin: React.FC<SkinProps> = ({
   const handlePurchase = async () => {
     if (pendingPurchase && userPoints >= skinsData[pendingPurchase].price) {
       try {
-        const response = await fetch("/api/user/purchaseSkin", {
+        const response = await fetch("https://ggr-backend-production.up.railway.app/api/user/purchaseSkin", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
