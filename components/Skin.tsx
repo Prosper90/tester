@@ -144,19 +144,25 @@ const Skin: React.FC<SkinProps> = ({
   const handlePurchase = async () => {
     if (pendingPurchase && userPoints >= skinsData[pendingPurchase].price) {
       try {
+        // Log the request details to ensure correctness
+        console.log("Attempting to purchase skin:", pendingPurchase, skinsData[pendingPurchase].price);
+  
         const response = await fetch("https://ggr-backend-production.up.railway.app/api/user/purchaseSkin", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${userToken}`, // Ensure you pass the user's token
+            Authorization: `Bearer ${userToken}`, // Ensure the token is passed
           },
           body: JSON.stringify({
             skinName: pendingPurchase,
             price: skinsData[pendingPurchase].price,
           }),
         });
-
+  
         const data = await response.json();
+        // Log the server response for debugging
+        console.log("Response data:", data);
+  
         if (response.ok) {
           setUserPoints(data.remainingPoints); // Update user points
           setOwnedSkins(new Set(data.ownedSkins)); // Update owned skins
@@ -173,6 +179,7 @@ const Skin: React.FC<SkinProps> = ({
       alert("You do not have enough points to purchase this skin.");
     }
   };
+  
 
   const handleCancelPurchase = () => setShowPopup(false);
 
