@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import Arrow from "../icons/Arrow.svg";
 import Image, { StaticImageData } from "next/image";
+import Arrow from "../icons/Arrow.svg";
 import Default from "../images/Skins/Armadillo_1.svg";
 import AstroGirl_Normal_1 from "../images/Skins/AstroGirl_Normal_2.svg";
 import Panda_Normal_1 from "../images/Skins/Panda_Normal_4.svg";
@@ -10,8 +10,7 @@ import Kayopo_Hunter_Normal from "../images/Skins/Red_Hunter_Normal_3.svg";
 import Lock from "../icons/Lock.svg";
 import Coin from "../images/Token.svg";
 
-// Define a type for skin information
-type SkinName =
+type SkinName = 
   | "Default"
   | "AstroGirl_Normal_1"
   | "Panda_Normal_1"
@@ -32,15 +31,10 @@ interface SkinProps {
   setGalacticGoldRush: (newSkin: StaticImageData) => void;
   userPoints: number;
   setUserPoints: (newPoints: number | ((prevPoints: number) => number)) => void;
-  userName: string;
-  levelIndex: number;
-  levelNames: string[];
-  levelIcons: StaticImageData[];
-  calculateProgress: () => number;
+  userToken: string;
   onClose: () => void;
 }
 
-// Skin data structure
 const skinsData: { [key in SkinName]: SkinInfo } = {
   Default: {
     image: Default,
@@ -95,13 +89,9 @@ const skinsData: { [key in SkinName]: SkinInfo } = {
 const Skin: React.FC<SkinProps> = ({
   GalacticGoldRush,
   setGalacticGoldRush,
-  userName,
   setUserPoints,
   userPoints,
-  levelIndex,
-  levelNames,
-  levelIcons,
-  calculateProgress,
+  userToken,
   onClose,
 }) => {
   const [selectedSkin, setSelectedSkin] = useState<SkinName>("Default");
@@ -111,14 +101,10 @@ const Skin: React.FC<SkinProps> = ({
 
   useEffect(() => {
     const savedSkinName = localStorage.getItem("selectedSkinName");
-    if (savedSkinName) {
-      setSelectedSkin(savedSkinName as SkinName);
-    }
-
     const savedOwnedSkins = localStorage.getItem("ownedSkins");
-    if (savedOwnedSkins) {
-      setOwnedSkins(new Set(JSON.parse(savedOwnedSkins)));
-    }
+
+    if (savedSkinName) setSelectedSkin(savedSkinName as SkinName);
+    if (savedOwnedSkins) setOwnedSkins(new Set(JSON.parse(savedOwnedSkins)));
   }, []);
 
   useEffect(() => {
@@ -131,63 +117,67 @@ const Skin: React.FC<SkinProps> = ({
     setPendingPurchase(ownedSkins.has(skinName) ? null : skinName);
   };
 
-  const handlePurchase = () => {
+  const handlePurchase = async () => {
     if (pendingPurchase && userPoints >= skinsData[pendingPurchase].price) {
-      setShowPopup(true);
+      try {
+        const response = await fetch("/api/user/purchaseSkin", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${userToken}`,
+          },
+          body: JSON.stringify({
+            skinName: pendingPurchase,
+            price: skinsData[pendingPurchase].price,
+          }),
+        });
+
+        const data = await response.json();
+        if (response.ok) {
+          setUserPoints(data.remainingPoints);
+          setOwnedSkins(new Set(data.ownedSkins));
+          setGalacticGoldRush(skinsData[pendingPurchase].image);
+          setPendingPurchase(null);
+          setShowPopup(false);
+        } else {
+          alert(data.message);
+        }
+      } catch (error) {
+        console.error("Error purchasing skin:", error);
+      }
     } else if (pendingPurchase) {
       alert("You do not have enough points to purchase this skin.");
     }
   };
 
-  const handleConfirmPurchase = () => {
-    if (pendingPurchase && userPoints >= skinsData[pendingPurchase].price) {
-      setUserPoints((prev) => prev - skinsData[pendingPurchase].price);
-      setOwnedSkins((prev) => new Set([...Array.from(prev), pendingPurchase])); // Add to owned skins
-      setGalacticGoldRush(skinsData[pendingPurchase].image); // Set the new global skin
-      setPendingPurchase(null);
-      setShowPopup(false);
-    }
-  };
+  const handleCancelPurchase = () => setShowPopup(false);
 
-  const handleCancelPurchase = () => {
-    setShowPopup(false);
-  };
-
-  // Determine if the currently selected skin is the active/global skin
   const isActiveSkin = skinsData[selectedSkin].image === GalacticGoldRush;
 
   return (
     <div className="fixed inset-0 bg-black flex flex-col z-50 overflow-auto">
       <button onClick={onClose} className="mt-2 relative">
-          <Image src={Arrow} width={20} height={20} alt="arrow" className="absolute ml-2 mt-2" />
-          <h3 className="text-white text-2xl text-center flex-1">Skins</h3>
-        </button>
-      <div className="flex">
-      <div className="w-1/2 flex flex-col items-start justify-start gap-0">
-        <button className="text-white bg-black w-full text-center mb-4">Skin</button>
-      </div>
-      <div className="w-1/2 flex flex-col items-start justify-start gap-0">
-        <button className="text-white bg-black w-full text-center mb-4">All</button>
-      </div>
-      </div>
+        <Image src={Arrow} width={20} height={20} alt="arrow" className="absolute ml-2 mt-2" />
+        <h3 className="text-white text-2xl text-center flex-1">Skins</h3>
+      </button>
+
       <div className="flex flex-1 bg-neutral-800 rounded-t-[46px]">
-        {/* Left Sidebar for Skins Menu */}
-        <div className="w-1/2 flex flex-col items-start justify-start gap-0">
-          {/* Display Selected Skin */}
+        <div className="w-1/2 flex flex-col items-start justify-start">
           <div className="flex flex-col items-center justify-center">
-            <Image src={skinsData[selectedSkin].image} width={200} height={200} alt="Selected Skin" className="p-2"/>
+            <Image src={skinsData[selectedSkin].image} width={200} height={200} alt="Selected Skin" className="p-2" />
             <div className="bg-zinc-700 text-center p-2 mx-2 rounded-lg text-white mt-4">
-              <h4 className="text-sm text-center font-bold pb-2">{skinsData[selectedSkin].title}</h4>
-              <p className="text-xs font-semibold text-center">{skinsData[selectedSkin].subtitle}</p>
-              <p className="text-xs text-left mt-2">{skinsData[selectedSkin].description}</p>
+              <h4 className="text-sm font-bold pb-2">{skinsData[selectedSkin].title}</h4>
+              <p className="text-xs font-semibold">{skinsData[selectedSkin].subtitle}</p>
+              <p className="text-xs mt-2">{skinsData[selectedSkin].description}</p>
               <p className="flex items-center justify-center gap-2 text-xl font-bold mt-2">
-                <Image src={Coin} width={24} height={24} alt="Coin Icon" className="rounded-full" />
+                <Image src={Coin} width={24} height={24} alt="Coin Icon" />
                 {skinsData[selectedSkin].price.toLocaleString()}
               </p>
               <button
                 onClick={pendingPurchase ? handlePurchase : () => setGalacticGoldRush(skinsData[selectedSkin].image)}
-                className={`mt-4 px-6 py-2 rounded text-white ${isActiveSkin ? "bg-gray-500 cursor-not-allowed" : "bg-gradient-to-r from-indigo-600 to-purple-500"
-                  }`}
+                className={`mt-4 px-6 py-2 rounded text-white ${
+                  isActiveSkin ? "bg-gray-500 cursor-not-allowed" : "bg-gradient-to-r from-indigo-600 to-purple-500"
+                }`}
                 disabled={isActiveSkin}
               >
                 {pendingPurchase ? "Buy" : "Choose"}
@@ -196,35 +186,32 @@ const Skin: React.FC<SkinProps> = ({
           </div>
         </div>
 
-        {/* Main Content Area */}
         <div className="w-1/2 flex flex-col items-center justify-start">
-          {/* List of Skins */}
-          <div className="h-full pr-2">
-            <div className="grid grid-cols-2 gap-2 mt-6">
-              {Object.keys(skinsData).map((skinName) => {
-                const isOwned = ownedSkins.has(skinName as SkinName);
-                const isSkinActive = skinsData[skinName as SkinName].image === GalacticGoldRush;
-                return (
-                  <div
-                    key={skinName}
-                    className={`relative bg-zinc-700 py-2 gap-2 flex flex-col items-center justify-center rounded-xl cursor-pointer ${isOwned ? "border-2 border-blue-500" : ""
-                      }`}
-                    onClick={() => handleSkinSelect(skinName as SkinName)}
-                  >
-                    <Image src={skinsData[skinName as SkinName].image} width={100} height={100} alt={skinName} />
-                    <h4 className="text-xs text-center">{skinsData[skinName as SkinName].title}</h4>
-                    {!isOwned && (
-                      <div className="absolute inset-0 flex items-center justify-center rounded-xl bg-black bg-opacity-50">
-                        <Image src={Lock} width={20} height={20} alt="Locked" />
-                      </div>
-                    )}
-                    {isSkinActive && (
-                      <div className="absolute top-0 right-0 bg-blue-500 text-white text-xs rounded-full p-1">✓</div>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
+          <div className="grid grid-cols-2 gap-2 mt-6">
+            {Object.keys(skinsData).map((skinName) => {
+              const isOwned = ownedSkins.has(skinName as SkinName);
+              const isSkinActive = skinsData[skinName as SkinName].image === GalacticGoldRush;
+              return (
+                <div
+                  key={skinName}
+                  className={`relative bg-zinc-700 py-2 gap-2 flex flex-col items-center justify-center rounded-xl cursor-pointer ${
+                    isOwned ? "border-2 border-blue-500" : ""
+                  }`}
+                  onClick={() => handleSkinSelect(skinName as SkinName)}
+                >
+                  <Image src={skinsData[skinName as SkinName].image} width={100} height={100} alt={skinName} />
+                  <h4 className="text-xs text-center">{skinsData[skinName as SkinName].title}</h4>
+                  {!isOwned && (
+                    <div className="absolute inset-0 flex items-center justify-center rounded-xl bg-black bg-opacity-50">
+                      <Image src={Lock} width={20} height={20} alt="Locked" />
+                    </div>
+                  )}
+                  {isSkinActive && (
+                    <div className="absolute top-0 right-0 bg-blue-500 text-white text-xs rounded-full p-1">✓</div>
+                  )}
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>
@@ -238,7 +225,7 @@ const Skin: React.FC<SkinProps> = ({
             </p>
             <div className="flex gap-2 justify-center">
               <button
-                onClick={handleConfirmPurchase}
+                onClick={handlePurchase}
                 className="bg-gradient-to-r from-indigo-600 to-purple-500 text-white px-4 py-2 rounded"
               >
                 Yes

@@ -15,6 +15,7 @@ interface UserInfoProps {
   userName: string;
   levelIndex: number;
   levelNames: string[];
+  userToken: string;
   levelIcons: StaticImageData[];
   calculateProgress: () => number;
 }
@@ -26,6 +27,7 @@ export default function UserInfo({
   setUserPoints,
   levelIcons,
   userName,
+  userToken,
   levelIndex,
   levelNames,
   calculateProgress,
@@ -92,7 +94,7 @@ export default function UserInfo({
         </div>
       </div>
 
-      {showSkinPage && <Skin GalacticGoldRush={GalacticGoldRush} levelIcons={levelIcons} setGalacticGoldRush={setGalacticGoldRush} levelIndex={levelIndex} userPoints={userPoints} setUserPoints={setUserPoints} userName={userName} levelNames={levelNames} calculateProgress={calculateProgress} onClose={handleSkinClose} />}
+      {showSkinPage && <Skin GalacticGoldRush={GalacticGoldRush} userToken={userToken} setGalacticGoldRush={setGalacticGoldRush} userPoints={userPoints} setUserPoints={setUserPoints} onClose={handleSkinClose} />}
       {showProgressPage && <ProgressPage levelIndex={levelIndex} levelIcons={levelIcons} userPoints={userPoints} levelNames={levelNames} calculateProgress={calculateProgress} onClose={handleClose} />}
     </>
   );
