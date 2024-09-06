@@ -139,7 +139,7 @@ export default function Home() {
   const renderSharedComponents = () => (
     <>
       <UserInfo GalacticGoldRush={GalacticGoldRush} setGalacticGoldRush={setGalacticGoldRush} levelIndex={levelIndex} levelIcons={levelIcons} userPoints={userPoints} setUserPoints={setUserPoints} userName={userName} levelNames={levelNames} calculateProgress={calculateProgress} />
-      <Redeem userPoints={userPoints} setUserPoints={setUserPoints} />
+      <Redeem userPoints={userPoints} setUserPoints={setUserPoints} userToken={userToken} />
       <ProfitPerHour pointsPerHour={pointsPerHour} />
     </>
   );

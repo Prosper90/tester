@@ -5,33 +5,41 @@ import React, { useState } from 'react';
 interface RedeemProps {
   userPoints: number;
   setUserPoints: (newPoints: number | ((prevPoints: number) => number)) => void;
+  userToken: string; // Pass userToken from the parent component
 }
 
-export default function Redeem({ userPoints, setUserPoints }: RedeemProps) {
+export default function Redeem({ userPoints, setUserPoints, userToken }: RedeemProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [inputCode, setInputCode] = useState('');
   const [error, setError] = useState('');
-
-  const validCodes = new Set([
-    'AXJ8KL', 'ZQR5TH', 'LPM3VN', 'QW7JXC', 'TY2HNB', 'UIO9ER',
-    'PLM6JK', 'GHT4WF', 'BVC1QP', 'MNB7UY', 'KJH2ZX', 'REW8VS',
-    'ASX9PL', 'CVB3AQ', 'MKI5OF', 'POI6JL', 'NHY2RT', 'YUJ8IE',
-    'OLP4DS', 'QAZ7XC', 'WSX5DC', 'EDC9RF', 'RFV3TG', 'TGB2HU',
-    'YHN8JI', 'IKL5MO', 'MLK9UP', 'OPP2QB', 'QWE6RT', 'ZXC8IU'
-  ]);
 
   const handleRedeemClick = () => {
     setIsModalOpen(true);
     setError('');
   };
 
-  const handleCodeSubmit = () => {
-    if (validCodes.has(inputCode.toUpperCase())) {
-      setUserPoints(prevPoints => prevPoints + 3000);
-      setInputCode('');
-      setIsModalOpen(false);
-    } else {
-      setError('Invalid code. Please try again.');
+  const handleCodeSubmit = async () => {
+    try {
+      const response = await fetch('https://ggr-backend-production.up.railway.app/api/user/redeemCode', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${userToken}`,
+        },
+        body: JSON.stringify({ code: inputCode }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setUserPoints(prevPoints => prevPoints + data.points); // Update points
+        setInputCode('');
+        setIsModalOpen(false);
+      } else {
+        setError(data.message); // Show error message from the backend
+      }
+    } catch (error) {
+      setError('Something went wrong. Please try again.');
     }
   };
 
