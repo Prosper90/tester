@@ -10,7 +10,8 @@ import Kayopo_Hunter_Normal from "../images/Skins/Red_Hunter_Normal_3.svg";
 import Lock from "../icons/Lock.svg";
 import Coin from "../images/Token.svg";
 
-type SkinName = 
+// Define a type for skin information
+type SkinName =
   | "Default"
   | "AstroGirl_Normal_1"
   | "Panda_Normal_1"
@@ -35,6 +36,7 @@ interface SkinProps {
   onClose: () => void;
 }
 
+// Skin data structure
 const skinsData: { [key in SkinName]: SkinInfo } = {
   Default: {
     image: Default,
@@ -99,18 +101,40 @@ const Skin: React.FC<SkinProps> = ({
   const [pendingPurchase, setPendingPurchase] = useState<SkinName | null>(null);
   const [showPopup, setShowPopup] = useState<boolean>(false);
 
+  // Fetch owned skins from the backend when the component mounts
+  useEffect(() => {
+    const fetchOwnedSkins = async () => {
+      try {
+        const response = await fetch("https://ggr-backend-production.up.railway.app/api/user/getUserSkins", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${userToken}`, // Pass user token
+          },
+        });
+
+        const data = await response.json();
+        if (response.ok) {
+          setOwnedSkins(new Set(data.ownedSkins)); // Set owned skins from backend response
+        } else {
+          console.error("Failed to fetch owned skins:", data.message);
+        }
+      } catch (error) {
+        console.error("Error fetching owned skins:", error);
+      }
+    };
+
+    fetchOwnedSkins();
+  }, [userToken]);
+
   useEffect(() => {
     const savedSkinName = localStorage.getItem("selectedSkinName");
-    const savedOwnedSkins = localStorage.getItem("ownedSkins");
-
     if (savedSkinName) setSelectedSkin(savedSkinName as SkinName);
-    if (savedOwnedSkins) setOwnedSkins(new Set(JSON.parse(savedOwnedSkins)));
   }, []);
 
   useEffect(() => {
     localStorage.setItem("selectedSkinName", selectedSkin);
-    localStorage.setItem("ownedSkins", JSON.stringify(Array.from(ownedSkins)));
-  }, [selectedSkin, ownedSkins]);
+  }, [selectedSkin]);
 
   const handleSkinSelect = (skinName: SkinName) => {
     setSelectedSkin(skinName);
@@ -124,7 +148,7 @@ const Skin: React.FC<SkinProps> = ({
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${userToken}`,
+            Authorization: `Bearer ${userToken}`, // Ensure you pass the user's token
           },
           body: JSON.stringify({
             skinName: pendingPurchase,
@@ -134,13 +158,13 @@ const Skin: React.FC<SkinProps> = ({
 
         const data = await response.json();
         if (response.ok) {
-          setUserPoints(data.remainingPoints);
-          setOwnedSkins(new Set(data.ownedSkins));
-          setGalacticGoldRush(skinsData[pendingPurchase].image);
+          setUserPoints(data.remainingPoints); // Update user points
+          setOwnedSkins(new Set(data.ownedSkins)); // Update owned skins
+          setGalacticGoldRush(skinsData[pendingPurchase].image); // Set the new global skin
           setPendingPurchase(null);
           setShowPopup(false);
         } else {
-          alert(data.message);
+          alert(data.message); // Show an error message if something goes wrong
         }
       } catch (error) {
         console.error("Error purchasing skin:", error);
@@ -194,7 +218,7 @@ const Skin: React.FC<SkinProps> = ({
               return (
                 <div
                   key={skinName}
-                  className={`relative bg-zinc-700 py-2 gap-2 flex flex-col items-center justify-center rounded-xl cursor-pointer ${
+                  className={`relative bg-zinc-700 py-2 flex flex-col items-center justify-center rounded-xl cursor-pointer ${
                     isOwned ? "border-2 border-blue-500" : ""
                   }`}
                   onClick={() => handleSkinSelect(skinName as SkinName)}
@@ -218,22 +242,16 @@ const Skin: React.FC<SkinProps> = ({
 
       {showPopup && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75">
-          <div className="bg-neutral-800 border-t-2 border-amber-600 p-6 rounded-t-[46px] top-glow">
+          <div className="bg-neutral-800 border-t-2 border-amber-600 p-6 rounded-t-[46px]">
             <h2 className="text-purple-500 font-bold text-center text-2xl mb-4">Confirm Purchase</h2>
             <p className="text-white mb-4">
               Are you sure you want to purchase this skin for {skinsData[pendingPurchase!].price.toLocaleString()} Points?
             </p>
             <div className="flex gap-2 justify-center">
-              <button
-                onClick={handlePurchase}
-                className="bg-gradient-to-r from-indigo-600 to-purple-500 text-white px-4 py-2 rounded"
-              >
+              <button onClick={handlePurchase} className="bg-gradient-to-r from-indigo-600 to-purple-500 text-white px-4 py-2 rounded">
                 Yes
               </button>
-              <button
-                onClick={handleCancelPurchase}
-                className="bg-gray-600 px-4 py-2 rounded text-white"
-              >
+              <button onClick={handleCancelPurchase} className="bg-gray-600 px-4 py-2 rounded text-white">
                 No
               </button>
             </div>
