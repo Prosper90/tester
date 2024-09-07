@@ -400,7 +400,7 @@ export default function Home() {
 
   return (
     <div
-      className={`relative flex flex-col w-full  justify-center items-center bg-black text-white pb-32`}
+      className={`relative flex flex-col w-full  justify-center items-center bg-black text-white pb-32 md:pb-40`}
     >
       {activeTab === "protocol lab" && (
         <div className="flex flex-col gap-4 items-center justify-start pt-3 pb-36 w-full h-screen">
