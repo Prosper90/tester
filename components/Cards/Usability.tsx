@@ -1,18 +1,18 @@
 "use client";
 
 import { useState } from "react";
-import Image, {StaticImageData} from "next/image";
+import Image, { StaticImageData } from "next/image";
 import Coin from "../../images/Token.svg";
-import Icon1 from "../../images/Mining Icons/Usability/User Interface.svg"
-import Icon2 from "../../images/Mining Icons/Usability/Wallet Solutions.svg"
-import Icon3 from "../../images/Mining Icons/Usability/Onboarding Guides.svg"
-import Icon4 from "../../images/Mining Icons/Usability/Accessibility Options.svg"
-import Icon5 from "../../images/Mining Icons/Usability/User Experience.svg"
-import Icon6 from "../../images/Mining Icons/Usability/Game Elements.svg"
-import Icon7 from "../../images/Mining Icons/Usability/Personalized Content.svg"
-import Icon8 from "../../images/Mining Icons/Usability/Data Analytics.svg"
-import Icon9 from "../../images/Mining Icons/Usability/User Engagement.svg"
-import Icon10 from "../../images/Mining Icons/Usability/Decentralized Apps.svg"
+import Icon1 from "../../images/Mining Icons/Usability/User Interface.svg";
+import Icon2 from "../../images/Mining Icons/Usability/Wallet Solutions.svg";
+import Icon3 from "../../images/Mining Icons/Usability/Onboarding Guides.svg";
+import Icon4 from "../../images/Mining Icons/Usability/Accessibility Options.svg";
+import Icon5 from "../../images/Mining Icons/Usability/User Experience.svg";
+import Icon6 from "../../images/Mining Icons/Usability/Game Elements.svg";
+import Icon7 from "../../images/Mining Icons/Usability/Personalized Content.svg";
+import Icon8 from "../../images/Mining Icons/Usability/Data Analytics.svg";
+import Icon9 from "../../images/Mining Icons/Usability/User Engagement.svg";
+import Icon10 from "../../images/Mining Icons/Usability/Decentralized Apps.svg";
 
 interface CardData {
   avtar: StaticImageData;
@@ -24,23 +24,64 @@ interface UsabilityProps {
   userPoints: number;
   setUserPoints: React.Dispatch<React.SetStateAction<number>>;
   cardLevels: { [key: string]: number };
-  setCardLevels: React.Dispatch<React.SetStateAction<{ [key: string]: number }>>;
+  setCardLevels: React.Dispatch<
+    React.SetStateAction<{ [key: string]: number }>
+  >;
   updateProfitPerHour: (amount: number) => void;
 }
 
 const cardData: CardData[] = [
-  {avtar:Icon2, title: "Wallet Solutions", description: "Secure tools for managing digital assets." },
-  {avtar:Icon10, title: "Decentralized Apps", description: "Decentralized applications built on blockchain." },
-  {avtar:Icon1, title: "User Interface", description: "User interface design for ease of use." },
-  {avtar:Icon5, title: "User Experience", description: "User experience optimization." },
-  {avtar:Icon7, title: "Personalized Content", description: "Customizing user experiences." },
-  {avtar:Icon4, title: "Accessibility Options", description: "Ensuring the platform is usable by everyone." },
-  {avtar:Icon6, title: "Game Elements", description: "Adding game-like elements to enhance engagement." },
-  {avtar:Icon8, title: "Data Analytics", description: "Tracking and analyzing user behavior." },
-  {avtar:Icon9, title: "User Engagement", description: "Keeping users actively involved." },
-  {avtar:Icon3, title: "Onboarding Guides", description: "Processes for introducing new users." },
+  {
+    avtar: Icon2,
+    title: "Wallet Solutions",
+    description: "Secure tools for managing digital assets.",
+  },
+  {
+    avtar: Icon10,
+    title: "Decentralized Apps",
+    description: "Decentralized applications built on blockchain.",
+  },
+  {
+    avtar: Icon1,
+    title: "User Interface",
+    description: "User interface design for ease of use.",
+  },
+  {
+    avtar: Icon5,
+    title: "User Experience",
+    description: "User experience optimization.",
+  },
+  {
+    avtar: Icon7,
+    title: "Personalized Content",
+    description: "Customizing user experiences.",
+  },
+  {
+    avtar: Icon4,
+    title: "Accessibility Options",
+    description: "Ensuring the platform is usable by everyone.",
+  },
+  {
+    avtar: Icon6,
+    title: "Game Elements",
+    description: "Adding game-like elements to enhance engagement.",
+  },
+  {
+    avtar: Icon8,
+    title: "Data Analytics",
+    description: "Tracking and analyzing user behavior.",
+  },
+  {
+    avtar: Icon9,
+    title: "User Engagement",
+    description: "Keeping users actively involved.",
+  },
+  {
+    avtar: Icon3,
+    title: "Onboarding Guides",
+    description: "Processes for introducing new users.",
+  },
 ];
-
 
 const costMap: { [key: string]: number } = {
   "User Interface": 1100,
@@ -81,15 +122,23 @@ const bonusMap: { [key: string]: number[] } = {
   "Decentralized Apps": [90, 180, 270, 360],
 };
 
-function Notification({ message, type, onClose }: { message: string; type: 'success' | 'error'; onClose: () => void }) {
+function Notification({
+  message,
+  type,
+  onClose,
+}: {
+  message: string;
+  type: "success" | "error";
+  onClose: () => void;
+}) {
   return (
     <div
       className={`fixed top-4 right-0 w-full max-w-sm p-4 rounded-xl shadow-lg z-50 transition-all duration-300 transform ${
-        type === 'success' ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
+        type === "success" ? "bg-green-500 text-white" : "bg-red-500 text-white"
       } ${
-        type === 'success'
-          ? 'hover:bg-green-600 hover:shadow-2xl hover:scale-105'
-          : 'hover:bg-red-600 hover:shadow-2xl hover:scale-105'
+        type === "success"
+          ? "hover:bg-green-600 hover:shadow-2xl hover:scale-105"
+          : "hover:bg-red-600 hover:shadow-2xl hover:scale-105"
       }`}
     >
       <div className="flex items-center justify-between">
@@ -100,7 +149,7 @@ function Notification({ message, type, onClose }: { message: string; type: 'succ
         </div>
         <button
           className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${
-            type === 'success' ? 'bg-green-700' : 'bg-red-700'
+            type === "success" ? "bg-green-700" : "bg-red-700"
           }`}
           onClick={onClose}
         >
@@ -124,9 +173,18 @@ function Notification({ message, type, onClose }: { message: string; type: 'succ
   );
 }
 
-export default function Usability({ userPoints, setUserPoints, cardLevels, setCardLevels, updateProfitPerHour }: UsabilityProps) {
+export default function Usability({
+  userPoints,
+  setUserPoints,
+  cardLevels,
+  setCardLevels,
+  updateProfitPerHour,
+}: UsabilityProps) {
   const [selectedCard, setSelectedCard] = useState<CardData | null>(null);
-  const [notification, setNotification] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
+  const [notification, setNotification] = useState<{
+    message: string;
+    type: "success" | "error";
+  } | null>(null);
 
   const calculateCost = (cardTitle: string, level: number) => {
     const baseCost = costMap[cardTitle];
@@ -158,17 +216,24 @@ export default function Usability({ userPoints, setUserPoints, cardLevels, setCa
       const newBonus = calculateBonus(selectedCard.title, currentLevel);
       updateProfitPerHour(newBonus);
 
-      setNotification({ message: 'Purchase successful!', type: 'success' });
+      setNotification({ message: "Purchase successful!", type: "success" });
     } else if (currentLevel >= maxLevel) {
-      setNotification({ message: 'This card is already at the maximum level.', type: 'error' });
+      setNotification({
+        message: "This card is already at the maximum level.",
+        type: "error",
+      });
     } else {
-      setNotification({ message: 'You do not have enough points to purchase or upgrade this card.', type: 'error' });
+      setNotification({
+        message:
+          "You do not have enough points to purchase or upgrade this card.",
+        type: "error",
+      });
     }
     setSelectedCard(null); // Close the modal after purchase
   };
 
   return (
-    <div className="flex flex-wrap gap-2 w-full p-4 items-center justify-between">
+    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-7 gap-4">
       {cardData.map((card, index) => {
         const currentLevel = cardLevels[card.title] || 0;
         const maxLevel = maxLevelMap[card.title];
@@ -179,13 +244,13 @@ export default function Usability({ userPoints, setUserPoints, cardLevels, setCa
         return (
           <div
             key={index}
-            className={`relative flex flex-col rounded-2xl bg-neutral-800 py-4 gap-2 w-40 cursor-pointer shadow-lg${atMaxLevel ? 'opacity-50' : ''}`}
+            className={`relative flex flex-col rounded-2xl bg-neutral-800 py-4 gap-2 w-44 sm:w-40 cursor-pointer shadow-lg${
+              atMaxLevel ? "opacity-50" : ""
+            }`}
             onClick={() => !atMaxLevel && setSelectedCard(card)} // Set selected card on click
           >
             {atMaxLevel && (
-              <div className="absolute inset-0 bg-black opacity-60 flex items-center justify-center text-lg text-white font-bold rounded-lg">
-                
-              </div>
+              <div className="absolute inset-0 bg-black opacity-60 flex items-center justify-center text-lg text-white font-bold rounded-lg"></div>
             )}
             {/* Level Badge */}
             <div className="absolute top-0 right-0 bg-indigo-600 text-white text-xs px-2 py-1 rounded-tr-lg rounded-bl-lg">
@@ -194,9 +259,17 @@ export default function Usability({ userPoints, setUserPoints, cardLevels, setCa
 
             {/* Astro Image and Card Details */}
             <div className="flex items-center gap-2">
-              <Image src={card.avtar} width={64} height={64} alt="Astro" className="h-full" />
+              <Image
+                src={card.avtar}
+                width={64}
+                height={64}
+                alt="Astro"
+                className="h-full"
+              />
               <div className="flex flex-col pt-4">
-                <h3 className="text-white font-semibold text-sm">{card.title}</h3>
+                <h3 className="text-white font-semibold text-sm">
+                  {card.title}
+                </h3>
                 <h4 className="text-gray-400 text-xs">Bonus per hour</h4>
                 <div className="flex items-center gap-1">
                   <Image src={Coin} width={14} height={14} alt="Coin" />
@@ -208,10 +281,14 @@ export default function Usability({ userPoints, setUserPoints, cardLevels, setCa
             {/* Upgrade */}
             <div className="flex bg-neutral-700 p-1">
               <div className="flex items-center justify-between w-full">
-                <h3 className="text-white text-xs">{currentLevel === 0 ? 'Purchase' : 'Upgrade'}</h3>
+                <h3 className="text-white text-xs">
+                  {currentLevel === 0 ? "Purchase" : "Upgrade"}
+                </h3>
                 <div className="flex items-center justify-center gap-1 mt-1">
                   <Image src={Coin} width={14} height={14} alt="Coin" />
-                  <span className="text-yellow-400 text-xs">{cost.toLocaleString()}</span>
+                  <span className="text-yellow-400 text-xs">
+                    {cost.toLocaleString()}
+                  </span>
                 </div>
               </div>
             </div>
@@ -224,23 +301,50 @@ export default function Usability({ userPoints, setUserPoints, cardLevels, setCa
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-neutral-800 rounded-t-[46px] border-t-2 border-amber-600 top-glow p-6 w-96 relative">
             <div className="flex flex-col items-center gap-4">
-              <Image src={selectedCard.avtar} width={100} height={100} alt="Astro" />
-              <h3 className="text-white font-semibold text-lg">{selectedCard.title}</h3>
-              <p className="text-gray-400 text-sm text-center">{selectedCard.description}</p>
+              <Image
+                src={selectedCard.avtar}
+                width={100}
+                height={100}
+                alt="Astro"
+              />
+              <h3 className="text-white font-semibold text-lg">
+                {selectedCard.title}
+              </h3>
+              <p className="text-gray-400 text-sm text-center">
+                {selectedCard.description}
+              </p>
               <div className="flex bg-neutral-600 items-center gap-2 border rounded-full p-2">
                 <span className="text-white text-xs">Profit per hour:</span>
-                <span className="text-green-400 text-xs">+{calculateBonus(selectedCard.title, (cardLevels[selectedCard.title] || 0))}</span>
+                <span className="text-green-400 text-xs">
+                  +
+                  {calculateBonus(
+                    selectedCard.title,
+                    cardLevels[selectedCard.title] || 0
+                  )}
+                </span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="text-gray-400 text-xs">{cardLevels[selectedCard.title] === 0 ? 'Purchase' : 'Upgrade'} Cost:</span>
-                <span className="text-yellow-400 text-lg">{calculateCost(selectedCard.title, cardLevels[selectedCard.title] || 0)}</span>
+                <span className="text-gray-400 text-xs">
+                  {cardLevels[selectedCard.title] === 0
+                    ? "Purchase"
+                    : "Upgrade"}{" "}
+                  Cost:
+                </span>
+                <span className="text-yellow-400 text-lg">
+                  {calculateCost(
+                    selectedCard.title,
+                    cardLevels[selectedCard.title] || 0
+                  )}
+                </span>
               </div>
               <div className="flex gap-2 mt-4">
                 <button
                   className="bg-gradient-to-r from-indigo-600 to-purple-500 text-white py-2 px-4 rounded-xl"
                   onClick={handlePurchase}
                 >
-                  {cardLevels[selectedCard.title] === 0 ? 'Purchase' : 'Upgrade'}
+                  {cardLevels[selectedCard.title] === 0
+                    ? "Purchase"
+                    : "Upgrade"}
                 </button>
                 <button
                   className="bg-gray-600 text-white py-2 px-4 rounded-xl"

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo, useCallback } from "react";
 import Image, { StaticImageData } from "next/image";
 import Orb from "../images/Allien Planets/Allien Planet 3.svg";
 import OrbCipher from "../images/Allien Planets/Allien Planet 5.svg";
@@ -11,12 +11,14 @@ import Clock from "../icons/Satr3.svg";
 import Boost from "./Boost";
 import PointIncrement from "./PointIncrement";
 import DailyRewardPopup from "./DailyReward"; // Import the DailyRewardPopup component
+import { motion, AnimatePresence } from "framer-motion";
+import { debounce } from "lodash";
 
 interface TappingAreaProps {
   userPoints: number;
   setUserPoints: (newPoints: number | ((prevPoints: number) => number)) => void;
   tapCount: number;
-  GalacticGoldRush: StaticImageData;
+  GalacticGoldRush: any;
   energy: number;
   maxEnergy: number;
   multitapLevel: number;
@@ -49,56 +51,58 @@ const cipherCodes = [
   "PROOF",
   "CRYPTO",
   "SCALE",
-  "UNITS"
+  "UNITS",
 ];
 
 // Determine the current day's cipher code
 const getCurrentTranslation = () => {
   const currentDate = new Date();
   const startOfEpoch = new Date(currentDate.getFullYear(), 0, 0); // Start of the year
-  const dayOfYear = Math.floor((currentDate.getTime() - startOfEpoch.getTime()) / (1000 * 60 * 60 * 24));
+  const dayOfYear = Math.floor(
+    (currentDate.getTime() - startOfEpoch.getTime()) / (1000 * 60 * 60 * 24)
+  );
   return cipherCodes[dayOfYear % cipherCodes.length];
 };
 
 // Morse code map for letters and digits
-const morseCodeMap: { [key: string]: string } = {
-  A: ".-",
-  B: "-...",
-  C: "-.-.",
-  D: "-..",
-  E: ".",
-  F: "..-.",
-  G: "--.",
-  H: "....",
-  I: "..",
-  J: ".---",
-  K: "-.-",
-  L: ".-..",
-  M: "--",
-  N: "-.",
-  O: "---",
-  P: ".--.",
-  Q: "--.-",
-  R: ".-.",
-  S: "...",
-  T: "-",
-  U: "..-",
-  V: "...-",
-  W: ".--",
-  X: "-..-",
-  Y: "-.--",
-  Z: "--..",
-  "0": "-----",
-  "1": ".----",
-  "2": "..---",
-  "3": "...--",
-  "4": "....-",
-  "5": ".....",
-  "6": "-....",
-  "7": "--...",
-  "8": "---..",
-  "9": "----."
-};
+// const morseCodeMap: { [key: string]: string } = {
+//   A: ".-",
+//   B: "-...",
+//   C: "-.-.",
+//   D: "-..",
+//   E: ".",
+//   F: "..-.",
+//   G: "--.",
+//   H: "....",
+//   I: "..",
+//   J: ".---",
+//   K: "-.-",
+//   L: ".-..",
+//   M: "--",
+//   N: "-.",
+//   O: "---",
+//   P: ".--.",
+//   Q: "--.-",
+//   R: ".-.",
+//   S: "...",
+//   T: "-",
+//   U: "..-",
+//   V: "...-",
+//   W: ".--",
+//   X: "-..-",
+//   Y: "-.--",
+//   Z: "--..",
+//   "0": "-----",
+//   "1": ".----",
+//   "2": "..---",
+//   "3": "...--",
+//   "4": "....-",
+//   "5": ".....",
+//   "6": "-....",
+//   "7": "--...",
+//   "8": "---..",
+//   "9": "----.",
+// };
 
 export default function TappingArea({
   GalacticGoldRush,
@@ -118,18 +122,69 @@ export default function TappingArea({
   const [showBoost, setShowBoost] = useState(false);
   const [showIncrement, setShowIncrement] = useState(false);
   const [showDailyReward, setShowDailyReward] = useState(false); // State to control Daily Reward Popup visibility
-  const [tapPosition, setTapPosition] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
+  const [tapPosition, setTapPosition] = useState<{ x: number; y: number }>({
+    x: 0,
+    y: 0,
+  });
   const [isCipherMode, setIsCipherMode] = useState(false); // State to track cipher mode
   const [tapSymbol, setTapSymbol] = useState<string | null>(null); // State to track the symbol
   const [userInput, setUserInput] = useState<string>(""); // State to track user Morse code input
   const [displayText, setDisplayText] = useState<string>("");
   const [currentIndex, setCurrentIndex] = useState<number>(0);
-  const [lastCompletionTime, setLastCompletionTime] = useState<number | null>(null);
+  const [lastCompletionTime, setLastCompletionTime] = useState<number | null>(
+    null
+  );
   const [canUseCipher, setCanUseCipher] = useState<boolean>(true); // State to control cipher mode usage
   // Calculate the current cipher translation
-  const [currentTranslation, setCurrentTranslation] = useState<string>(getCurrentTranslation());
+  const [currentTranslation, setCurrentTranslation] = useState<string>(
+    getCurrentTranslation()
+  );
 
   const longPressTimer = useRef<NodeJS.Timeout | null>(null);
+  // const orbRef = useRef<HTMLDivElement>(null);
+
+  // Memoize complex calculations or large objects
+  const morseCodeMap: { [key: string]: string } = useMemo(
+    () => ({
+      A: ".-",
+      B: "-...",
+      C: "-.-.",
+      D: "-..",
+      E: ".",
+      F: "..-.",
+      G: "--.",
+      H: "....",
+      I: "..",
+      J: ".---",
+      K: "-.-",
+      L: ".-..",
+      M: "--",
+      N: "-.",
+      O: "---",
+      P: ".--.",
+      Q: "--.-",
+      R: ".-.",
+      S: "...",
+      T: "-",
+      U: "..-",
+      V: "...-",
+      W: ".--",
+      X: "-..-",
+      Y: "-.--",
+      Z: "--..",
+      "0": "-----",
+      "1": ".----",
+      "2": "..---",
+      "3": "...--",
+      "4": "....-",
+      "5": ".....",
+      "6": "-....",
+      "7": "--...",
+      "8": "---..",
+      "9": "----.",
+    }),
+    []
+  );
 
   useEffect(() => {
     // Retrieve the last completion time from local storage on component mount
@@ -156,84 +211,92 @@ export default function TappingArea({
     }
   };
 
-  const handleBoostClick = () => {
+  const handleBoostClick = useCallback(() => {
     setShowBoost(true);
-  };
+  }, []);
 
-  const handleDailyRewardClick = () => {
-    setShowDailyReward(true); // Show the Daily Reward Popup
-  };
+  const handleDailyRewardClick = useCallback(() => {
+    setShowDailyReward(true);
+  }, []);
 
-  const closeDailyRewardPopup = () => {
-    setShowDailyReward(false); // Close the Daily Reward Popup
-  };
+  const closeDailyRewardPopup = useCallback(() => {
+    setShowDailyReward(false);
+  }, []);
 
   // Handle tap or long press
-  const handleTap = (e: React.MouseEvent<HTMLImageElement>) => {
-    e.preventDefault();
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    setTapPosition({ x, y });
+  // const handleTap = (e: React.MouseEvent<HTMLImageElement>) => {
+  //   e.preventDefault();
+  //   const rect = e.currentTarget.getBoundingClientRect();
+  //   const x = e.clientX - rect.left;
+  //   const y = e.clientY - rect.top;
+  //   setTapPosition({ x, y });
 
-    if (isCipherMode && canUseCipher) {
-      handleTapClick();
-      const newSymbol = ".";
-      setTapSymbol(newSymbol);
-      updateUserInput(newSymbol); // Use function to update input and handle logic
+  //   if (isCipherMode && canUseCipher) {
+  //     handleTapClick();
+  //     const newSymbol = ".";
+  //     setTapSymbol(newSymbol);
+  //     updateUserInput(newSymbol); // Use function to update input and handle logic
+  //   } else if (!isCipherMode) {
+  //     handleTapClick();
+  //     setShowIncrement(true);
+  //     setTimeout(() => setShowIncrement(false), 500);
+  //   }
+  // };
 
-    } else if (!isCipherMode) {
-      handleTapClick();
-      setShowIncrement(true);
-      setTimeout(() => setShowIncrement(false), 500);
-    }
-  };
-
-  const handleMouseDown = (e: React.MouseEvent<HTMLImageElement>) => {
-
-    longPressTimer.current = setTimeout(() => {
-      handleLongPress();
-    }, 500); // Trigger long press after 2 seconds
-
-  };
-
-  const handleTouchStart = (e: React.TouchEvent<HTMLImageElement>) => {
-
-    longPressTimer.current = setTimeout(() => {
-      handleLongPress();
-    }, 500); // Trigger long press after 2 seconds
-
-  };
-
-  const handleMouseUp = () => {
-    if (longPressTimer.current) {
-      clearTimeout(longPressTimer.current);
-      longPressTimer.current = null;
-    }
-  };
-
-  const handleTouchEnd = () => {
-    if (longPressTimer.current) {
-      clearTimeout(longPressTimer.current);
-      longPressTimer.current = null;
-    }
-  };
-
-  // Handle long press for dash
-  const handleLongPress = () => {
-    if (isCipherMode && canUseCipher) {
-      handleTapClick();
-      const newSymbol = "-";
-      setTapSymbol(newSymbol);
-      updateUserInput(newSymbol); // Use function to update input and handle logic
-
-      // Add console log for debugging
-      console.log("Long press detected!");
-    }
-  };
+  {
+    /* The new one */
+  }
 
   // Update user input and check if it matches the Morse code for the current letter
+  // const debouncedUpdateUserInput = useCallback(
+  //   debounce((newSymbol: string) => {
+  //     setUserInput((prevInput) => {
+  //       const updatedInput = prevInput + newSymbol;
+  //       const currentLetter = currentTranslation[currentIndex];
+  //       const currentLetterMorse = morseCodeMap[currentLetter];
+
+  //       if (updatedInput === currentLetterMorse) {
+  //         setDisplayText((prev) => prev + currentLetter);
+  //         setCurrentIndex((prev) => prev + 1);
+
+  //         if (currentIndex + 1 === currentTranslation.length) {
+  //           setUserPoints((prevPoints) => prevPoints + BONUS_POINTS);
+  //           const completionTime = Date.now();
+  //           localStorage.setItem(
+  //             "lastCompletionTime",
+  //             completionTime.toString()
+  //           );
+  //           setCanUseCipher(false);
+  //           setCurrentIndex(0);
+  //           setDisplayText("");
+  //           setIsCipherMode(false);
+  //           return "";
+  //         }
+  //         return "";
+  //       } else if (!currentLetterMorse.startsWith(updatedInput)) {
+  //         return "";
+  //       }
+  //       return updatedInput;
+  //     });
+
+  //     setShowIncrement(true);
+  //     setTimeout(() => setShowIncrement(false), 500);
+  //   }, 100),
+  //   [
+  //     currentIndex,
+  //     currentTranslation,
+  //     morseCodeMap,
+  //     setUserPoints,
+  //     setCanUseCipher,
+  //     setCurrentIndex,
+  //     setDisplayText,
+  //     setIsCipherMode,
+  //   ]
+  // );
+
   const updateUserInput = (newSymbol: string) => {
+    console.log("calledddd oooo", newSymbol);
+
     const updatedInput = userInput + newSymbol; // Update the Morse code string
     setUserInput(updatedInput); // Update state with new input
     setShowIncrement(true);
@@ -265,21 +328,83 @@ export default function TappingArea({
     }
   };
 
-  const handleDailyCipherClick = () => {
-    if (canUseCipher) {
-      setIsCipherMode((prev) => !prev); // Toggle cipher mode
-    }
-  };
+  const handleTap = useCallback(
+    (e: React.MouseEvent<HTMLDivElement>) => {
+      e.preventDefault();
+      console.log("tapping", "memoization");
 
-  const handleDailyComboClick = () => {
+      const rect = e.currentTarget.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      setTapPosition({ x, y });
+
+      if (isCipherMode && canUseCipher) {
+        console.log("called one");
+
+        handleTapClick();
+        const newSymbol = ".";
+        setTapSymbol(newSymbol);
+        updateUserInput(newSymbol);
+      } else if (!isCipherMode) {
+        console.log("Called two");
+
+        handleTapClick();
+        setShowIncrement(true);
+        setTimeout(() => setShowIncrement(false), 500);
+      }
+    },
+    [isCipherMode, canUseCipher, handleTapClick, showIncrement]
+  );
+
+  // Handle long press for dash
+  const handleLongPress = useCallback(() => {
+    if (isCipherMode && canUseCipher) {
+      handleTapClick();
+      const newSymbol = "-";
+      setTapSymbol(newSymbol);
+      updateUserInput(newSymbol);
+      console.log("Long press detected!");
+    }
+  }, [isCipherMode, canUseCipher, handleTapClick, updateUserInput]);
+
+  const handlePressStart = useCallback(
+    (e: React.MouseEvent | React.TouchEvent) => {
+      e.preventDefault();
+      longPressTimer.current = setTimeout(handleLongPress, 500);
+    },
+    [handleLongPress]
+  );
+
+  const handlePressEnd = useCallback(
+    (e: React.MouseEvent | React.TouchEvent) => {
+      e.preventDefault();
+      if (longPressTimer.current) {
+        clearTimeout(longPressTimer.current);
+        longPressTimer.current = null;
+      }
+    },
+    []
+  );
+
+  const handleDailyCipherClick = useCallback(() => {
+    if (canUseCipher) {
+      setIsCipherMode((prev) => !prev);
+    }
+  }, [canUseCipher]);
+
+  const handleDailyComboClick = useCallback(() => {
     setActiveTab("mine");
-  };
+  }, [setActiveTab]);
 
   return (
-    <div className="my-10 w-full h-full bg-gray-950 rounded-t-[46px] border-t-2 border-amber-600 top-glow">
+    <div className="mb-10 mt-6 w-full h-full bg-gray-950 rounded-t-[46px] border-t-2 border-amber-600 top-glow">
       <svg style={{ display: "none" }}>
         <filter id="glow">
-          <feGaussianBlur stdDeviation="15" operator="out" result="coloredBlur" />
+          <feGaussianBlur
+            stdDeviation="15"
+            operator="out"
+            result="coloredBlur"
+          />
           <feMerge>
             <feMergeNode in="coloredBlur" />
             <feMergeNode in="SourceGraphic" />
@@ -289,13 +414,20 @@ export default function TappingArea({
       {!showBoost ? (
         <div className="flex flex-col items-center justify-start h-full p-2 gap-4">
           <div className="flex items-center justify-center gap-2">
-            <Image src={Coin} width={40} height={40} alt="Coin Icon" className="rounded-full" />
+            <Image
+              src={Coin}
+              width={40}
+              height={40}
+              alt="Coin Icon"
+              className="rounded-full"
+            />
             <h5 className="text-white text-4xl">{userPoints}</h5>
           </div>
           {isCipherMode && (
             <div className="morse-code-input w-full flex items-center justify-between bg-gray-800 p-2 rounded-md text-white">
               <p className="font-bold w-1/3">Daily cipher</p>
-              <p className="w-1/3 break-words">{displayText}</p> {/* Display matched letters */}
+              <p className="w-1/3 break-words">{displayText}</p>{" "}
+              {/* Display matched letters */}
               <button className="p-1 w-1/3 flex rounded-lg bg-gradient-to-r from-indigo-500 to-pink-600 gap-1 items-center justify-center">
                 <Image
                   src={Coin}
@@ -309,46 +441,51 @@ export default function TappingArea({
             </div>
           )}
           <div className="relative">
-            <Image
-              src={isCipherMode ? OrbCipher : Orb} // Use the selected orb image based on the mode
-              width={200}
-              height={200}
-              onClick={handleTap}
-              onMouseDown={handleMouseDown}
-              onMouseUp={handleMouseUp}
-              onTouchStart={handleTouchStart}
-              onTouchEnd={handleTouchEnd}
-              onMouseLeave={handleMouseUp} // Clear the timer if the mouse leaves the element
-              onContextMenu={(e) => e.preventDefault()}
-              alt="Central Tap"
-              className="transition duration-200 ease-in-out rounded-full"
-            />
-            <Image
-              src={GalacticGoldRush}
-              width={120}
-              height={50}
-              onClick={handleTap}
-              onMouseDown={handleMouseDown}
-              onMouseUp={handleMouseUp}
-              onTouchStart={handleTouchStart}
-              onTouchEnd={handleTouchEnd}
-              onMouseLeave={handleMouseUp} // Clear the timer if the mouse leaves the element
-              onContextMenu={(e) => e.preventDefault()}
-              alt="Armadillo"
-              style={{
-                filter: showIncrement ? "url(#glow)" : "none",
-              }}
-              className="h-full absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition duration-200 ease-in-out"
-            />
-            {showIncrement && (
-              isCipherMode ? (
-                <CipherIncrement symbol={tapSymbol} tapCount={tapCount} tapPosition={tapPosition} />
+            <motion.div
+              onMouseDown={handlePressStart}
+              onMouseUp={handlePressEnd}
+              onMouseLeave={handlePressEnd}
+              onTouchStart={handlePressStart}
+              onTouchEnd={handlePressEnd}
+              whileTap={{ scale: 0.95, rotate: -5 }}
+              transition={{ type: "spring", stiffness: 300, damping: 10 }}
+            >
+              <Image
+                src={isCipherMode ? OrbCipher : Orb} // Use the selected orb image based on the mode
+                width={200}
+                height={200}
+                onClick={handleTap}
+                onContextMenu={(e) => e.preventDefault()}
+                alt="Central Tap"
+                className="transition duration-200 ease-in-out rounded-full"
+              />
+              <Image
+                src={GalacticGoldRush}
+                width={120}
+                height={50}
+                onClick={handleTap}
+                onContextMenu={(e) => e.preventDefault()}
+                alt="Armadillo"
+                style={{
+                  filter: showIncrement ? "url(#glow)" : "none",
+                  transitionDuration: "0.75s",
+                }}
+                className="h-full absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition duration-200 ease-in-out"
+              />
+            </motion.div>
+
+            {showIncrement &&
+              (isCipherMode ? (
+                <CipherIncrement
+                  symbol={tapSymbol}
+                  tapCount={tapCount}
+                  tapPosition={tapPosition}
+                />
               ) : (
                 <PointIncrement tapCount={tapCount} tapPosition={tapPosition} />
-              )
-            )}
+              ))}
           </div>
-          <div className="flex items-center justify-between w-full">
+          <div className="flex items-center justify-between w-full px-2">
             <div className="flex items-center gap-1">
               <Image src={Fire} width={15} height={15} alt="Fire" />
               <h4 className="text-white text-lg">
@@ -361,9 +498,23 @@ export default function TappingArea({
             </div>
           </div>
           <div className="flex gap-2 text-sm items-center justify-evenly w-full h-20">
-            <RewardCard icon={Star} label="Daily Reward" onClick={handleDailyRewardClick} /> {/* Show Daily Reward Popup on click */}
-            <RewardCard icon={Diamond} label="Daily Cipher" onClick={handleDailyCipherClick} /> {/* Attach click handler */}
-            <RewardCard icon={Clock} label="Daily Combo" onClick={handleDailyComboClick} />
+            <RewardCard
+              icon={Star}
+              label="Daily Reward"
+              onClick={handleDailyRewardClick}
+            />{" "}
+            {/* Show Daily Reward Popup on click */}
+            <RewardCard
+              icon={Diamond}
+              label="Daily Cipher"
+              onClick={handleDailyCipherClick}
+            />{" "}
+            {/* Attach click handler */}
+            <RewardCard
+              icon={Clock}
+              label="Daily Combo"
+              onClick={handleDailyComboClick}
+            />
           </div>
         </div>
       ) : (
@@ -380,12 +531,14 @@ export default function TappingArea({
       )}
 
       {/* Show the Daily Reward Popup if showDailyReward is true */}
-      {showDailyReward &&
+      {showDailyReward && (
         <DailyRewardPopup
           userPoints={userPoints}
           userToken={userToken}
           setUserPoints={setUserPoints}
-          onClose={closeDailyRewardPopup} />}
+          onClose={closeDailyRewardPopup}
+        />
+      )}
     </div>
   );
 }

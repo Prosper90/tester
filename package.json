@@ -19,6 +19,7 @@
     "@web3modal/wagmi": "^5.1.5",
     "axios": "^1.7.4",
     "ethers": "^6.13.2",
+    "framer-motion": "^11.5.4",
     "next": "14.2.5",
     "node-fetch": "^3.3.2",
     "react": "^18",
@@ -28,6 +29,7 @@
     "wagmi": "^2.12.8"
   },
   "devDependencies": {
+    "@types/lodash": "^4.17.7",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

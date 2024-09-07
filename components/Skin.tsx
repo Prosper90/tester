@@ -97,7 +97,9 @@ const Skin: React.FC<SkinProps> = ({
   onClose,
 }) => {
   const [selectedSkin, setSelectedSkin] = useState<SkinName>("Default");
-  const [ownedSkins, setOwnedSkins] = useState<Set<SkinName>>(new Set<SkinName>(["Default"]));
+  const [ownedSkins, setOwnedSkins] = useState<Set<SkinName>>(
+    new Set<SkinName>(["Default"])
+  );
   const [pendingPurchase, setPendingPurchase] = useState<SkinName | null>(null);
   const [showPopup, setShowPopup] = useState<boolean>(false);
 
@@ -105,13 +107,16 @@ const Skin: React.FC<SkinProps> = ({
   useEffect(() => {
     const fetchOwnedSkins = async () => {
       try {
-        const response = await fetch("https://ggr-backend-production.up.railway.app/api/user/getUserSkins", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${userToken}`, // Pass user token
-          },
-        });
+        const response = await fetch(
+          "https://ggr-backend-production.up.railway.app/api/user/getUserSkins",
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${userToken}`, // Pass user token
+            },
+          }
+        );
 
         const data = await response.json();
         if (response.ok) {
@@ -145,24 +150,31 @@ const Skin: React.FC<SkinProps> = ({
     if (pendingPurchase && userPoints >= skinsData[pendingPurchase].price) {
       try {
         // Log the request details to ensure correctness
-        console.log("Attempting to purchase skin:", pendingPurchase, skinsData[pendingPurchase].price);
-  
-        const response = await fetch("https://ggr-backend-production.up.railway.app/api/user/purchaseSkin", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${userToken}`, // Ensure the token is passed
-          },
-          body: JSON.stringify({
-            skinName: pendingPurchase,
-            price: skinsData[pendingPurchase].price,
-          }),
-        });
-  
+        console.log(
+          "Attempting to purchase skin:",
+          pendingPurchase,
+          skinsData[pendingPurchase].price
+        );
+
+        const response = await fetch(
+          "https://ggr-backend-production.up.railway.app/api/user/purchaseSkin",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${userToken}`, // Ensure the token is passed
+            },
+            body: JSON.stringify({
+              skinName: pendingPurchase,
+              price: skinsData[pendingPurchase].price,
+            }),
+          }
+        );
+
         const data = await response.json();
         // Log the server response for debugging
         console.log("Response data:", data);
-  
+
         if (response.ok) {
           setUserPoints(data.remainingPoints); // Update user points
           setOwnedSkins(new Set(data.ownedSkins)); // Update owned skins
@@ -179,7 +191,6 @@ const Skin: React.FC<SkinProps> = ({
       alert("You do not have enough points to purchase this skin.");
     }
   };
-  
 
   const handleCancelPurchase = () => setShowPopup(false);
 
@@ -188,26 +199,50 @@ const Skin: React.FC<SkinProps> = ({
   return (
     <div className="fixed inset-0 bg-black flex flex-col z-50 overflow-auto">
       <button onClick={onClose} className="mt-2 relative">
-        <Image src={Arrow} width={20} height={20} alt="arrow" className="absolute ml-2 mt-2" />
+        <Image
+          src={Arrow}
+          width={20}
+          height={20}
+          alt="arrow"
+          className="absolute ml-2 mt-2"
+        />
         <h3 className="text-white text-2xl text-center flex-1">Skins</h3>
       </button>
 
       <div className="flex flex-1 bg-neutral-800 rounded-t-[46px]">
         <div className="w-1/2 flex flex-col items-start justify-start">
           <div className="flex flex-col items-center justify-center">
-            <Image src={skinsData[selectedSkin].image} width={200} height={200} alt="Selected Skin" className="p-2" />
+            <Image
+              src={skinsData[selectedSkin].image}
+              width={200}
+              height={200}
+              alt="Selected Skin"
+              className="p-2"
+            />
             <div className="bg-zinc-700 text-center p-2 mx-2 rounded-lg text-white mt-4">
-              <h4 className="text-sm font-bold pb-2">{skinsData[selectedSkin].title}</h4>
-              <p className="text-xs font-semibold">{skinsData[selectedSkin].subtitle}</p>
-              <p className="text-xs mt-2">{skinsData[selectedSkin].description}</p>
+              <h4 className="text-sm font-bold pb-2">
+                {skinsData[selectedSkin].title}
+              </h4>
+              <p className="text-xs font-semibold">
+                {skinsData[selectedSkin].subtitle}
+              </p>
+              <p className="text-xs mt-2">
+                {skinsData[selectedSkin].description}
+              </p>
               <p className="flex items-center justify-center gap-2 text-xl font-bold mt-2">
                 <Image src={Coin} width={24} height={24} alt="Coin Icon" />
                 {skinsData[selectedSkin].price.toLocaleString()}
               </p>
               <button
-                onClick={pendingPurchase ? handlePurchase : () => setGalacticGoldRush(skinsData[selectedSkin].image)}
+                onClick={
+                  pendingPurchase
+                    ? handlePurchase
+                    : () => setGalacticGoldRush(skinsData[selectedSkin].image)
+                }
                 className={`mt-4 px-6 py-2 rounded text-white ${
-                  isActiveSkin ? "bg-gray-500 cursor-not-allowed" : "bg-gradient-to-r from-indigo-600 to-purple-500"
+                  isActiveSkin
+                    ? "bg-gray-500 cursor-not-allowed"
+                    : "bg-gradient-to-r from-indigo-600 to-purple-500"
                 }`}
                 disabled={isActiveSkin}
               >
@@ -221,7 +256,8 @@ const Skin: React.FC<SkinProps> = ({
           <div className="grid grid-cols-2 gap-2 mt-6">
             {Object.keys(skinsData).map((skinName) => {
               const isOwned = ownedSkins.has(skinName as SkinName);
-              const isSkinActive = skinsData[skinName as SkinName].image === GalacticGoldRush;
+              const isSkinActive =
+                skinsData[skinName as SkinName].image === GalacticGoldRush;
               return (
                 <div
                   key={skinName}
@@ -230,15 +266,32 @@ const Skin: React.FC<SkinProps> = ({
                   }`}
                   onClick={() => handleSkinSelect(skinName as SkinName)}
                 >
-                  <Image src={skinsData[skinName as SkinName].image} width={100} height={100} alt={skinName} />
-                  <h4 className="text-xs text-center">{skinsData[skinName as SkinName].title}</h4>
+                  {/* <Image
+                    src={skinsData[skinName as SkinName].image}
+                    className="w-[30%] h-20"
+                    alt={skinName}
+                  /> */}
+                  <div className="w-[100%] h-20 relative">
+                    <Image
+                      src={skinsData[skinName as SkinName].image}
+                      alt={skinName}
+                      layout="fill"
+                      objectFit="contain"
+                      className="object-center"
+                    />
+                  </div>
+                  <h4 className="text-xs text-center whitespace-normal w-[60%]">
+                    {skinsData[skinName as SkinName].title}
+                  </h4>
                   {!isOwned && (
                     <div className="absolute inset-0 flex items-center justify-center rounded-xl bg-black bg-opacity-50">
                       <Image src={Lock} width={20} height={20} alt="Locked" />
                     </div>
                   )}
                   {isSkinActive && (
-                    <div className="absolute top-0 right-0 bg-blue-500 text-white text-xs rounded-full p-1">✓</div>
+                    <div className="absolute top-1 right-1 bg-blue-500 text-white text-xs rounded-full p-1 px-2">
+                      ✓
+                    </div>
                   )}
                 </div>
               );
@@ -250,15 +303,24 @@ const Skin: React.FC<SkinProps> = ({
       {showPopup && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75">
           <div className="bg-neutral-800 border-t-2 border-amber-600 p-6 rounded-t-[46px]">
-            <h2 className="text-purple-500 font-bold text-center text-2xl mb-4">Confirm Purchase</h2>
+            <h2 className="text-purple-500 font-bold text-center text-2xl mb-4">
+              Confirm Purchase
+            </h2>
             <p className="text-white mb-4">
-              Are you sure you want to purchase this skin for {skinsData[pendingPurchase!].price.toLocaleString()} Points?
+              Are you sure you want to purchase this skin for{" "}
+              {skinsData[pendingPurchase!].price.toLocaleString()} Points?
             </p>
             <div className="flex gap-2 justify-center">
-              <button onClick={handlePurchase} className="bg-gradient-to-r from-indigo-600 to-purple-500 text-white px-4 py-2 rounded">
+              <button
+                onClick={handlePurchase}
+                className="bg-gradient-to-r from-indigo-600 to-purple-500 text-white px-4 py-2 rounded"
+              >
                 Yes
               </button>
-              <button onClick={handleCancelPurchase} className="bg-gray-600 px-4 py-2 rounded text-white">
+              <button
+                onClick={handleCancelPurchase}
+                className="bg-gray-600 px-4 py-2 rounded text-white"
+              >
                 No
               </button>
             </div>

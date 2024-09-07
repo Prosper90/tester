@@ -26,6 +26,7 @@ import IconLevel4 from "../images/Achivment Levels/Crypto Tech Strategist.svg";
 import IconLevel5 from "../images/Achivment Levels/Chief Blockchain Architect.svg";
 import Redeem from "@/components/Redeem";
 import WebApp from "@twa-dev/sdk";
+import { motion } from "framer-motion";
 
 type CardLevels = { [key: string]: number };
 
@@ -53,7 +54,6 @@ interface UserData {
   Token?: string;
 }
 
-
 export default function Home() {
   const [userData, setUserData] = useState<UserData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -67,26 +67,29 @@ export default function Home() {
 
       if (tgWebAppData) {
         const decodedData = decodeURIComponent(tgWebAppData);
-        const userDataString = decodedData.split('user=')[1].split('&')[0];
+        const userDataString = decodedData.split("user=")[1].split("&")[0];
         const userData = JSON.parse(decodeURIComponent(userDataString));
 
         const telegramID = userData.id;
 
         if (telegramID) {
           try {
-            const response = await fetch('https://ggr-backend-production.up.railway.app/api/user/login', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({ telegramID }),
-            });
+            const response = await fetch(
+              "https://ggr-backend-production.up.railway.app/api/user/login",
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ telegramID }),
+              }
+            );
 
             const data = await response.json();
             if (response.ok) {
               setUserData({
                 ...data.data, // Spread the rest of user data
-                Token: data.Token // Ensure the Token is set properly
+                Token: data.Token, // Ensure the Token is set properly
               });
               setUserToken(data.Token);
               // Set the points from the fetched data
@@ -97,19 +100,19 @@ export default function Home() {
               setTapCount(data.data.tapCount);
               setEnergyLimitLevel(data.data.energyLimitLevel);
             } else {
-              console.error('Failed to fetch user data:', data.message);
+              console.error("Failed to fetch user data:", data.message);
             }
           } catch (error) {
-            console.error('Error fetching user data:', error);
+            console.error("Error fetching user data:", error);
           } finally {
             setIsLoading(false);
           }
         } else {
-          console.error('Telegram ID not found in URL fragment');
+          console.error("Telegram ID not found in URL fragment");
           setIsLoading(false);
         }
       } else {
-        console.error('tgWebAppData not found in URL fragment');
+        console.error("tgWebAppData not found in URL fragment");
         setIsLoading(false);
       }
     };
@@ -119,27 +122,44 @@ export default function Home() {
     }
   }, []);
 
-  const userName = userData?.name || 'Jones';
+  const userName = userData?.name || "Jones";
   const levelNames = [
-    "Blockchain Junior Developer", "Senior DeFi Coder", "Web3 Solutions Architect", "Crypto Tech Strategist", "Chief Blockchain Architect"
+    "Blockchain Junior Developer",
+    "Senior DeFi Coder",
+    "Web3 Solutions Architect",
+    "Crypto Tech Strategist",
+    "Chief Blockchain Architect",
   ];
 
-  const levelMinPoints = [
-    0, 60000, 120000, 420000, 780000
-  ];
+  const levelMinPoints = [0, 60000, 120000, 420000, 780000];
 
   const levelIcons: StaticImageData[] = [
     IconLevel1,
     IconLevel2,
     IconLevel3,
     IconLevel4,
-    IconLevel5
+    IconLevel5,
   ];
 
   const renderSharedComponents = () => (
     <>
-      <UserInfo GalacticGoldRush={GalacticGoldRush} setGalacticGoldRush={setGalacticGoldRush} userToken={userToken} levelIndex={levelIndex} levelIcons={levelIcons} userPoints={userPoints} setUserPoints={setUserPoints} userName={userName} levelNames={levelNames} calculateProgress={calculateProgress} />
-      <Redeem userPoints={userPoints} setUserPoints={setUserPoints} userToken={userToken} />
+      <UserInfo
+        GalacticGoldRush={GalacticGoldRush}
+        setGalacticGoldRush={setGalacticGoldRush}
+        userToken={userToken}
+        levelIndex={levelIndex}
+        levelIcons={levelIcons}
+        userPoints={userPoints}
+        setUserPoints={setUserPoints}
+        userName={userName}
+        levelNames={levelNames}
+        calculateProgress={calculateProgress}
+      />
+      <Redeem
+        userPoints={userPoints}
+        setUserPoints={setUserPoints}
+        userToken={userToken}
+      />
       <ProfitPerHour pointsPerHour={pointsPerHour} />
     </>
   );
@@ -147,7 +167,8 @@ export default function Home() {
   const [levelIndex, setLevelIndex] = useState(0);
   const [levelIcon, setLevelIcon] = useState<StaticImageData>(levelIcons[0]);
   const [userPoints, setUserPoints] = useState<number>(0);
-  const [GalacticGoldRush, setGalacticGoldRush] = useState<StaticImageData>(BronzeSkim1);
+  const [GalacticGoldRush, setGalacticGoldRush] =
+    useState<StaticImageData>(BronzeSkim1);
   const [pointsPerHour, setPointsPerHour] = useState(0);
   const [energy, setEnergy] = useState<number>(1000);
   const [maxEnergy, setMaxEnergy] = useState<number>(1000);
@@ -157,7 +178,7 @@ export default function Home() {
   const [energyRegenInterval, setEnergyRegenInterval] = useState(5000);
   const [tapCount, setTapCount] = useState<number>(1);
   const [multitapLevel, setMultitapLevel] = useState(0);
-  const [energyLimitLevel, setEnergyLimitLevel] = useState(0)
+  const [energyLimitLevel, setEnergyLimitLevel] = useState(0);
   const [cardLevels, setCardLevels] = useState<CardLevels>({
     "Consensus Algorithms": 0,
     "Network Design": 0,
@@ -206,6 +227,27 @@ export default function Home() {
     "Blockchain Forensics": 0,
     "Reward Multiplier": 0,
   });
+  // const [heightDynamic, setHeightDynamic] = useState(0); // Default padding
+  // const [stillLoading, setStillLoading] = useState(true);
+  // useEffect(() => {
+  //   console.log(window.innerHeight, "checking something", heightDynamic);
+  //   const updatePadding = () => {
+  //     const calculatedHeight = window.innerHeight + 200;
+  //     console.log(calculatedHeight, "checking calculated height");
+  //     setHeightDynamic(calculatedHeight);
+  //   };
+
+  //   let i = 0;
+  //   if (window.innerHeight + 200 !== heightDynamic) {
+  //     console.log(i++, "checking of i", heightDynamic);
+  //     // updatePadding();
+  //     const calculatedHeight = window.innerHeight + 200;
+  //     console.log(calculatedHeight, "checking calculated height");
+  //     setHeightDynamic(calculatedHeight);
+  //   }
+  //   window.addEventListener("resize", updatePadding);
+  //   return () => window.removeEventListener("resize", updatePadding);
+  // }, [heightDynamic, stillLoading]);
 
   const increaseTapCount = () => {
     setTapCount((prevCount) => prevCount + 1);
@@ -227,7 +269,8 @@ export default function Home() {
 
   useEffect(() => {
     const updateLevel = () => {
-      const index = levelMinPoints.findIndex((points) => userPoints < points) - 1;
+      const index =
+        levelMinPoints.findIndex((points) => userPoints < points) - 1;
       setLevelIndex(index >= 0 ? index : levelMinPoints.length - 1);
     };
     updateLevel();
@@ -235,7 +278,9 @@ export default function Home() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setEnergy((prevEnergy) => Math.min(prevEnergy + energyRegenRate, maxEnergy));
+      setEnergy((prevEnergy) =>
+        Math.min(prevEnergy + energyRegenRate, maxEnergy)
+      );
     }, energyRegenInterval);
     return () => clearInterval(interval);
   }, [energyRegenRate, energyRegenInterval, maxEnergy]);
@@ -244,22 +289,28 @@ export default function Home() {
     const syncEnergyToBackend = async () => {
       if (userData) {
         try {
-          const response = await fetch('https://ggr-backend-production.up.railway.app/api/user/updateUser', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${userData?.Token}`
-            },
-            body: JSON.stringify({
-              energy: energy
-            }),
-          });
+          const response = await fetch(
+            "https://ggr-backend-production.up.railway.app/api/user/updateUser",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${userData?.Token}`,
+              },
+              body: JSON.stringify({
+                energy: energy,
+              }),
+            }
+          );
 
           if (!response.ok) {
-            console.error('Failed to sync energy to backend:', await response.json());
+            console.error(
+              "Failed to sync energy to backend:",
+              await response.json()
+            );
           }
         } catch (error) {
-          console.error('Error syncing energy to backend:', error);
+          console.error("Error syncing energy to backend:", error);
         }
       }
     };
@@ -290,7 +341,8 @@ export default function Home() {
       return 100;
     }
 
-    const progress = ((userPoints - prevMinPoints) / (nextMinPoints - prevMinPoints)) * 100;
+    const progress =
+      ((userPoints - prevMinPoints) / (nextMinPoints - prevMinPoints)) * 100;
 
     return Math.min(Math.max(progress, 0), 100);
   }, [userPoints, levelIndex, levelMinPoints, levelNames.length]);
@@ -303,31 +355,37 @@ export default function Home() {
       setEnergy(newEnergy);
 
       try {
-        const response = await fetch('https://ggr-backend-production.up.railway.app/api/user/updateUser', {
-          method: 'POST', // Use POST or PUT for updates
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${userData?.Token}` // Pass the token for authorization
-          },
-          body: JSON.stringify({
-            Amount: newPoints, // Send new points to update
-            energy: newEnergy
-          }),
-        });
+        const response = await fetch(
+          "https://ggr-backend-production.up.railway.app/api/user/updateUser",
+          {
+            method: "POST", // Use POST or PUT for updates
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${userData?.Token}`, // Pass the token for authorization
+            },
+            body: JSON.stringify({
+              Amount: newPoints, // Send new points to update
+              energy: newEnergy,
+            }),
+          }
+        );
 
         if (!response.ok) {
           const errorData = await response.json();
-          console.error('Failed to update user points and energy:', errorData.message);
+          console.error(
+            "Failed to update user points and energy:",
+            errorData.message
+          );
 
           // Optionally, revert points on error
-          setUserPoints(prevPoints => prevPoints - tapCount);
+          setUserPoints((prevPoints) => prevPoints - tapCount);
           setEnergy((prevEnergy) => prevEnergy + 1);
         }
       } catch (error) {
-        console.error('Error updating user points and energy:', error);
+        console.error("Error updating user points and energy:", error);
 
         // Optionally, revert points on error
-        setUserPoints(prevPoints => prevPoints - tapCount);
+        setUserPoints((prevPoints) => prevPoints - tapCount);
         setEnergy((prevEnergy) => prevEnergy + 1);
       }
     }
@@ -335,10 +393,17 @@ export default function Home() {
 
   if (isLoading) return <Loading />;
 
+  const variants = {
+    visible: { opacity: 1 },
+    hidden: { opacity: 0 },
+  };
+
   return (
-    <div className="relative flex flex-col w-full h-full justify-center items-center bg-black text-white">
-      {activeTab === 'protocol lab' && (
-        <div className="flex flex-col gap-4 mb-20 items-center justify-start h-screen pt-2 w-full">
+    <div
+      className={`relative flex flex-col w-full  justify-center items-center bg-black text-white pb-32`}
+    >
+      {activeTab === "protocol lab" && (
+        <div className="flex flex-col gap-4 items-center justify-start pt-3 pb-36 w-full h-screen">
           {renderSharedComponents()}
           <TappingArea
             GalacticGoldRush={GalacticGoldRush}
@@ -357,70 +422,83 @@ export default function Home() {
           />
         </div>
       )}
-      {activeTab === 'mine' && (
-        <div className="flex flex-col gap-4 items-center justify-start h-full pt-2 w-full mb-24">
-          {renderSharedComponents()}
-          <DailyCombo
-            userPoints={userPoints}
-            setUserPoints={setUserPoints}
-            cardLevels={cardLevels}
-            setCardLevels={setCardLevels}
-          />
-          <CardTabs cardTab={cardTab} setCardTab={setCardTab} />
-          {cardTab === 'Performance' && (
-            <Performance
+      {activeTab === "mine" && (
+        <motion.div animate={{ x: [0, 40, 0] }} variants={variants}>
+          <div className="flex flex-col gap-4 items-center justify-start h-full pt-2 w-full mb-24">
+            {renderSharedComponents()}
+            <DailyCombo
               userPoints={userPoints}
               setUserPoints={setUserPoints}
               cardLevels={cardLevels}
               setCardLevels={setCardLevels}
-              updateProfitPerHour={updateProfitPerHour}
             />
-          )}
-          {cardTab === 'Incentives' && (
-            <Incentives
-              userPoints={userPoints}
-              setUserPoints={setUserPoints}
-              cardLevels={cardLevels}
-              setCardLevels={setCardLevels}
-              updateProfitPerHour={updateProfitPerHour}
-            />
-          )}
-          {cardTab === 'Usability' && (
-            <Usability
-              userPoints={userPoints}
-              setUserPoints={setUserPoints}
-              cardLevels={cardLevels}
-              setCardLevels={setCardLevels}
-              updateProfitPerHour={updateProfitPerHour}
-            />
-          )}
-          {cardTab === 'Security' && (
-            <Security
-              userPoints={userPoints}
-              setUserPoints={setUserPoints}
-              cardLevels={cardLevels}
-              setCardLevels={setCardLevels}
-              updateProfitPerHour={updateProfitPerHour}
-            />
-          )}
-          <Balance userPoints={userPoints} />
-          <CommonTapArea
-            GalacticGoldRush={GalacticGoldRush}
-            tapCount={tapCount}
-            energy={energy}
-            maxEnergy={maxEnergy}
-            handleTapClick={handleTapClick}
-          />
+            <CardTabs cardTab={cardTab} setCardTab={setCardTab} />
+            {cardTab === "Performance" && (
+              <Performance
+                userPoints={userPoints}
+                setUserPoints={setUserPoints}
+                cardLevels={cardLevels}
+                setCardLevels={setCardLevels}
+                updateProfitPerHour={updateProfitPerHour}
+              />
+            )}
+            {cardTab === "Incentives" && (
+              <Incentives
+                userPoints={userPoints}
+                setUserPoints={setUserPoints}
+                cardLevels={cardLevels}
+                setCardLevels={setCardLevels}
+                updateProfitPerHour={updateProfitPerHour}
+              />
+            )}
+            {cardTab === "Usability" && (
+              <Usability
+                userPoints={userPoints}
+                setUserPoints={setUserPoints}
+                cardLevels={cardLevels}
+                setCardLevels={setCardLevels}
+                updateProfitPerHour={updateProfitPerHour}
+              />
+            )}
+            {cardTab === "Security" && (
+              <Security
+                userPoints={userPoints}
+                setUserPoints={setUserPoints}
+                cardLevels={cardLevels}
+                setCardLevels={setCardLevels}
+                updateProfitPerHour={updateProfitPerHour}
+              />
+            )}
+            <motion.div animate={{ y: [0, 20, 0] }} variants={variants}>
+              <Balance userPoints={userPoints} />
+              <CommonTapArea
+                GalacticGoldRush={GalacticGoldRush}
+                tapCount={tapCount}
+                energy={energy}
+                maxEnergy={maxEnergy}
+                handleTapClick={handleTapClick}
+              />
+            </motion.div>
+          </div>
+        </motion.div>
+      )}
+      {activeTab === "friends" && (
+        <motion.div animate={{ x: [0, 20, 0] }} variants={variants}>
+          <Friends />
+        </motion.div>
+      )}
+      {activeTab === "earn" && (
+        <div className="mb-20">
+          <motion.div animate={{ x: [0, 20, 0] }} variants={variants}>
+            <Earn userPoints={userPoints} setUserPoints={setUserPoints} />
+          </motion.div>
         </div>
       )}
-      {activeTab === 'friends' && <Friends />}
-      {activeTab === 'earn' &&
-        <div className="mb-20">
-          <Earn
-            userPoints={userPoints}
-            setUserPoints={setUserPoints} />
-        </div>}
-      {activeTab === 'airdrop' && <Airdrop />}
+      {activeTab === "airdrop" && (
+        <motion.div animate={{ x: [0, 20, 0] }} variants={variants}>
+          <Airdrop />
+        </motion.div>
+      )}
       <Navbar activeTab={activeTab} setActiveTab={setActiveTab} />
     </div>
   );

@@ -3,21 +3,21 @@
 import { useState } from "react";
 import Image, { StaticImageData } from "next/image";
 import Coin from "../../images/Token.svg";
-import Icon1 from "../../images/Mining Icons/Performance/Consensus Algorithms.svg"
-import Icon2 from "../../images/Mining Icons/Performance/Network Design.svg"
-import Icon3 from "../../images/Mining Icons/Performance/Data Structures.svg"
-import Icon4 from "../../images/Mining Icons/Performance/Shard Technology.svg"
-import Icon5 from "../../images/Mining Icons/Performance/Scalability Solutions.svg"
-import Icon6 from "../../images/Mining Icons/Performance/Fault Tolerance.svg"
-import Icon7 from "../../images/Mining Icons/Performance/Security Protocols.svg"
-import Icon8 from "../../images/Mining Icons/Performance/Privacy Features.svg"
-import Icon9 from "../../images/Mining Icons/Performance/Cross-Chain Interop.svg"
-import Icon10 from "../../images/Mining Icons/Performance/Energy Efficiency.svg"
-import Icon11 from "../../images/Mining Icons/Performance/Latency Reduction.svg"
-import Icon12 from "../../images/Mining Icons/Performance/Hybrid Networks.svg"
-import Icon13 from "../../images/Mining Icons/Performance/Performance Optimization.svg"
-import Icon14 from "../../images/Mining Icons/Performance/Node Infrastructure.svg"
-import Icon15 from "../../images/Mining Icons/Performance/Elastic Network.svg"
+import Icon1 from "../../images/Mining Icons/Performance/Consensus Algorithms.svg";
+import Icon2 from "../../images/Mining Icons/Performance/Network Design.svg";
+import Icon3 from "../../images/Mining Icons/Performance/Data Structures.svg";
+import Icon4 from "../../images/Mining Icons/Performance/Shard Technology.svg";
+import Icon5 from "../../images/Mining Icons/Performance/Scalability Solutions.svg";
+import Icon6 from "../../images/Mining Icons/Performance/Fault Tolerance.svg";
+import Icon7 from "../../images/Mining Icons/Performance/Security Protocols.svg";
+import Icon8 from "../../images/Mining Icons/Performance/Privacy Features.svg";
+import Icon9 from "../../images/Mining Icons/Performance/Cross-Chain Interop.svg";
+import Icon10 from "../../images/Mining Icons/Performance/Energy Efficiency.svg";
+import Icon11 from "../../images/Mining Icons/Performance/Latency Reduction.svg";
+import Icon12 from "../../images/Mining Icons/Performance/Hybrid Networks.svg";
+import Icon13 from "../../images/Mining Icons/Performance/Performance Optimization.svg";
+import Icon14 from "../../images/Mining Icons/Performance/Node Infrastructure.svg";
+import Icon15 from "../../images/Mining Icons/Performance/Elastic Network.svg";
 
 interface CardData {
   avtar: StaticImageData;
@@ -29,25 +29,83 @@ interface PerformanceProps {
   userPoints: number;
   setUserPoints: React.Dispatch<React.SetStateAction<number>>;
   cardLevels: { [key: string]: number };
-  setCardLevels: React.Dispatch<React.SetStateAction<{ [key: string]: number }>>;
+  setCardLevels: React.Dispatch<
+    React.SetStateAction<{ [key: string]: number }>
+  >;
   updateProfitPerHour: (amount: number) => void;
 }
 
 const cardData: CardData[] = [
-  { avtar: Icon1, title: "Consensus Algorithms", description: "Decision-making mechanisms for block validation." },
-  { avtar: Icon7, title: "Security Protocols", description: "Measures to protect the network from threats." },
-  { avtar: Icon5, title: "Scalability Solutions", description: "Ability to handle increasing transactions and users." },
-  { avtar: Icon13, title: "Performance Optimization", description: "Techniques for improving network performance." },
-  { avtar: Icon2, title: "Network Design", description: "Structure and layout of the blockchain network." },
-  { avtar: Icon4, title: "Shard Technology", description: "Dividing the network into smaller partitions for efficiency." },
-  { avtar: Icon12, title: "Hybrid Networks", description: "Combining different technologies for optimal performance." },
-  { avtar: Icon15, title: "Elastic Network", description: "Ability to adjust resources based on demand." },
-  { avtar: Icon3, title: "Data Structures", description: "Methods for organizing and storing data." },
-  { avtar: Icon6, title: "Fault Tolerance", description: "Resilience against network failures or attacks." },
-  { avtar: Icon9, title: "Cross-Chain Interop", description: "Communication between different blockchain networks." },
-  { avtar: Icon11, title: "Latency Reduction", description: "Reducing delays in transaction processing." },
-  { avtar: Icon14, title: "Node Infrastructure", description: "Types and roles of network participants." },
-  { avtar: Icon10, title: "Energy Efficiency", description: "Energy consumption and efficiency strategies." },
+  {
+    avtar: Icon1,
+    title: "Consensus Algorithms",
+    description: "Decision-making mechanisms for block validation.",
+  },
+  {
+    avtar: Icon7,
+    title: "Security Protocols",
+    description: "Measures to protect the network from threats.",
+  },
+  {
+    avtar: Icon5,
+    title: "Scalability Solutions",
+    description: "Ability to handle increasing transactions and users.",
+  },
+  {
+    avtar: Icon13,
+    title: "Performance Optimization",
+    description: "Techniques for improving network performance.",
+  },
+  {
+    avtar: Icon2,
+    title: "Network Design",
+    description: "Structure and layout of the blockchain network.",
+  },
+  {
+    avtar: Icon4,
+    title: "Shard Technology",
+    description: "Dividing the network into smaller partitions for efficiency.",
+  },
+  {
+    avtar: Icon12,
+    title: "Hybrid Networks",
+    description: "Combining different technologies for optimal performance.",
+  },
+  {
+    avtar: Icon15,
+    title: "Elastic Network",
+    description: "Ability to adjust resources based on demand.",
+  },
+  {
+    avtar: Icon3,
+    title: "Data Structures",
+    description: "Methods for organizing and storing data.",
+  },
+  {
+    avtar: Icon6,
+    title: "Fault Tolerance",
+    description: "Resilience against network failures or attacks.",
+  },
+  {
+    avtar: Icon9,
+    title: "Cross-Chain Interop",
+    description: "Communication between different blockchain networks.",
+  },
+  {
+    avtar: Icon11,
+    title: "Latency Reduction",
+    description: "Reducing delays in transaction processing.",
+  },
+  {
+    avtar: Icon14,
+    title: "Node Infrastructure",
+    description: "Types and roles of network participants.",
+  },
+  {
+    avtar: Icon10,
+    title: "Energy Efficiency",
+    description: "Energy consumption and efficiency strategies.",
+  },
 ];
 
 const costMap: { [key: string]: number } = {
@@ -101,15 +159,23 @@ const bonusMap: { [key: string]: number[] } = {
   "Elastic Network": [60, 120, 180],
 };
 
-function Notification({ message, type, onClose }: { message: string; type: 'success' | 'error'; onClose: () => void }) {
+function Notification({
+  message,
+  type,
+  onClose,
+}: {
+  message: string;
+  type: "success" | "error";
+  onClose: () => void;
+}) {
   return (
     <div
       className={`fixed right-0 top-4 w-full max-w-sm p-4 rounded-xl shadow-lg z-50 transition-all duration-300 transform ${
-        type === 'success' ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
+        type === "success" ? "bg-green-500 text-white" : "bg-red-500 text-white"
       } ${
-        type === 'success'
-          ? 'hover:bg-green-600 hover:shadow-2xl hover:scale-105'
-          : 'hover:bg-red-600 hover:shadow-2xl hover:scale-105'
+        type === "success"
+          ? "hover:bg-green-600 hover:shadow-2xl hover:scale-105"
+          : "hover:bg-red-600 hover:shadow-2xl hover:scale-105"
       }`}
     >
       <div className="flex items-center justify-between">
@@ -120,7 +186,7 @@ function Notification({ message, type, onClose }: { message: string; type: 'succ
         </div>
         <button
           className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${
-            type === 'success' ? 'bg-green-700' : 'bg-red-700'
+            type === "success" ? "bg-green-700" : "bg-red-700"
           }`}
           onClick={onClose}
         >
@@ -144,10 +210,18 @@ function Notification({ message, type, onClose }: { message: string; type: 'succ
   );
 }
 
-
-export default function Performance({ userPoints, setUserPoints, cardLevels, setCardLevels, updateProfitPerHour }: PerformanceProps) {
+export default function Performance({
+  userPoints,
+  setUserPoints,
+  cardLevels,
+  setCardLevels,
+  updateProfitPerHour,
+}: PerformanceProps) {
   const [selectedCard, setSelectedCard] = useState<CardData | null>(null);
-  const [notification, setNotification] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
+  const [notification, setNotification] = useState<{
+    message: string;
+    type: "success" | "error";
+  } | null>(null);
 
   const calculateCost = (cardTitle: string, level: number) => {
     const baseCost = costMap[cardTitle];
@@ -179,21 +253,28 @@ export default function Performance({ userPoints, setUserPoints, cardLevels, set
       const newBonus = calculateBonus(selectedCard.title, currentLevel);
       updateProfitPerHour(newBonus);
 
-      setNotification({ message: 'Purchase successful!', type: 'success' });
+      setNotification({ message: "Purchase successful!", type: "success" });
     } else if (currentLevel >= maxLevel) {
-      setNotification({ message: 'This card is already at the maximum level.', type: 'error' });
+      setNotification({
+        message: "This card is already at the maximum level.",
+        type: "error",
+      });
     } else {
-      setNotification({ message: 'You do not have enough points to purchase or upgrade this card.', type: 'error' });
+      setNotification({
+        message:
+          "You do not have enough points to purchase or upgrade this card.",
+        type: "error",
+      });
     }
     setSelectedCard(null); // Close the modal after purchase
   };
-  
+
   const checkIfPurchased = (cardTitle: string) => {
     return (cardLevels[cardTitle] || 0) > 0;
   };
 
   return (
-    <div className="flex flex-wrap gap-2 w-full p-4 items-center justify-between">
+    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-7 gap-4">
       {cardData.map((card, index) => {
         const currentLevel = cardLevels[card.title] || 0;
         const maxLevel = maxLevelMap[card.title];
@@ -205,13 +286,13 @@ export default function Performance({ userPoints, setUserPoints, cardLevels, set
         return (
           <div
             key={index}
-            className={`relative flex flex-col rounded-2xl bg-neutral-800 py-4 gap-2 w-40 cursor-pointer shadow-lg${atMaxLevel ? 'opacity-50' : ''}`}
+            className={`relative flex flex-col rounded-2xl bg-neutral-800 py-4 gap-2 w-44 sm:w-40 cursor-pointer shadow-lg${
+              atMaxLevel ? "opacity-50" : ""
+            }`}
             onClick={() => !atMaxLevel && setSelectedCard(card)} // Set selected card on click
           >
             {atMaxLevel && (
-              <div className="absolute inset-0 bg-black opacity-60 flex items-center justify-center text-lg text-white font-bold rounded-lg">
-                
-              </div>
+              <div className="absolute inset-0 bg-black opacity-60 flex items-center justify-center text-lg text-white font-bold rounded-lg"></div>
             )}
             {/* Level Badge */}
             <div className="absolute top-0 right-0 bg-indigo-600 text-white text-xs px-2 py-1 rounded-tr-lg rounded-bl-lg">
@@ -220,9 +301,17 @@ export default function Performance({ userPoints, setUserPoints, cardLevels, set
 
             {/* Astro Image and Card Details */}
             <div className="flex items-center gap-2">
-              <Image src={card.avtar} width={64} height={64} alt="Astro" className="h-full" />
+              <Image
+                src={card.avtar}
+                width={64}
+                height={64}
+                alt="Astro"
+                className="h-full"
+              />
               <div className="flex flex-col pt-4">
-                <h3 className="text-white font-semibold text-sm">{card.title}</h3>
+                <h3 className="text-white font-semibold text-sm">
+                  {card.title}
+                </h3>
                 <h4 className="text-gray-400 text-xs">Bonus per hour</h4>
                 <div className="flex items-center gap-1">
                   <Image src={Coin} width={14} height={14} alt="Coin" />
@@ -234,10 +323,14 @@ export default function Performance({ userPoints, setUserPoints, cardLevels, set
             {/* Upgrade */}
             <div className="flex bg-neutral-700 p-1">
               <div className="flex items-center justify-between w-full">
-                <h3 className="text-white text-xs">{currentLevel === 0 ? 'Purchase' : 'Upgrade'}</h3>
+                <h3 className="text-white text-xs">
+                  {currentLevel === 0 ? "Purchase" : "Upgrade"}
+                </h3>
                 <div className="flex items-center justify-center gap-1 mt-1">
                   <Image src={Coin} width={14} height={14} alt="Coin" />
-                  <span className="text-yellow-400 text-xs">{cost.toLocaleString()}</span>
+                  <span className="text-yellow-400 text-xs">
+                    {cost.toLocaleString()}
+                  </span>
                 </div>
               </div>
             </div>
@@ -250,23 +343,50 @@ export default function Performance({ userPoints, setUserPoints, cardLevels, set
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-neutral-800 rounded-t-[46px] border-t-2 border-amber-600 top-glow p-6 w-96 relative">
             <div className="flex flex-col items-center gap-4">
-              <Image src={selectedCard.avtar} width={100} height={100} alt="Astro" />
-              <h3 className="text-white font-semibold text-lg">{selectedCard.title}</h3>
-              <p className="text-gray-400 text-sm text-center">{selectedCard.description}</p>
+              <Image
+                src={selectedCard.avtar}
+                width={100}
+                height={100}
+                alt="Astro"
+              />
+              <h3 className="text-white font-semibold text-lg">
+                {selectedCard.title}
+              </h3>
+              <p className="text-gray-400 text-sm text-center">
+                {selectedCard.description}
+              </p>
               <div className="flex bg-neutral-600 items-center gap-2 border rounded-full p-2">
                 <span className="text-white text-xs">Profit per hour:</span>
-                <span className="text-green-400 text-xs">+{calculateBonus(selectedCard.title, (cardLevels[selectedCard.title] || 0))}</span>
+                <span className="text-green-400 text-xs">
+                  +
+                  {calculateBonus(
+                    selectedCard.title,
+                    cardLevels[selectedCard.title] || 0
+                  )}
+                </span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="text-gray-400 text-xs">{cardLevels[selectedCard.title] === 0 ? 'Purchase' : 'Upgrade'} Cost:</span>
-                <span className="text-yellow-400 text-xs">{calculateCost(selectedCard.title, cardLevels[selectedCard.title] || 0)}</span>
+                <span className="text-gray-400 text-xs">
+                  {cardLevels[selectedCard.title] === 0
+                    ? "Purchase"
+                    : "Upgrade"}{" "}
+                  Cost:
+                </span>
+                <span className="text-yellow-400 text-xs">
+                  {calculateCost(
+                    selectedCard.title,
+                    cardLevels[selectedCard.title] || 0
+                  )}
+                </span>
               </div>
               <div className="flex flex-col w-full gap-2 mt-4">
                 <button
                   className="bg-gradient-to-r from-indigo-600 to-purple-500 text-white py-2 px-4 rounded-xl"
                   onClick={handlePurchase}
                 >
-                  {cardLevels[selectedCard.title] === 0 ? 'Purchase' : 'Upgrade'}
+                  {cardLevels[selectedCard.title] === 0
+                    ? "Purchase"
+                    : "Upgrade"}
                 </button>
                 <button
                   className="bg-gray-600 text-white py-2 px-4 rounded-xl"

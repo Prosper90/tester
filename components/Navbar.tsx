@@ -1,4 +1,4 @@
-"use client"; 
+"use client";
 
 import Image, { StaticImageData } from "next/image";
 import ExchangeGrey from "../icons/Menue Icons/Token Grey.svg";
@@ -18,7 +18,7 @@ interface NavbarProps {
 }
 
 interface TabItemProps {
-  greyIcon: StaticImageData;  
+  greyIcon: StaticImageData;
   whiteIcon: StaticImageData;
   label: string;
   activeTab: string;
@@ -27,28 +27,75 @@ interface TabItemProps {
 
 export default function Navbar({ activeTab, setActiveTab }: NavbarProps) {
   return (
-    <div className="bottom-0 fixed w-full p-4">
+    <div className="fixed bottom-0 left-0 right-0 w-full p-4">
       <div className="w-full bg-neutral-900 border border-black rounded-2xl">
-        <div className="flex justify-around h-full p-4">
-          <TabItem greyIcon={ExchangeGrey} whiteIcon={ExchangeWhite} label="Protocol Lab" activeTab={activeTab} setActiveTab={setActiveTab} />
-          <TabItem greyIcon={MineGrey} whiteIcon={MineWhite} label="Mine" activeTab={activeTab} setActiveTab={setActiveTab} />
-          <TabItem greyIcon={FriendGrey} whiteIcon={FriendWhite} label="Friends" activeTab={activeTab} setActiveTab={setActiveTab} />
-          <TabItem greyIcon={EarnGrey} whiteIcon={EarnWhite} label="Earn" activeTab={activeTab} setActiveTab={setActiveTab} />
-          <TabItem greyIcon={AirdropGrey} whiteIcon={AirdropWhite} label="Airdrop" activeTab={activeTab} setActiveTab={setActiveTab} />
+        <div className="flex justify-around h-full p-4 text-xs">
+          <TabItem
+            greyIcon={ExchangeGrey}
+            whiteIcon={ExchangeWhite}
+            label="Protocol Lab"
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+          />
+          <TabItem
+            greyIcon={MineGrey}
+            whiteIcon={MineWhite}
+            label="Mine"
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+          />
+          <TabItem
+            greyIcon={FriendGrey}
+            whiteIcon={FriendWhite}
+            label="Friends"
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+          />
+          <TabItem
+            greyIcon={EarnGrey}
+            whiteIcon={EarnWhite}
+            label="Earn"
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+          />
+          <TabItem
+            greyIcon={AirdropGrey}
+            whiteIcon={AirdropWhite}
+            label="Airdrop"
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+          />
         </div>
       </div>
     </div>
   );
 }
 
-function TabItem({ greyIcon, whiteIcon, label, activeTab, setActiveTab }: TabItemProps) {
+function TabItem({
+  greyIcon,
+  whiteIcon,
+  label,
+  activeTab,
+  setActiveTab,
+}: TabItemProps) {
   const isActive = activeTab === label.toLowerCase();
   const icon = isActive ? whiteIcon : greyIcon;
 
   return (
-    <div onClick={() => setActiveTab(label.toLowerCase())} className="flex w-1/5 flex-col items-center cursor-pointer gap-2">
-      <Image src={icon} width={30} height={24} alt={`${label} Icon`} className="h-8" />
-      <span className={`text-xs ${isActive ? "text-white" : "text-gray-400"}`}>{label}</span>
+    <div
+      onClick={() => setActiveTab(label.toLowerCase())}
+      className="flex w-1/5 flex-col items-center cursor-pointer gap-2 text-xs"
+    >
+      <Image
+        src={icon}
+        width={30}
+        height={24}
+        alt={`${label} Icon`}
+        className="h-8"
+      />
+      <span className={`text-xs ${isActive ? "text-white" : "text-gray-400"}`}>
+        {label}
+      </span>
     </div>
   );
 }
